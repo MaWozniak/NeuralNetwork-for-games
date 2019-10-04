@@ -1,15 +1,15 @@
 public class UpdateMovement extends Thread{
 
-    public int getDirection() {
+    int getDirection() {
         return direction;
     }
 
-    public double getAcceleration() {
+    double getAcceleration() {
         return acceleration;
     }
 
-    public int direction = 0;
-    public double acceleration = 0.0;
+    private int direction = 0;
+    private double acceleration = 0.0;
 
     public void run(){
 

@@ -7,13 +7,13 @@ import javax.swing.JPanel;
 public class Game extends JPanel {
 
     //add a list to handle a number of balls
-    Ball ball = new Ball(this, 250.0, 190.0);
-    Ball ball1 = new Ball(this, 450.0, 400.0);
+    private Ball ball = new Ball( 250.0, 190.0, "b001");
+    private Ball ball1 = new Ball( 450.0, 400.0, "a000");
 
-    private void move(int dirAngle, double Vel) {
+    private void move() {
 
-        ball.move(dirAngle, Vel);
-        ball1.move(dirAngle+1, Vel);
+        ball.move();
+        ball1.move();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Game extends JPanel {
 
         while (true) {
 
-            game.move(updateMovement.getDirection(), updateMovement.getAcceleration());
+            game.move();
             game.revalidate();
             game.repaint();
 
