@@ -1,4 +1,4 @@
-public class GetTime20 extends Thread{
+public class UpdateMovement extends Thread{
 
     public int getDirection() {
         return direction;

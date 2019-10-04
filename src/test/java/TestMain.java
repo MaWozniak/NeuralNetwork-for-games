@@ -1,8 +1,8 @@
-public class test {
+public class TestMain {
 
     public static void main(String[] args){
 
-        Thread getTime = new GetTime20();
+        Thread getTime = new UpdateMovement();
 
         getTime.start();
 

@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-    //wprowadz liste ktora bedzie generowac n kulek z randomowymi polami x i y
+    //add a list to handle a number of balls
     Ball ball = new Ball(this, 250.0, 190.0);
     Ball ball1 = new Ball(this, 450.0, 400.0);
 
@@ -35,25 +35,17 @@ public class Game extends JPanel {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//        Thread getTime = new GetTime20();
-//        getTime.start();
-
-        GetTime20 getTime20 = new GetTime20();
-        getTime20.start();
-
+        UpdateMovement updateMovement = new UpdateMovement();
+        updateMovement.start();
 
         while (true) {
 
-            game.move(getTime20.getDirection(), getTime20.getAcceleration());
-            //game.repaint();
+            game.move(updateMovement.getDirection(), updateMovement.getAcceleration());
             game.revalidate();
-            //game.getPreferredSize();
             game.repaint();
 
-
             Thread.sleep(50);
-            // 3 is smooth
-            //Thread.sleep(3);
+
         }
     }
 }
