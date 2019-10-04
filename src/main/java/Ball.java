@@ -30,12 +30,17 @@ class Ball {
     }
 
     void paint(Graphics2D g) {
-        g.fillOval((int)x-5, (int)y-5, 10, 10);
+        g.fillOval((int)x-5, (int)y-5, 15, 15);
+
+        //temp direction point:
+        g.fillOval(((int)x-5)+(int)(50.0*Math.cos(radians)), ((int)y-5)+(int)(50.0*Math.sin(radians)), 5, 5);
+        g.fillOval(((int)x-5)+(int)(40.0*Math.cos(radians)-(int)(20.0*Math.sin(radians))), ((int)y-5)+(int)(40.0*Math.sin(radians)+(int)(20.0*Math.cos(radians))), 5, 5);
+        g.fillOval(((int)x-5)+(int)(40.0*Math.cos(radians)+(int)(20.0*Math.sin(radians))), ((int)y-5)+(int)(40.0*Math.sin(radians)-(int)(20.0*Math.cos(radians))), 5, 5);
 
         int[] xpoints = {(int)x, (int)(x+10*velocity*Math.cos(radians)-25), (int)(x+10*velocity*Math.cos(radians))+25};
         int[] ypoints = {(int)y, (int)(y+10*velocity*Math.sin(radians)), (int)(y+10*velocity*Math.sin(radians))};
         int npoints = 3;
 
-        g.fillPolygon(xpoints, ypoints, npoints);
+        //g.fillPolygon(xpoints, ypoints, npoints);
     }
 }
