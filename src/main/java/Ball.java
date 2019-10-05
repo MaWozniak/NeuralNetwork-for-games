@@ -8,7 +8,7 @@ class Ball {
 
     private double radians;
     private int directionAngle = 0;
-    private double velocity = 3.0;
+    private double velocity = 2.0;
     private int id;
 
     Ball(double xStartPos, double yStartPos, int id) {

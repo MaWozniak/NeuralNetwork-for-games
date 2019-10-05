@@ -16,7 +16,7 @@ public class UpdateMovement extends Thread {
         while (true) {
 
             direction = (int) (20 * Math.random() - 10.0);
-            acceleration = 0.3 * ((Math.random() / 5) - 0.1);
+            acceleration = 0.8 * ((Math.random() / 5) - 0.1);
 
             System.out.println(direction);
 

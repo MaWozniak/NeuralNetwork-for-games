@@ -14,8 +14,8 @@ public class BallsGenerator {
 
         for (int i = 0; i < number; i++) {
 
-            double xStartPos = 700 * Math.random();
-            double yStartPos = 400 * Math.random();
+            double xStartPos = 1150 * Math.random();
+            double yStartPos = 750 * Math.random();
             int id = (int) (1000 * Math.random());
             Ball newBall = new Ball(xStartPos, yStartPos, id);
 
