@@ -29,6 +29,24 @@ class Ball {
 
         x += (int) (velocity * Math.cos(radians));
         y += (int) (velocity * Math.sin(radians));
+
+        //simplest bouncing on borders:
+        if ((x < 5)) {
+            directionAngle = -directionAngle;
+            x += 3;
+        }
+        if ((y < 5)) {
+            directionAngle = -directionAngle;
+            y += 3;
+        }
+        if ((x > 1195)) {
+            directionAngle = -directionAngle;
+            x -= 3;
+        }
+        if ((y > 785)) {
+            directionAngle = -directionAngle;
+            y -= 3;
+        }
     }
 
     void paint(Graphics2D g) {

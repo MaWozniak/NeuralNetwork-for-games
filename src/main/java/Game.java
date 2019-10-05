@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-    private BallsGenerator generator = new BallsGenerator(70);
+    private BallsGenerator generator = new BallsGenerator(50);
 
     private void move() {
 
