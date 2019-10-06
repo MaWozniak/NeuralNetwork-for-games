@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-    private BallsGenerator generator = new BallsGenerator(50);
+    private OrganismsGenerator generator = new OrganismsGenerator(30);
 
     public Game() {
 
@@ -13,6 +13,11 @@ public class Game extends JPanel {
     private void move() {
 
         generator.move();
+        generator.randomAddPrey();
+        generator.randomKillPrey();
+        generator.validate();
+
+        System.out.println(generator.getGeneratedPreys().size());
     }
 
     @Override

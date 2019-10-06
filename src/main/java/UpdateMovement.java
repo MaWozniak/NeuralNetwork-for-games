@@ -18,7 +18,7 @@ public class UpdateMovement extends Thread {
             direction = (int) (20 * Math.random() - 10.0);
             acceleration = 0.8 * ((Math.random() / 5) - 0.1);
 
-            System.out.println(direction);
+            //System.out.println(direction);
 
             try {
                 Thread.sleep(150);

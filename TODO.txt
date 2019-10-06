@@ -1,0 +1,17 @@
+-separate game loop and jFrame loop (graphics)
+different frame rate for graphics and game
+
+//! everything important is in OrganismGenerator -> there should be a game thread with for example 10FPS
+//and in Game it's should only be a graphics plus methods that's import data from OrganismGenerator
+//GUI can had for example 30FPS
+
+-enhance board - places to hide, places to feed, borders etc
+
+-add Predators - logic to Eat a pray
+(add energy after consume, don't eat when it's full more than 90% energy etc)
+! FIELD OF VIEW - visibility concept - predators and pray doesn't see all board or all others organism
+it's only see about for example 15 points in front of it
+
+-Predators cannot walk in to the middle-board, it's safe area for the Prey like deep wood or smth
+
+-refactor code to be more SOLID, more Atomic, meaningful names
