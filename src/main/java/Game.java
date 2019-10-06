@@ -6,6 +6,10 @@ public class Game extends JPanel {
 
     private BallsGenerator generator = new BallsGenerator(50);
 
+    public Game() {
+
+    }
+
     private void move() {
 
         generator.move();
@@ -34,9 +38,6 @@ public class Game extends JPanel {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        UpdateMovement updateMovement = new UpdateMovement();
-        updateMovement.start();
-
         while (true) {
 
             game.move();
@@ -44,6 +45,8 @@ public class Game extends JPanel {
             game.repaint();
 
             Thread.sleep(50);
+            //30FPS~ 33
+            //60FPS~ 17
 
         }
     }
