@@ -93,11 +93,11 @@ class Predator {
         return isAlive;
     }
 
-    public double getX() {
+    double getX() {
         return x;
     }
 
-    public double getY() {
+    double getY() {
         return y;
     }
 }

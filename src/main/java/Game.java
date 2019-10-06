@@ -4,10 +4,9 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-    private OrganismsGenerator generator = new OrganismsGenerator(30);
+    private OrganismsGenerator generator = new OrganismsGenerator(1);
 
-    public Game() {
-
+    private Game() {
     }
 
     private void move() {

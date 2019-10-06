@@ -87,20 +87,20 @@ class Prey {
         //g.fillPolygon(xpoints, ypoints, npoints);
     }
 
-    public void isDead() {
+    void isDead() {
         this.energy = 0.0;
         this.isAlive = false;
     }
 
-    public boolean isAlive() {
+    boolean isAlive() {
         return isAlive;
     }
 
-    public double getX() {
+    double getX() {
         return x;
     }
 
-    public double getY() {
+    double getY() {
         return y;
     }
 }

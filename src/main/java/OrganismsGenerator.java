@@ -2,24 +2,24 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrganismsGenerator {
+class OrganismsGenerator {
 
     private List<Prey> generatedPreys = new ArrayList<>();
 
-    public List<Prey> getGeneratedPreys() {
+    List<Prey> getGeneratedPreys() {
         return generatedPreys;
     }
 
     private Predator predator = new Predator(100, 400, 1);
 
-    public void randomAddPrey() {
+    void randomAddPrey() {
         double randomNum = Math.random();
         if (randomNum > 0.98) {
             this.addNewPreys(1);
         }
     }
 
-    public void randomKillPrey() {
+    void randomKillPrey() {
         double randomNum = Math.random();
         if (!(generatedPreys.size() == 0)) {
             if (randomNum > 0.99) {
@@ -36,7 +36,7 @@ public class OrganismsGenerator {
 
     }
 
-    void addNewPreys(int number) {
+    private void addNewPreys(int number) {
 
         for (int i = 0; i < number; i++) {
 
@@ -57,7 +57,7 @@ public class OrganismsGenerator {
             generatedPrey.move();
 
             //simple kill - right now Predator see all board and all Prey, doesn't has a FIELD OF VIEW
-            if ((Math.abs((int) (predator.getX() - generatedPrey.getX())) < 10) && (Math.abs((int) (predator.getY() - generatedPrey.getY())) < 10)) {
+            if ((Math.abs((int) (predator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (predator.getY() - generatedPrey.getY())) < 20)) {
                 generatedPrey.isDead();
             }
         }
