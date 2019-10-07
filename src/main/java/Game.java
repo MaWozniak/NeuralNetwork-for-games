@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-    private OrganismsGenerator generator = new OrganismsGenerator(100);
+    private OrganismsGenerator generator = new OrganismsGenerator(100, 10);
 
     private Game() {
     }

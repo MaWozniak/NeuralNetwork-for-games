@@ -4,13 +4,12 @@ import java.util.List;
 
 class OrganismsGenerator {
 
-    private List<Prey> generatedPreys = new ArrayList<>();
-
     List<Prey> getGeneratedPreys() {
         return generatedPreys;
     }
 
-    private Predator predator = new Predator(100, 400, 1);
+    private List<Prey> generatedPreys = new ArrayList<>();
+    private List<Predator> generatedPredators = new ArrayList<>();
 
     void randomAddPrey() {
         double randomNum = Math.random();
@@ -30,9 +29,10 @@ class OrganismsGenerator {
 
     }
 
-    OrganismsGenerator(int number) {
+    OrganismsGenerator(int numPrey, int numPred) {
 
-        this.addNewPreys(number);
+        this.addNewPreys(numPrey);
+        this.addNewPredators(numPred);
 
     }
 
@@ -49,16 +49,33 @@ class OrganismsGenerator {
         }
     }
 
+    private void addNewPredators(int number) {
+
+        for (int i = 0; i < number; i++) {
+
+            double xStartPos = 1150 * Math.random();
+            double yStartPos = 750 * Math.random();
+            int id = (int) (1000 * Math.random());
+            Predator newPredator = new Predator(xStartPos, yStartPos, id);
+
+            generatedPredators.add(newPredator);
+        }
+    }
+
     void move() {
 
-        predator.move();
+        for (Predator generatedPredator : generatedPredators) {
+            generatedPredator.move();
+        }
 
         for (Prey generatedPrey : generatedPreys) {
             generatedPrey.move();
 
             //simple kill - right now Predator see all board and all Prey, doesn't has a FIELD OF VIEW
-            if ((Math.abs((int) (predator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (predator.getY() - generatedPrey.getY())) < 20)) {
-                generatedPrey.isDead();
+            for (Predator generatedPredator : generatedPredators) {
+                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 20)) {
+                    generatedPrey.isDead();
+                }
             }
         }
 
@@ -66,11 +83,13 @@ class OrganismsGenerator {
 
     void paint(Graphics2D g) {
 
+        for (Predator generatedPredator : generatedPredators) {
+            generatedPredator.paint(g);
+        }
+
         for (Prey generatedPrey : generatedPreys) {
             generatedPrey.paint(g);
         }
-
-        predator.paint(g);
     }
 
     void validate() {
