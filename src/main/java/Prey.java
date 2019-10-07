@@ -36,26 +36,32 @@ class Prey {
             energy += 0.06;
         }
 
+        //simplest bouncing on borders:
+        if ((x < 22)) {
+            //directionAngle = -directionAngle;
+            x += 5;
+            //  velocity = 0.0;
+        }
+        if ((y < 22)) {
+            //directionAngle = -directionAngle;
+            y += 5;
+            // velocity = 0.0;
+        }
+        if ((x > 1178)) {
+            //directionAngle = -directionAngle;
+            x -= 5;
+            //  velocity = 0.0;
+        }
+        if ((y > 778)) {
+            //directionAngle = -directionAngle;
+            y -= 5;
+            // velocity = 0.0;
+        }
+
+
         x += (int) (velocity * Math.cos(radians));
         y += (int) (velocity * Math.sin(radians));
 
-        //simplest bouncing on borders:
-        if ((x < 5)) {
-            directionAngle = -directionAngle;
-            x += 3;
-        }
-        if ((y < 5)) {
-            directionAngle = -directionAngle;
-            y += 3;
-        }
-        if ((x > 1195)) {
-            directionAngle = -directionAngle;
-            x -= 3;
-        }
-        if ((y > 785)) {
-            directionAngle = -directionAngle;
-            y -= 3;
-        }
     }
 
     void paint(Graphics2D g) {

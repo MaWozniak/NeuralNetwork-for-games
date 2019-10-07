@@ -15,3 +15,20 @@ it's only see about for example 15 points in front of it
 -Predators cannot walk in to the middle-board, it's safe area for the Prey like deep wood or smth
 
 -refactor code to be more SOLID, more Atomic, meaningful names
+
+-class Organism which other organism will be inherit
+//void move, paint, eat, dead etc
+
+-class Simulation where is static main function - here we construct OrganismGenerator with own thread and fps
+and Visual class (our jFrame GUI)
+
+TO DO
+-list of predator(3)
+-class Animal
+-Predator slow in gray, fast in white, energy only by eating
+-Prey energy only by green, faster lose on white, slightly slower on white
+
+-SOLID cleaning - class GUI and class Game(OrganismCon.. on Simulation main)
+-simply AI to see how they can behave
+
+-add Neural network with genetic progresion and first dummy Real-AI Prey, next Real-AI Predators (different colors to compare)
