@@ -15,8 +15,6 @@ public class Game extends JPanel {
         //generator.randomAddPrey();
         //generator.randomKillPrey();
         generator.validate();
-
-        //System.out.println(generator.getGeneratedPreys().size());
     }
 
     @Override

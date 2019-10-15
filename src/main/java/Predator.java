@@ -1,18 +1,10 @@
 import java.awt.*;
 
-class Predator {
-    private double x;
-    private double y;
-    private double energy = 100;
-    private boolean isAlive = true;
+class Predator extends Organism {
 
-    private UpdateMovement updateMovement = new UpdateMovement();
-
-    private double radians;
-    private int directionAngle = 0;
     private double velocity = 4.0;
 
-    Predator(double xStartPos, double yStartPos, int id) {
+    Predator(double xStartPos, double yStartPos) {
         this.x = xStartPos;
         this.y = yStartPos;
         updateMovement.start();
@@ -69,28 +61,7 @@ class Predator {
             energy += 0.06;
         }
 
-        //simplest bouncing on borders:
-        if ((x < 22)) {
-            //directionAngle = -directionAngle;
-            x += 25;
-            //  velocity = 0.0;
-        }
-        if ((y < 22)) {
-            //directionAngle = -directionAngle;
-            y += 25;
-            // velocity = 0.0;
-        }
-        if ((x > 1178)) {
-            //directionAngle = -directionAngle;
-            x -= 25;
-            //  velocity = 0.0;
-        }
-        if ((y > 778)) {
-            //directionAngle = -directionAngle;
-            y -= 25;
-            // velocity = 0.0;
-        }
-
+        this.simplyBouncing();
 
         x += (int) (velocity * Math.cos(radians));
         y += (int) (velocity * Math.sin(radians));
@@ -120,23 +91,6 @@ class Predator {
             }
             g.drawString(String.valueOf((int) energy), (int) x - 8, (int) y - 8);
         }
-
-        int[] xpoints = {(int) x, (int) (x + 10 * velocity * Math.cos(radians) - 25), (int) (x + 10 * velocity * Math.cos(radians)) + 25};
-        int[] ypoints = {(int) y, (int) (y + 10 * velocity * Math.sin(radians)), (int) (y + 10 * velocity * Math.sin(radians))};
-        int npoints = 3;
-
-        //g.fillPolygon(xpoints, ypoints, npoints);
     }
 
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    double getX() {
-        return x;
-    }
-
-    double getY() {
-        return y;
-    }
 }

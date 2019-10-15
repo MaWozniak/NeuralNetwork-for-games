@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
+// AT THE MOMENT NOT WORKING
 public class GUI extends JPanel {
 
+    /*
     private OrganismsGenerator generator = new OrganismsGenerator(100, 10);
 
     public JFrame frame;
@@ -67,5 +69,7 @@ public class GUI extends JPanel {
         generator.paint(g2d);
 
     }
+
+     */
 
 }

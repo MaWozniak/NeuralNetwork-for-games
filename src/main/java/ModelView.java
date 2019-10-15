@@ -5,19 +5,18 @@ public class ModelView extends JFrame {
 
     private char[][] model = new char[1300][900];
 
-    public char[][] getModel() {
+    char[][] getModel() {
         return model;
     }
 
-    private JPanel jPanel = new JPanel();
+    ModelView(boolean visible) throws InterruptedException {
 
-    ModelView() throws InterruptedException {
-
+        JPanel jPanel = new JPanel();
         this.add(jPanel);
         jPanel.setLocation(10, 10);
         this.setSize(650, 500);
         this.setLocation(1250, 200);
-        this.setVisible(true);
+        this.setVisible(visible);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

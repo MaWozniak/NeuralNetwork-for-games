@@ -4,11 +4,8 @@ import java.util.List;
 
 class OrganismsGenerator {
 
-    List<Prey> getGeneratedPreys() {
-        return generatedPreys;
-    }
-
-    public ModelView model = new ModelView();
+    //SECOND JFRAME - MONITOR OF THE ORGANISMS VIEWS
+    private ModelView model = new ModelView(false);
 
     private List<Prey> generatedPreys = new ArrayList<>();
     private List<Predator> generatedPredators = new ArrayList<>();
@@ -44,8 +41,7 @@ class OrganismsGenerator {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            int id = (int) (1000 * Math.random());
-            Prey newPrey = new Prey(xStartPos, yStartPos, id);
+            Prey newPrey = new Prey(xStartPos, yStartPos);
 
             generatedPreys.add(newPrey);
         }
@@ -57,8 +53,7 @@ class OrganismsGenerator {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            int id = (int) (1000 * Math.random());
-            Predator newPredator = new Predator(xStartPos, yStartPos, id);
+            Predator newPredator = new Predator(xStartPos, yStartPos);
 
             generatedPredators.add(newPredator);
         }
