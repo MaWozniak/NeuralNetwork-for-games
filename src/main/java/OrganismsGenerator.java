@@ -8,6 +8,8 @@ class OrganismsGenerator {
         return generatedPreys;
     }
 
+    public ModelView model = new ModelView();
+
     private List<Prey> generatedPreys = new ArrayList<>();
     private List<Predator> generatedPredators = new ArrayList<>();
 
@@ -29,7 +31,7 @@ class OrganismsGenerator {
 
     }
 
-    OrganismsGenerator(int numPrey, int numPred) {
+    OrganismsGenerator(int numPrey, int numPred) throws InterruptedException {
 
         this.addNewPreys(numPrey);
         this.addNewPredators(numPred);
@@ -65,11 +67,11 @@ class OrganismsGenerator {
     void move() {
 
         for (Predator generatedPredator : generatedPredators) {
-            generatedPredator.move();
+            generatedPredator.move(model.getModel());
         }
 
         for (Prey generatedPrey : generatedPreys) {
-            generatedPrey.move();
+            generatedPrey.move(model.getModel());
 
             //simple kill - right now Predator see all board and all Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : generatedPredators) {
@@ -78,6 +80,20 @@ class OrganismsGenerator {
                 }
             }
         }
+
+        //model:
+        model.clear();
+
+        for (Predator generatedPredator : generatedPredators) {
+            model.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P');
+        }
+        for (Prey generatedPrey : generatedPreys) {
+            model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X');
+        }
+
+        //second frame repaint // comment out to up performance
+        model.repaint();
+        model.revalidate();
 
     }
 
@@ -97,6 +113,14 @@ class OrganismsGenerator {
             for (int i = 0; i < generatedPreys.size(); i++) {
                 if (!generatedPreys.get(i).isAlive()) {
                     generatedPreys.remove(i);
+                    break;
+                }
+            }
+        }
+        if (!(generatedPredators.size() == 0)) {
+            for (int i = 0; i < generatedPredators.size(); i++) {
+                if (!generatedPredators.get(i).isAlive()) {
+                    generatedPredators.remove(i);
                     break;
                 }
             }

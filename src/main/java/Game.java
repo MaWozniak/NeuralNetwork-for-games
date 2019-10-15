@@ -4,19 +4,19 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-    private OrganismsGenerator generator = new OrganismsGenerator(100, 10);
+    private OrganismsGenerator generator = new OrganismsGenerator(67, 2);
 
-    private Game() {
+    private Game() throws InterruptedException {
     }
 
     private void move() {
 
         generator.move();
-        generator.randomAddPrey();
-        generator.randomKillPrey();
+        //generator.randomAddPrey();
+        //generator.randomKillPrey();
         generator.validate();
 
-        System.out.println(generator.getGeneratedPreys().size());
+        //System.out.println(generator.getGeneratedPreys().size());
     }
 
     @Override

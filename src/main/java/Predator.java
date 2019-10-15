@@ -18,7 +18,7 @@ class Predator {
         updateMovement.start();
     }
 
-    void move() {
+    void move(char[][] model) {
 
         int dirAngle = updateMovement.getDirection();
         double acceleration = updateMovement.getAcceleration();
@@ -26,6 +26,39 @@ class Predator {
         directionAngle += dirAngle;
         velocity += acceleration;
         radians = (Math.PI / 180) * (directionAngle);
+
+
+        //EYES of the Predator
+        int k = ((int) x - 5) + (int) (90.0 * Math.cos(radians));
+        int l = ((int) y - 5) + (int) (90.0 * Math.sin(radians));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                // directionAngle = 0;
+                velocity = 1.2 * velocity;
+            }
+        }
+        k = ((int) x - 5) + (int) (50.0 * Math.cos(radians) - (int) (70.0 * Math.sin(radians)));
+        l = ((int) y - 5) + (int) (50.0 * Math.sin(radians) + (int) (70.0 * Math.cos(radians)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                directionAngle = directionAngle + 10;
+                velocity = 1.2 * velocity;
+            }
+        }
+        k = ((int) x - 5) + (int) (50.0 * Math.cos(radians) + (int) (70.0 * Math.sin(radians)));
+        l = ((int) y - 5) + (int) (50.0 * Math.sin(radians) - (int) (70.0 * Math.cos(radians)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                directionAngle = directionAngle - 10;
+                velocity = 1.2 * velocity;
+            }
+        }
+
+        if (velocity > 12.0) {
+            velocity = 2.0;
+        }
+        //////////////////////////////////
+
 
         energy -= 0.05;
         if (energy <= 0) {
@@ -39,22 +72,22 @@ class Predator {
         //simplest bouncing on borders:
         if ((x < 22)) {
             //directionAngle = -directionAngle;
-            x += 5;
+            x += 25;
             //  velocity = 0.0;
         }
         if ((y < 22)) {
             //directionAngle = -directionAngle;
-            y += 5;
+            y += 25;
             // velocity = 0.0;
         }
         if ((x > 1178)) {
             //directionAngle = -directionAngle;
-            x -= 5;
+            x -= 25;
             //  velocity = 0.0;
         }
         if ((y > 778)) {
             //directionAngle = -directionAngle;
-            y -= 5;
+            y -= 25;
             // velocity = 0.0;
         }
 
