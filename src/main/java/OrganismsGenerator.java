@@ -12,7 +12,7 @@ class OrganismsGenerator {
 
     void randomAddPrey() {
         double randomNum = Math.random();
-        if (randomNum > 0.98) {
+        if (randomNum > 0.995) {
             this.addNewPreys(1);
         }
     }
@@ -72,6 +72,7 @@ class OrganismsGenerator {
             for (Predator generatedPredator : generatedPredators) {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 20)) {
                     generatedPrey.isDead();
+                    generatedPredator.eat();
                 }
             }
         }
@@ -94,13 +95,18 @@ class OrganismsGenerator {
 
     void paint(Graphics2D g) {
 
-        for (Predator generatedPredator : generatedPredators) {
-            generatedPredator.paint(g);
+        try {
+            for (Predator generatedPredator : generatedPredators) {
+                generatedPredator.paint(g);
+            }
+
+            for (Prey generatedPrey : generatedPreys) {
+                generatedPrey.paint(g);
+            }
+        } catch (java.util.ConcurrentModificationException e) {
+            System.out.println("error: java.util.ConcurrentModificationException");
         }
 
-        for (Prey generatedPrey : generatedPreys) {
-            generatedPrey.paint(g);
-        }
     }
 
     void validate() {

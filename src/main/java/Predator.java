@@ -2,6 +2,7 @@ import java.awt.*;
 
 class Predator extends Organism {
 
+    private double energy = 200;
     private double velocity = 4.0;
 
     Predator(double xStartPos, double yStartPos) {
@@ -46,33 +47,41 @@ class Predator extends Organism {
             }
         }
 
-        if (velocity > 12.0) {
+        if (velocity > 10.0) {
             velocity = 2.0;
+        }
+        if (velocity < -0.6) {
+            velocity = 0.5;
         }
         //////////////////////////////////
 
 
-        energy -= 0.05;
+        energy -= 0.03;
         if (energy <= 0) {
             isAlive = false;
         }
 
-        if ((x > 300 && x < 900) && (y > 200 && y < 600)) {
-            energy += 0.06;
-        }
-
-        this.simplyBouncing();
+//        if ((x > 300 && x < 900) && (y > 200 && y < 600)) {
+//            energy += 0.06;
+//        }
 
         x += (int) (velocity * Math.cos(radians));
         y += (int) (velocity * Math.sin(radians));
 
+        this.simplyBouncing();
+
+    }
+
+    @Override
+    void eat() {
+        energy += 25;
     }
 
     void paint(Graphics2D g) {
 
         if (isAlive) {
             g.setColor(Color.RED);
-            g.fillOval((int) x - 15, (int) y - 15, 30, 30);
+            g.fillOval((int) x - 15, (int) y - 15, 20, 20);
 
             //temp direction point:
             g.setColor(Color.BLUE);

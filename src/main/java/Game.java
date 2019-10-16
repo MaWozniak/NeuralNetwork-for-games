@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-    private OrganismsGenerator generator = new OrganismsGenerator(67, 2);
+    private OrganismsGenerator generator = new OrganismsGenerator(100, 2);
 
     private Game() throws InterruptedException {
     }
@@ -12,7 +12,7 @@ public class Game extends JPanel {
     private void move() {
 
         generator.move();
-        //generator.randomAddPrey();
+        generator.randomAddPrey();
         //generator.randomKillPrey();
         generator.validate();
     }
@@ -31,10 +31,10 @@ public class Game extends JPanel {
         g2d.setColor(Color.LIGHT_GRAY);
         g2d.fillRect(20, 20, 1160, 760);
         g2d.setColor(Color.WHITE);
-        g2d.fillRect(180, 180, 820, 440);
-        g2d.setColor(Color.GREEN);
-        g2d.fillRect(310, 380, 60, 60);
-        g2d.fillRect(820, 380, 60, 60);
+        g2d.fillRect(180, 20, 820, 760);
+        g2d.setColor(Color.BLUE);
+        g2d.fillRect(400, 500, 50, 180);
+        g2d.fillRect(700, 120, 50, 180);
 
         //g2d.setColor(Color.GRAY);
 
@@ -57,7 +57,8 @@ public class Game extends JPanel {
             game.revalidate();
             game.repaint();
 
-            Thread.sleep(50);
+            Thread.sleep(33);
+            //300FPS~ 3 - good for fast simulations
             //30FPS~ 33
             //60FPS~ 17
 

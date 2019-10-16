@@ -2,6 +2,7 @@ import java.awt.*;
 
 class Prey extends Organism {
 
+    private double energy = 100;
     private double velocity = 2.0;
 
     Prey(double xStartPos, double yStartPos) {
@@ -28,16 +29,16 @@ class Prey extends Organism {
                 velocity += 2 * velocity;
             }
         }
-        k = ((int) x - 5) + (int) (50.0 * Math.cos(radians) - (int) (70.0 * Math.sin(radians)));
-        l = ((int) y - 5) + (int) (50.0 * Math.sin(radians) + (int) (70.0 * Math.cos(radians)));
+        k = ((int) x - 5) + (int) (40.0 * Math.cos(radians) - (int) (40.0 * Math.sin(radians)));
+        l = ((int) y - 5) + (int) (40.0 * Math.sin(radians) + (int) (40.0 * Math.cos(radians)));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
             if (model[k][l] == 'P') {
                 directionAngle = directionAngle - 30;
                 velocity = 2 * velocity;
             }
         }
-        k = ((int) x - 5) + (int) (50.0 * Math.cos(radians) + (int) (70.0 * Math.sin(radians)));
-        l = ((int) y - 5) + (int) (50.0 * Math.sin(radians) - (int) (70.0 * Math.cos(radians)));
+        k = ((int) x - 5) + (int) (40.0 * Math.cos(radians) + (int) (40.0 * Math.sin(radians)));
+        l = ((int) y - 5) + (int) (40.0 * Math.sin(radians) - (int) (40.0 * Math.cos(radians)));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
             if (model[k][l] == 'P') {
                 directionAngle = directionAngle + 30;
@@ -45,8 +46,11 @@ class Prey extends Organism {
             }
         }
 
-        if (velocity > 12.0) {
+        if (velocity > 8.0) {
             velocity = 2.0;
+        }
+        if (velocity < -0.6) {
+            velocity = 0.5;
         }
         //////////////////////////////////
 
@@ -59,10 +63,10 @@ class Prey extends Organism {
             energy += 0.06;
         }
 
-        this.simplyBouncing();
-
         x += (int) (velocity * Math.cos(radians));
         y += (int) (velocity * Math.sin(radians));
+
+        this.simplyBouncing();
 
     }
 
@@ -70,14 +74,14 @@ class Prey extends Organism {
 
         if (isAlive) {
             g.setColor(Color.GRAY);
-            g.fillOval((int) x - 8, (int) y - 8, 16, 16);
+            g.fillOval((int) x - 8, (int) y - 8, 12, 12);
 
             //temp direction point:
             g.setColor(Color.MAGENTA);
             //x = x * 50 * Math.cos; y = y * 50 * Math.sin
             g.fillOval(((int) x - 5) + (int) (50.0 * Math.cos(radians)), ((int) y - 5) + (int) (50.0 * Math.sin(radians)), 5, 5);
-            g.fillOval(((int) x - 5) + (int) (40.0 * Math.cos(radians) - (int) (20.0 * Math.sin(radians))), ((int) y - 5) + (int) (40.0 * Math.sin(radians) + (int) (20.0 * Math.cos(radians))), 5, 5);
-            g.fillOval(((int) x - 5) + (int) (40.0 * Math.cos(radians) + (int) (20.0 * Math.sin(radians))), ((int) y - 5) + (int) (40.0 * Math.sin(radians) - (int) (20.0 * Math.cos(radians))), 5, 5);
+            g.fillOval(((int) x - 5) + (int) (40.0 * Math.cos(radians) - (int) (40.0 * Math.sin(radians))), ((int) y - 5) + (int) (40.0 * Math.sin(radians) + (int) (40.0 * Math.cos(radians))), 5, 5);
+            g.fillOval(((int) x - 5) + (int) (40.0 * Math.cos(radians) + (int) (40.0 * Math.sin(radians))), ((int) y - 5) + (int) (40.0 * Math.sin(radians) - (int) (40.0 * Math.cos(radians))), 5, 5);
 
             g.setColor(Color.DARK_GRAY);
             if (energy < 60) {
