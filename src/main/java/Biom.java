@@ -9,12 +9,12 @@ class Biom {
     private List<Predator> predators = new ArrayList<>();
 
 
-    Biom(int numPrey, int numPred, int framerate, ModelView model) {
+    Biom(int numPrey, int numPred, int framerate, boolean fullspeed, ModelView model) {
 
         this.addNewPreys(numPrey);
         this.addNewPredators(numPred);
         this.model = model;
-        Thread thread = new Thread(new LifecycleThread(framerate, this));
+        Thread thread = new Thread(new LifecycleThread(framerate, fullspeed, this));
         thread.start();
 
 

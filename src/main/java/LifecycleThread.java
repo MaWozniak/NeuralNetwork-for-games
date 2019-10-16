@@ -2,10 +2,12 @@ public class LifecycleThread implements Runnable {
 
     private Biom biom;
     private int millis;
+    private boolean fullspeed;
 
-    LifecycleThread(int framerate, Biom biom) {
+    LifecycleThread(int framerate, boolean fullspeed, Biom biom) {
         this.biom = biom;
         this.millis = 1000 / framerate;
+        this.fullspeed = fullspeed;
     }
 
     @Override
@@ -14,11 +16,14 @@ public class LifecycleThread implements Runnable {
 
             biom.lifecycle();
 
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (!fullspeed) {
+                try {
+                    Thread.sleep(millis);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
     }
 }
