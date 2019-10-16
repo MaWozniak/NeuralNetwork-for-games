@@ -1,10 +1,8 @@
 public class TestMain {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
 
-        Thread getTime = new UpdateMovement();
-
-        getTime.start();
+        Simulation test = new Simulation(30, 20, 3);
 
     }
 }

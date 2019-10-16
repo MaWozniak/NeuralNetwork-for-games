@@ -1,11 +1,12 @@
 public class Simulation {
 
-    public static void main(String[] args) throws InterruptedException {
+    Simulation(int guiFramerate, int preyNum, int predatorsNum) throws InterruptedException {
 
-        //Thread getTime = new UpdateMovement();
-        //getTime.start();
+        //here I must add 'model-view-controller' pattern: Gui + Biom(with Model) transfer to some Controller
+        //at the moment I transfer Biom to Gui
 
-        GUI gui = new GUI();
+        Biom biom = new Biom(preyNum, predatorsNum);
+        GUI gui = new GUI(guiFramerate, biom);
 
     }
 }
