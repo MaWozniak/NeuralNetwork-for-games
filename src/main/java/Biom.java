@@ -4,11 +4,29 @@ import java.util.List;
 
 class Biom {
 
-    //SECOND JFRAME - MONITOR OF THE ORGANISMS VIEWS
-    private ModelView model = new ModelView(false);
-
+    private ModelView model;
     private List<Prey> prey = new ArrayList<>();
     private List<Predator> predators = new ArrayList<>();
+
+
+    Biom(int numPrey, int numPred, int framerate, ModelView model) {
+
+        this.addNewPreys(numPrey);
+        this.addNewPredators(numPred);
+        this.model = model;
+        Thread thread = new Thread(new LifecycleThread(framerate, this));
+        thread.start();
+
+
+    }
+
+    void lifecycle() {
+
+        organismsMoves();
+        randomAddPrey();
+        //randomKillPrey();
+        validate();
+    }
 
     void randomAddPrey() {
         double randomNum = Math.random();
@@ -25,13 +43,6 @@ class Biom {
                     this.prey.remove(0);
             }
         }
-
-    }
-
-    Biom(int numPrey, int numPred) throws InterruptedException {
-
-        this.addNewPreys(numPrey);
-        this.addNewPredators(numPred);
 
     }
 
@@ -59,7 +70,7 @@ class Biom {
         }
     }
 
-    void organismsMoves() {
+    private void organismsMoves() {
 
         for (Predator generatedPredator : predators) {
             generatedPredator.move(model.getModel());
@@ -109,7 +120,7 @@ class Biom {
 
     }
 
-    void validate() {
+    private void validate() {
         if (!(prey.size() == 0)) {
             for (int i = 0; i < prey.size(); i++) {
                 if (!prey.get(i).isAlive()) {

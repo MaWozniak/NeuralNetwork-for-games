@@ -11,8 +11,7 @@ public class GUI extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //30FPS~ 33 - 60FPS~ 17 - 300FPS~ 3 - good for fast simulation
-        int millis = (int) (1000 / framerate);
+        int millis = 1000 / framerate;
 
         while (true) {
 
