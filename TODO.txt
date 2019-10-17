@@ -1,9 +1,9 @@
--separate game loop and jFrame loop (graphics)
-different frame rate for graphics and game
+-separate renderPanel loop and jFrame loop (graphics)
+different frame rate for graphics and renderPanel
 
-//! everything important is in OrganismGenerator -> there should be a game thread with for example 10FPS
-//and in Game it's should only be a graphics plus methods that's import data from OrganismGenerator
-//GUI can had for example 30FPS
+//! everything important is in OrganismGenerator -> there should be a renderPanel thread with for example 10FPS
+//and in Main.RenderPanel it's should only be a graphics plus methods that's import data from OrganismGenerator
+//Main.GUI can had for example 30FPS
 
 -enhance board - places to hide, places to feed, borders etc
 
@@ -12,23 +12,23 @@ different frame rate for graphics and game
 ! FIELD OF VIEW - visibility concept - predators and pray doesn't see all board or all others organism
 it's only see about for example 15 points in front of it
 
--Predators cannot walk in to the middle-board, it's safe area for the Prey like deep wood or smth
+-Predators cannot walk in to the middle-board, it's safe area for the Main.Prey like deep wood or smth
 
 -refactor code to be more SOLID, more Atomic, meaningful names
 
--class Organism which other organism will be inherit
+-class Main.Organism which other organism will be inherit
 //void move, paint, eat, dead etc
 
--class Simulation where is static main function - here we construct OrganismGenerator with own thread and fps
-and Visual class (our jFrame GUI)
+-class Main.Simulation where is static Main function - here we construct OrganismGenerator with own thread and fps
+and Visual class (our jFrame Main.GUI)
 
 TO DO
 -list of predator(3)
 -class Animal
--Predator slow in gray, fast in white, energy only by eating
--Prey energy only by green, faster lose on white, slightly slower on white
+-Main.Predator slow in gray, fast in white, energy only by eating
+-Main.Prey energy only by green, faster lose on white, slightly slower on white
 
--SOLID cleaning - class GUI and class Game(OrganismCon.. on Simulation main)
+-SOLID cleaning - class Main.GUI and class Main.RenderPanel(OrganismCon.. on Main.Simulation Main)
 -simply AI to see how they can behave
 
--add Neural network with genetic progresion and first dummy Real-AI Prey, next Real-AI Predators (different colors to compare)
+-add Neural network with genetic progresion and first dummy Real-AI Main.Prey, next Real-AI Predators (different colors to compare)

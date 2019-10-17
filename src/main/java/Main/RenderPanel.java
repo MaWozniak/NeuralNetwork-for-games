@@ -1,3 +1,5 @@
+package Main;
+
 import java.awt.*;
 import javax.swing.JPanel;
 
@@ -8,11 +10,6 @@ public class RenderPanel extends JPanel {
 
     RenderPanel(Biom biom) {
         this.biom = biom;
-    }
-
-    void update() {
-
-        //biom.lifecycle();
     }
 
     @Override

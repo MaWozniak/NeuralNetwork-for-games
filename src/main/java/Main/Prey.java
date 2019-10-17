@@ -1,3 +1,5 @@
+package Main;
+
 import java.awt.*;
 
 class Prey extends Organism {
@@ -20,7 +22,7 @@ class Prey extends Organism {
         velocity += acceleration;
         radians = (Math.PI / 180) * (directionAngle);
 
-        //EYES of the Prey
+        //EYES of the main.Prey
         int k = (int) x - 5 + (int) (90.0 * Math.cos(radians));
         int l = (int) y - 5 + (int) (90.0 * Math.sin(radians));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
@@ -74,6 +76,7 @@ class Prey extends Organism {
 
         if (isAlive) {
             g.setColor(Color.GRAY);
+            //g.setColor(Color.GREEN);
             g.fillOval((int) x - 8, (int) y - 8, 12, 12);
 
             //temp direction point:

@@ -1,3 +1,5 @@
+package Main;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -39,7 +41,7 @@ public class ModelView extends JFrame {
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
                 if (model[i][j] == 'P') {
-                    g2d.fillRect((int) (i / 2), (int) (j / 2), 1, 1);
+                    g2d.fillRect(i / 2, j / 2, 1, 1);
                 }
             }
         }
@@ -48,7 +50,7 @@ public class ModelView extends JFrame {
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
                 if (model[i][j] == 'X') {
-                    g2d.fillRect((int) (i / 2), (int) (j / 2), 1, 1);
+                    g2d.fillRect(i / 2, j / 2, 1, 1);
                 }
             }
         }

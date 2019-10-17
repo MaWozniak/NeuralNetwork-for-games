@@ -1,3 +1,5 @@
+package Main;
+
 public class UpdateMovement extends Thread {
 
     int getDirection() {

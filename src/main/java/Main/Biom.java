@@ -1,3 +1,5 @@
+package Main;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,16 +9,15 @@ class Biom {
     private ModelView model;
     private List<Prey> prey = new ArrayList<>();
     private List<Predator> predators = new ArrayList<>();
-
+    private LifecycleThread lifecycleThread;
 
     Biom(int numPrey, int numPred, int framerate, boolean fullspeed, ModelView model) {
 
         this.addNewPreys(numPrey);
         this.addNewPredators(numPred);
         this.model = model;
-        Thread thread = new Thread(new LifecycleThread(framerate, fullspeed, this));
+        Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
         thread.start();
-
 
     }
 
@@ -26,9 +27,10 @@ class Biom {
         randomAddPrey();
         //randomKillPrey();
         validate();
+
     }
 
-    void randomAddPrey() {
+    private void randomAddPrey() {
         double randomNum = Math.random();
         if (randomNum > 0.995) {
             this.addNewPreys(1);
@@ -44,6 +46,10 @@ class Biom {
             }
         }
 
+    }
+
+    void setFramerate(int framerate) {
+        this.lifecycleThread.setMillis(1000 / framerate);
     }
 
     private void addNewPreys(int number) {
@@ -79,7 +85,7 @@ class Biom {
         for (Prey generatedPrey : prey) {
             generatedPrey.move(model.getModel());
 
-            //simple kill - right now Predator see all board and all Prey, doesn't has a FIELD OF VIEW
+            //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 20)) {
                     generatedPrey.isDead();

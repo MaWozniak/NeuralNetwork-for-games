@@ -1,3 +1,5 @@
+package Main;
+
 public class LifecycleThread implements Runnable {
 
     private Biom biom;
@@ -25,5 +27,9 @@ public class LifecycleThread implements Runnable {
             }
 
         }
+    }
+
+    public void setMillis(int millis) {
+        this.millis = millis;
     }
 }

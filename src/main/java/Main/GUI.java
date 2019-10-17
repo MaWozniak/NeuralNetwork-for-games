@@ -1,3 +1,5 @@
+package Main;
+
 import javax.swing.*;
 
 public class GUI extends JFrame {
@@ -15,7 +17,6 @@ public class GUI extends JFrame {
 
         while (true) {
 
-            renderPanel.update();
             renderPanel.revalidate();
             renderPanel.repaint();
 
