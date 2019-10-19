@@ -10,12 +10,14 @@ class Biom {
     private List<Prey> prey = new ArrayList<>();
     private List<Predator> predators = new ArrayList<>();
     private LifecycleThread lifecycleThread;
+    private int organismUpdateFramerate;
 
-    Biom(int numPrey, int numPred, int framerate, boolean fullspeed, ModelView model) {
+    Biom(int numPrey, int numPred, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
 
+        this.model = model;
+        this.organismUpdateFramerate = organismUpdateFramerate;
         this.addNewPreys(numPrey);
         this.addNewPredators(numPred);
-        this.model = model;
         Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
         thread.start();
 
@@ -58,7 +60,7 @@ class Biom {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            Prey newPrey = new Prey(xStartPos, yStartPos);
+            Prey newPrey = new Prey(xStartPos, yStartPos, organismUpdateFramerate);
 
             prey.add(newPrey);
         }
@@ -70,7 +72,7 @@ class Biom {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            Predator newPredator = new Predator(xStartPos, yStartPos);
+            Predator newPredator = new Predator(xStartPos, yStartPos, organismUpdateFramerate);
 
             predators.add(newPredator);
         }

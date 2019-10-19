@@ -2,6 +2,12 @@ package Main;
 
 public class UpdateMovement extends Thread {
 
+    private int millis;
+
+    UpdateMovement(int framerate) {
+        this.millis = 1000 / framerate;
+    }
+
     int getDirection() {
         return direction;
     }
@@ -23,7 +29,7 @@ public class UpdateMovement extends Thread {
             //System.out.println(direction);
 
             try {
-                Thread.sleep(150);
+                Thread.sleep(millis);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -7,10 +7,11 @@ class Prey extends Organism {
     private double energy = 100;
     private double velocity = 2.0;
 
-    Prey(double xStartPos, double yStartPos) {
+    Prey(double xStartPos, double yStartPos, int updateFramerate) {
+        super(updateFramerate);
         this.x = xStartPos;
         this.y = yStartPos;
-        updateMovement.start();
+
     }
 
     void move(char[][] model) {

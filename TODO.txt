@@ -1,16 +1,7 @@
--separate renderPanel loop and jFrame loop (graphics)
-different frame rate for graphics and renderPanel
-
-//! everything important is in OrganismGenerator -> there should be a renderPanel thread with for example 10FPS
-//and in Main.RenderPanel it's should only be a graphics plus methods that's import data from OrganismGenerator
-//Main.GUI can had for example 30FPS
-
--enhance board - places to hide, places to feed, borders etc
+enhance board - places to hide, places to feed, borders etc
 
 -add Predators - logic to Eat a pray
 (add energy after consume, don't eat when it's full more than 90% energy etc)
-! FIELD OF VIEW - visibility concept - predators and pray doesn't see all board or all others organism
-it's only see about for example 15 points in front of it
 
 -Predators cannot walk in to the middle-board, it's safe area for the Main.Prey like deep wood or smth
 
@@ -19,16 +10,5 @@ it's only see about for example 15 points in front of it
 -class Main.Organism which other organism will be inherit
 //void move, paint, eat, dead etc
 
--class Main.Simulation where is static Main function - here we construct OrganismGenerator with own thread and fps
-and Visual class (our jFrame Main.GUI)
-
-TO DO
--list of predator(3)
--class Animal
--Main.Predator slow in gray, fast in white, energy only by eating
--Main.Prey energy only by green, faster lose on white, slightly slower on white
-
--SOLID cleaning - class Main.GUI and class Main.RenderPanel(OrganismCon.. on Main.Simulation Main)
--simply AI to see how they can behave
-
--add Neural network with genetic progresion and first dummy Real-AI Main.Prey, next Real-AI Predators (different colors to compare)
+Predator slow in gray, fast in white, energy only by eating
+Prey energy only by green, faster lose on white, slightly slower on white

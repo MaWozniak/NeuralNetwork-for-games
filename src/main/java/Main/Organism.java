@@ -8,12 +8,12 @@ class Organism {
     boolean isAlive = true;
     double radians;
     int directionAngle = 0;
-    private double velocity;
-    double energy;
+    private double energy;
+    UpdateMovement updateMovement;
 
-    UpdateMovement updateMovement = new UpdateMovement();
-
-    Organism() {
+    Organism(int updateFramerate) {
+        updateMovement = new UpdateMovement(updateFramerate);
+        updateMovement.start();
     }
 
     void simplyBouncing() {
@@ -21,22 +21,18 @@ class Organism {
         if ((x < 22)) {
             //directionAngle = -directionAngle;
             x += 10;
-            velocity = 0.1;
         }
         if ((y < 22)) {
             //directionAngle = -directionAngle;
             y += 10;
-            velocity = 0.1;
         }
         if ((x > 1178)) {
             //directionAngle = -directionAngle;
             x -= 10;
-            velocity = 0.1;
         }
         if ((y > 778)) {
             //directionAngle = -directionAngle;
             y -= 10;
-            velocity = 0.1;
         }
     }
 
