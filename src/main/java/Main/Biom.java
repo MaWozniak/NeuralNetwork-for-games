@@ -12,6 +12,10 @@ class Biom {
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
 
+    public int getFramerate() {
+        return this.lifecycleThread.getFramerate();
+    }
+
     Biom(int numPrey, int numPred, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
 
         this.model = model;

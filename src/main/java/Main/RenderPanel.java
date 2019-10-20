@@ -1,7 +1,7 @@
 package Main;
 
 import java.awt.*;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class RenderPanel extends JPanel {
 

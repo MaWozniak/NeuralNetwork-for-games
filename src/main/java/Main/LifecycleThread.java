@@ -32,4 +32,8 @@ public class LifecycleThread implements Runnable {
     public void setMillis(int millis) {
         this.millis = millis;
     }
+
+    public int getFramerate() {
+        return 1000 / millis;
+    }
 }
