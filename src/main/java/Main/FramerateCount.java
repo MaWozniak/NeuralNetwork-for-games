@@ -1,6 +1,6 @@
 package Main;
 
-public class FramerateCount {
+class FramerateCount {
 
     private int[] array = {1, 5, 10, 15, 30, 45, 60, 100, 200, 300, 500, 1000};
     private int selectedIndex = 4;
@@ -27,7 +27,7 @@ public class FramerateCount {
         return selected;
     }
 
-    void updateSelected() {
+    private void updateSelected() {
         selected = array[selectedIndex];
     }
 

@@ -8,6 +8,7 @@ class Biom {
 
     private ModelView model;
     private List<Prey> prey = new ArrayList<>();
+    private List<PreyAI> AI_prey = new ArrayList<>();
     private List<Predator> predators = new ArrayList<>();
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
@@ -16,11 +17,12 @@ class Biom {
         return this.lifecycleThread.getFramerate();
     }
 
-    Biom(int numPrey, int numPred, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
+    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
 
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
         this.addNewPreys(numPrey);
+        this.addNewAIPreys(numAIPrey);
         this.addNewPredators(numPred);
         Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
         thread.start();
@@ -74,11 +76,22 @@ class Biom {
 
         for (int i = 0; i < number; i++) {
 
-            double xStartPos = 1150 * Math.random();
+            double xStartPos = 800 * Math.random() + 150;
             double yStartPos = 750 * Math.random();
             Predator newPredator = new Predator(xStartPos, yStartPos, organismUpdateFramerate);
 
             predators.add(newPredator);
+        }
+    }
+
+    private void addNewAIPreys(int number) {
+
+        for (int i = 0; i < number; i++) {
+
+            double xStartPos = 1150 * Math.random();
+            double yStartPos = 750 * Math.random();
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos);
+            AI_prey.add(newPreyAI);
         }
     }
 
@@ -100,11 +113,26 @@ class Biom {
             }
         }
 
+        for (PreyAI generatedPreyAI : AI_prey) {
+            generatedPreyAI.move(model.getModel());
+
+            //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
+            for (Predator generatedPredator : predators) {
+                if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 20)) {
+                    generatedPreyAI.isDead();
+                    generatedPredator.eat();
+                }
+            }
+        }
+
         //model:
         model.clear();
 
         for (Predator generatedPredator : predators) {
             model.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P');
+        }
+        for (PreyAI generatedPreyAI : AI_prey) {
+            model.set((int) generatedPreyAI.getX(), (int) generatedPreyAI.getY(), 'X');
         }
         for (Prey generatedPrey : prey) {
             model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X');
@@ -121,6 +149,10 @@ class Biom {
         try {
             for (Predator generatedPredator : predators) {
                 generatedPredator.paint(g);
+            }
+
+            for (PreyAI generatedPreyAI : AI_prey) {
+                generatedPreyAI.paint(g);
             }
 
             for (Prey generatedPrey : prey) {
@@ -145,6 +177,14 @@ class Biom {
             for (int i = 0; i < predators.size(); i++) {
                 if (!predators.get(i).isAlive()) {
                     predators.remove(i);
+                    break;
+                }
+            }
+        }
+        if (!(AI_prey.size() == 0)) {
+            for (int i = 0; i < AI_prey.size(); i++) {
+                if (!AI_prey.get(i).isAlive()) {
+                    AI_prey.remove(i);
                     break;
                 }
             }

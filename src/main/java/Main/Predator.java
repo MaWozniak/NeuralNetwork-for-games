@@ -5,6 +5,7 @@ import java.awt.*;
 class Predator extends Organism {
 
     private double energy = 200;
+    private double maxEnergy = 300;
     private double velocity = 4.0;
 
     Predator(double xStartPos, double yStartPos, int updateFramerate) {
@@ -48,13 +49,6 @@ class Predator extends Organism {
                 velocity = 1.2 * velocity;
             }
         }
-
-        if (velocity > 10.0) {
-            velocity = 2.0;
-        }
-        if (velocity < -0.6) {
-            velocity = 0.5;
-        }
         //////////////////////////////////
 
 
@@ -67,10 +61,26 @@ class Predator extends Organism {
 //            energy += 0.06;
 //        }
 
+        if (energy > 250) {
+            velocity -= 0.35;
+            directionAngle = (int) (0.3 * directionAngle);
+        }
+
+        if (energy > maxEnergy) {
+            energy = maxEnergy;
+        }
+
+        if (velocity > 10.0) {
+            velocity = 2.0;
+        }
+        if (velocity < -0.6) {
+            velocity = 0.5;
+        }
+
         x += (int) (velocity * Math.cos(radians));
         y += (int) (velocity * Math.sin(radians));
 
-        this.simplyBouncing();
+        this.simplyBouncing(180, 1010);
 
     }
 

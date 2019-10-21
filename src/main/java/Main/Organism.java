@@ -16,9 +16,9 @@ class Organism {
         updateMovement.start();
     }
 
-    void simplyBouncing() {
+    void simplyBouncing(int x1, int x2) {
         //simplest bouncing on borders:
-        if ((x < 22)) {
+        if ((x < x1)) {
             //directionAngle = -directionAngle;
             x += 10;
         }
@@ -26,7 +26,7 @@ class Organism {
             //directionAngle = -directionAngle;
             y += 10;
         }
-        if ((x > 1178)) {
+        if ((x > x2)) {
             //directionAngle = -directionAngle;
             x -= 10;
         }
