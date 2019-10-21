@@ -2,13 +2,13 @@ package Main;
 
 import java.awt.*;
 
-class Predator extends Organism {
+class Predator2 extends Organism {
 
     private double energy = 200;
     private double maxEnergy = 300;
     private double velocity = 4.0;
 
-    Predator(double xStartPos, double yStartPos, int updateFramerate) {
+    Predator2(double xStartPos, double yStartPos, int updateFramerate) {
         super(updateFramerate);
         this.x = xStartPos;
         this.y = yStartPos;

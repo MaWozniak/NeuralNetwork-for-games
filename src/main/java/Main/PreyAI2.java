@@ -4,7 +4,7 @@ import NeuralNetwork.BlackBoxAI;
 
 import java.awt.*;
 
-class PreyAI {
+class PreyAI2 {
     double x;
     double y;
     boolean isAlive = true;
@@ -14,7 +14,7 @@ class PreyAI {
     private double velocity = 2.0;
     private BlackBoxAI ai = new BlackBoxAI();
 
-    PreyAI(double xStartPos, double yStartPos) {
+    PreyAI2(double xStartPos, double yStartPos) {
         this.x = xStartPos;
         this.y = yStartPos;
 

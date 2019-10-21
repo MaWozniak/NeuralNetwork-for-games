@@ -8,7 +8,7 @@ class Organism {
     boolean isAlive = true;
     double radians;
     int directionAngle = 0;
-    private double energy;
+    double energy;
     UpdateMovement updateMovement;
 
     Organism(int updateFramerate) {
@@ -16,38 +16,52 @@ class Organism {
         updateMovement.start();
     }
 
-    void simplyBouncing(int x1, int x2) {
-        //simplest bouncing on borders:
+    void borderBouncing(int x1, int x2) {
         if ((x < x1)) {
-            //directionAngle = -directionAngle;
             x += 10;
         }
         if ((y < 22)) {
-            //directionAngle = -directionAngle;
             y += 10;
         }
         if ((x > x2)) {
-            //directionAngle = -directionAngle;
             x -= 10;
         }
         if ((y > 778)) {
-            //directionAngle = -directionAngle;
             y -= 10;
         }
     }
 
     void paint(Graphics2D g) {
-
     }
 
     void eat() {
-        energy += 5;
+    }
+
+    void feed() {
     }
 
     void isDead() {
         this.energy = 0.0;
         this.isAlive = false;
     }
+
+    /*void setPosition(int dirAngle, double acceleration){
+
+        directionAngle += dirAngle;
+        velocity += acceleration;
+        radians = (Math.PI / 180) * (directionAngle);
+    }
+
+    void velocityLimits(){
+        if (velocity > 8.0) {
+            velocity = 2.0;
+        }
+        if (velocity < -0.6) {
+            velocity = 0.5;
+        }
+    }
+*/
+
 
     boolean isAlive() {
         return isAlive;

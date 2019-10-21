@@ -6,6 +6,9 @@ class Prey extends Organism {
 
     private double energy = 100;
     private double velocity = 2.0;
+    private int leftBorder = 22;
+    private int rightBorder = 1178;
+
 
     Prey(double xStartPos, double yStartPos, int updateFramerate) {
         super(updateFramerate);
@@ -77,7 +80,7 @@ class Prey extends Organism {
         x += (int) (velocity * Math.cos(radians));
         y += (int) (velocity * Math.sin(radians));
 
-        this.simplyBouncing(22, 1178);
+        this.borderBouncing(this.leftBorder, this.rightBorder);
 
     }
 

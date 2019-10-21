@@ -1,11 +1,11 @@
-package NeuralNetwork;
+package Main;
 
-public class OutputAI {
+public class OutputMove {
 
     private double angle;
     private double accelleration;
 
-    OutputAI(double angle, double accelleration) {
+    OutputMove(double angle, double accelleration) {
         this.angle = angle;
         this.accelleration = accelleration;
     }

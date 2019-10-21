@@ -1,11 +1,13 @@
 package NeuralNetwork;
 
+import Main.OutputMove;
+
 public class BlackBoxAI {
 
     public BlackBoxAI() {
     }
 
-    public OutputAI move(char[][] model) {
-        return new OutputAI(1.0, 1.0);
+    public OutputMove move(char[][] model) {
+        return new OutputMove(1.0, 1.0);
     }
 }
