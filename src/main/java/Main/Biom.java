@@ -138,9 +138,7 @@ public class Biom {
             model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X');
         }
 
-        //second frame repaint // comment out to up performance
-        model.repaint();
-        model.revalidate();
+        model.repaintGui();
 
     }
 
