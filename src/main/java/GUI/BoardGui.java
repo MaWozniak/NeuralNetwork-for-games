@@ -1,13 +1,13 @@
-package Main;
+package GUI;
 
 import java.awt.*;
 
-class BoardGui {
+public class BoardGui {
 
-    BoardGui() {
+    public BoardGui() {
     }
 
-    void paint(Graphics2D g) {
+    public void paint(Graphics2D g) {
 
         //g.setColor(new Color(20, 20, 20, 50));
         //g.setBackground(Color.BLACK);

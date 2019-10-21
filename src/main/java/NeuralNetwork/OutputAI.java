@@ -5,7 +5,7 @@ public class OutputAI {
     private double angle;
     private double accelleration;
 
-    public OutputAI(double angle, double accelleration) {
+    OutputAI(double angle, double accelleration) {
         this.angle = angle;
         this.accelleration = accelleration;
     }
@@ -18,11 +18,4 @@ public class OutputAI {
         return accelleration;
     }
 
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
-
-    public void setAccelleration(double accelleration) {
-        this.accelleration = accelleration;
-    }
 }

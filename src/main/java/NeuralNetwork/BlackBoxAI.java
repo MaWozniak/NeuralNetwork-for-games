@@ -1,8 +1,5 @@
 package NeuralNetwork;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BlackBoxAI {
 
     public BlackBoxAI() {

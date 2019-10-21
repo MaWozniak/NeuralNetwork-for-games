@@ -1,4 +1,8 @@
-package Main;
+package GUI;
+
+import Main.Biom;
+import Main.FramerateCount;
+import Main.RenderPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
 
-    GUI(int framerate, Biom biom) throws InterruptedException {
+    public GUI(int framerate, Biom biom) throws InterruptedException {
 
         RenderPanel renderPanel = new RenderPanel(biom);
         JPanel buttonPanel = new JPanel();

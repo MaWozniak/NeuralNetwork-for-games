@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class Biom {
+public class Biom {
 
     private ModelView model;
     private List<Prey> prey = new ArrayList<>();
@@ -56,7 +56,7 @@ class Biom {
 
     }
 
-    void setFramerate(int framerate) {
+    public void setFramerate(int framerate) {
         this.lifecycleThread.setMillis(1000 / framerate);
     }
 

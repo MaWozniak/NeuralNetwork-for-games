@@ -1,5 +1,7 @@
 package Main;
 
+import GUI.BoardGui;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -8,7 +10,7 @@ public class RenderPanel extends JPanel {
     private Biom biom;
     private BoardGui boardGui = new BoardGui();
 
-    RenderPanel(Biom biom) {
+    public RenderPanel(Biom biom) {
         this.biom = biom;
     }
 

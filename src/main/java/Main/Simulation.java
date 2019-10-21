@@ -1,11 +1,10 @@
 package Main;
 
-public class Simulation {
+import GUI.GUI;
+
+class Simulation {
 
     Simulation(int guiFramerate, int biomFramerate, int organismFramerate, boolean fullspeed, int preyNum, int AIpreyNum, int predatorsNum, boolean modelFrame) throws InterruptedException {
-
-        //here I must add 'model-view-controller' pattern: Gui + main.Biom(with Model) transfer to some Controller
-        //at the moment I transfer main.Biom to Gui
 
         ModelView model = new ModelView(modelFrame);
         Biom biom = new Biom(preyNum, predatorsNum, AIpreyNum, biomFramerate, fullspeed, model, organismFramerate);
