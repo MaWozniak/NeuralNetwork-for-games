@@ -7,7 +7,7 @@ public class PreyGui {
     public PreyGui() {
     }
 
-    public void paint(Graphics2D g) {
+    public void paint(Graphics2D g, double x, double y, double radians, double energy) {
 
         g.setColor(Color.GRAY);
         //g.setColor(Color.GREEN);

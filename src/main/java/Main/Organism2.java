@@ -8,12 +8,12 @@ class Organism2 {
     boolean isAlive = true;
     private int directionAngle;
     double radians;
-    private double energy;
+    double energy;
     private double velocity;
     private int leftBorder;
     private int rightBorder;
     private int dirAngle;
-    private double acceleration;
+    double acceleration;
 
     Organism2() {
     }

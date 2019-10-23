@@ -6,9 +6,9 @@ import java.awt.*;
 
 class Prey2 extends Organism2 {
 
-    public int directionAngle;
+    int directionAngle;
     private double energy = 100;
-    private double velocity = 2.0;
+    double velocity = 2.0;
     private int leftBorder = 22;
     private int rightBorder = 1178;
 
@@ -36,7 +36,7 @@ class Prey2 extends Organism2 {
     void paint(Graphics2D g) {
 
         if (isAlive) {
-            preyGui.paint(g);
+            preyGui.paint(g, this.x, this.y, this.radians, this.energy);
         }
     }
 

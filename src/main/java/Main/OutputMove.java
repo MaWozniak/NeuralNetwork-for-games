@@ -5,7 +5,7 @@ public class OutputMove {
     private double angle;
     private double accelleration;
 
-    OutputMove(double angle, double accelleration) {
+    public OutputMove(double angle, double accelleration) {
         this.angle = angle;
         this.accelleration = accelleration;
     }
