@@ -1,66 +1,44 @@
 package Main;
 
+import GUI.PredatorGui;
+
 import java.awt.*;
 
 class Predator extends Organism {
 
-    private double energy = 200;
+    int directionAngle;
+    private double energy = 100;
     private double maxEnergy = 300;
-    private double velocity = 4.0;
+    double velocity = 2.0;
+    private int leftBorder = 22;
+    private int rightBorder = 1178;
+
+    private PredatorGui predatorGui;
+
+    private SimplyCPUpredator simplyCPUpredator;
+
 
     Predator(double xStartPos, double yStartPos, int updateFramerate) {
-        super(updateFramerate);
         this.x = xStartPos;
         this.y = yStartPos;
+        predatorGui = new PredatorGui();
+        simplyCPUpredator = new SimplyCPUpredator(updateFramerate);
+
     }
 
     void move(char[][] model) {
+        super.move(model);
+    }
 
-        int dirAngle = updateMovement.getDirection();
-        double acceleration = updateMovement.getAcceleration();
-
-        directionAngle += dirAngle;
-        velocity += acceleration;
-        radians = (Math.PI / 180) * (directionAngle);
-
-
-        //EYES of the main.Predator
-        int k = ((int) x - 5) + (int) (90.0 * Math.cos(radians));
-        int l = ((int) y - 5) + (int) (90.0 * Math.sin(radians));
-        if (k > 0 && l > 0 && k < 1250 && l < 850) {
-            if (model[k][l] == 'X') {
-                // directionAngle = 0;
-                velocity = 1.2 * velocity;
-            }
-        }
-        k = ((int) x - 5) + (int) (50.0 * Math.cos(radians) - (int) (70.0 * Math.sin(radians)));
-        l = ((int) y - 5) + (int) (50.0 * Math.sin(radians) + (int) (70.0 * Math.cos(radians)));
-        if (k > 0 && l > 0 && k < 1250 && l < 850) {
-            if (model[k][l] == 'X') {
-                directionAngle = directionAngle + 10;
-                velocity = 1.2 * velocity;
-            }
-        }
-        k = ((int) x - 5) + (int) (50.0 * Math.cos(radians) + (int) (70.0 * Math.sin(radians)));
-        l = ((int) y - 5) + (int) (50.0 * Math.sin(radians) - (int) (70.0 * Math.cos(radians)));
-        if (k > 0 && l > 0 && k < 1250 && l < 850) {
-            if (model[k][l] == 'X') {
-                directionAngle = directionAngle - 10;
-                velocity = 1.2 * velocity;
-            }
-        }
-        //////////////////////////////////
-
+    void energyCost() {
 
         energy -= 0.03;
-        if (energy <= 0) {
-            isAlive = false;
+
+        if (x < 180 || x > 1100) {
+            energy -= 0.05;
         }
 
-//        if ((x > 300 && x < 900) && (y > 200 && y < 600)) {
-//            energy += 0.06;
-//        }
-
+        //FULL & TIRED:
         if (energy > 250) {
             velocity -= 0.35;
             directionAngle = (int) (0.3 * directionAngle);
@@ -70,18 +48,10 @@ class Predator extends Organism {
             energy = maxEnergy;
         }
 
-        if (velocity > 10.0) {
-            velocity = 2.0;
+        //DEAD:
+        if (energy <= 0) {
+            isAlive = false;
         }
-        if (velocity < -0.6) {
-            velocity = 0.5;
-        }
-
-        x += (int) (velocity * Math.cos(radians));
-        y += (int) (velocity * Math.sin(radians));
-
-        this.borderBouncing(180, 1010);
-
     }
 
     @Override
@@ -89,29 +59,24 @@ class Predator extends Organism {
         energy += 25;
     }
 
+    @Override
+    void velocityLimits() {
+        if (velocity > 10.0) {
+            velocity = 2.0;
+        }
+        if (velocity < -0.6) {
+            velocity = 0.5;
+        }
+    }
+
+    void thinking(char[][] model) {
+        simplyCPUpredator.thinking(model, this);
+    }
+
     void paint(Graphics2D g) {
 
         if (isAlive) {
-            g.setColor(Color.RED);
-            //g.setColor(Color.YELLOW);
-            g.fillOval((int) x - 15, (int) y - 15, 20, 20);
-
-            //temp direction point:
-            g.setColor(Color.BLUE);
-            g.fillOval(((int) x - 5) + (int) (90.0 * Math.cos(radians)), ((int) y - 5) + (int) (90.0 * Math.sin(radians)), 5, 5);
-            g.fillOval(((int) x - 5) + (int) (80.0 * Math.cos(radians) - (int) (40.0 * Math.sin(radians))), ((int) y - 5) + (int) (80.0 * Math.sin(radians) + (int) (40.0 * Math.cos(radians))), 5, 5);
-            g.fillOval(((int) x - 5) + (int) (80.0 * Math.cos(radians) + (int) (40.0 * Math.sin(radians))), ((int) y - 5) + (int) (80.0 * Math.sin(radians) - (int) (40.0 * Math.cos(radians))), 5, 5);
-            g.fillOval(((int) x - 5) + (int) (50.0 * Math.cos(radians) - (int) (70.0 * Math.sin(radians))), ((int) y - 5) + (int) (50.0 * Math.sin(radians) + (int) (70.0 * Math.cos(radians))), 5, 5);
-            g.fillOval(((int) x - 5) + (int) (50.0 * Math.cos(radians) + (int) (70.0 * Math.sin(radians))), ((int) y - 5) + (int) (50.0 * Math.sin(radians) - (int) (70.0 * Math.cos(radians))), 5, 5);
-
-            g.setColor(Color.DARK_GRAY);
-            if (energy < 60) {
-                g.setColor(Color.GRAY);
-            }
-            if (energy < 30) {
-                g.setColor(Color.RED);
-            }
-            g.drawString(String.valueOf((int) energy), (int) x - 8, (int) y - 8);
+            predatorGui.paint(g, this.x, this.y, this.radians, this.energy);
         }
     }
 

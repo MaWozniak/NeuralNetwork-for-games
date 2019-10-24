@@ -142,7 +142,7 @@ public class Biom {
 
     }
 
-    void paint(Graphics2D g) {
+    public void paint(Graphics2D g) {
 
         try {
             for (Predator generatedPredator : predators) {
