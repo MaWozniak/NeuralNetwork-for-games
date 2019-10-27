@@ -1,16 +1,16 @@
-package Main;
+package NeuralNetwork;
 
 public class OutputMove {
 
-    private double angle;
+    private int angle;
     private double accelleration;
 
-    public OutputMove(double angle, double accelleration) {
+    OutputMove(int angle, double accelleration) {
         this.angle = angle;
         this.accelleration = accelleration;
     }
 
-    public double getAngle() {
+    public int getAngle() {
         return angle;
     }
 

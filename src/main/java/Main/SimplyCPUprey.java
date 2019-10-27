@@ -12,8 +12,12 @@ class SimplyCPUprey {
     void thinking(char[][] model, Prey prey) {
 
         //should be Get i Set
-        prey.directionAngle = updateMovement.getDirection();
-        prey.acceleration = updateMovement.getAcceleration();
+        int updateDirection = updateMovement.getDirection();
+        double acceleration = updateMovement.getAcceleration();
+
+        prey.directionAngle += updateDirection;
+        prey.velocity += acceleration;
+        prey.radians = (Math.PI / 180) * (prey.directionAngle);
 
         double radians = (Math.PI / 180) * (prey.directionAngle);
 

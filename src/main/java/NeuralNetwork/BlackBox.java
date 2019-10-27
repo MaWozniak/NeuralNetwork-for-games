@@ -1,9 +1,8 @@
 package NeuralNetwork;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BlackBox {
 
-    private List<Double> inputs = new ArrayList();
+    public OutputMove move(char[][] model) {
+        return new OutputMove(2, 0.1);
+    }
 }

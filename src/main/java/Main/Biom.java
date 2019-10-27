@@ -125,7 +125,11 @@ public class Biom {
             }
         }
 
-        //model:
+        modelViewSet();
+
+    }
+
+    private void modelViewSet() {
         model.clear();
 
         for (Predator generatedPredator : predators) {
@@ -139,7 +143,6 @@ public class Biom {
         }
 
         model.repaintGui();
-
     }
 
     public void paint(Graphics2D g) {
