@@ -20,17 +20,19 @@ where Predators can not reach.
 This simple setup is a good enviroment to engage Machine Learning AI-agents in order to teach them to become competetive and fight for their live.
 First I created old-fashioned AI-agents to start the game, in the next step I will introduce Machine Learning AI - like a new preys agents (blue agents).
 
-#####Goal of this simulation (sign that it's working)
+##### Goal of this simulation (sign that it's working) #####
 We want to see AI prey agents hiding from Predators and trying to reach feeding place as fast as they can and again run away to safe places.
 
 
 ### Application structure ###
 
-#####Game package
+##### Game package #####
 - test game classes
-#####GUI package 
+
+##### GUI package #####
 - gui classes
-#####Neural Network package 
+
+##### Neural Network package #####
 - for development neural network.
 
 ### Simulation ###
@@ -66,11 +68,11 @@ Method `lifecycle()` includes the main logic of the game:
         validate();
     }
 ```
-#####ModelView.class
+##### ModelView.class #####
 Concept of this class is to model what Organisms can see on the board. It's very important because inputs for neural network
  will be readed from this model.
 
-#####Simulation FPS (framerate)
+##### Simulation FPS (framerate) #####
 Simulation has two different threads with different framerates:
 - one for Lifecycle of the Biom class
 ```
@@ -84,9 +86,9 @@ GUI gui = new GUI(guiFramerate, biom);
 This concept is to separete graphics from model calculation.
 (Aim is to do calculation on server-side and to place Gui on web-side(javascript) and comunicate them via Web Sockets.
 
-### Hierarchy of the organisms (inheritance)
+### Hierarchy of the organisms (inheritance) ###
 
 ![Alt text](resources/img2.jpg?raw=true "Game")
 
-###Update
+### Update ###
 Game is still raw and in the early stage but fair good to start developing neural network and test first mocaps with AI-agents.
