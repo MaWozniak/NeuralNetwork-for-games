@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 import GUI.PreyAiGui;
 
@@ -6,7 +6,7 @@ import java.awt.*;
 
 class PreyAI extends Prey {
 
-    private AiCPUprey ai = new AiCPUprey();
+    private PreyLogicAI ai = new PreyLogicAI();
     private PreyAiGui preyAiGui = new PreyAiGui();
 
     PreyAI(double xStartPos, double yStartPos) {

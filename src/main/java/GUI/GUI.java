@@ -1,7 +1,7 @@
 package GUI;
 
-import Main.Biom;
-import Main.FramerateCount;
+import Game.Biom;
+import Game.FramerateCount;
 
 import javax.swing.*;
 import java.awt.*;

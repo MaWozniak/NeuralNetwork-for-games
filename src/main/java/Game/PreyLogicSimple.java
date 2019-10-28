@@ -1,17 +1,16 @@
-package Main;
+package Game;
 
-class SimplyCPUprey {
+class PreyLogicSimple {
 
     private UpdateMovement updateMovement;
 
-    SimplyCPUprey(int updateFramerate) {
+    PreyLogicSimple(int updateFramerate) {
         updateMovement = new UpdateMovement(updateFramerate);
         updateMovement.start();
     }
 
     void thinking(char[][] model, Prey prey) {
 
-        //should be Get i Set
         int updateDirection = updateMovement.getDirection();
         double acceleration = updateMovement.getAcceleration();
 

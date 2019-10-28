@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,10 +13,6 @@ public class Biom {
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
 
-    public int getFramerate() {
-        return this.lifecycleThread.getFramerate();
-    }
-
     Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
 
         this.model = model;
@@ -29,9 +25,18 @@ public class Biom {
 
     }
 
+    public int getFramerate() {
+        return this.lifecycleThread.getFramerate();
+    }
+
+    public void setFramerate(int framerate) {
+        this.lifecycleThread.setMillis(1000 / framerate);
+    }
+
     void lifecycle() {
 
         organismsMoves();
+        modelViewSet();
         randomAddPrey();
         //randomKillPrey();
         validate();
@@ -54,10 +59,6 @@ public class Biom {
             }
         }
 
-    }
-
-    public void setFramerate(int framerate) {
-        this.lifecycleThread.setMillis(1000 / framerate);
     }
 
     private void addNewPreys(int number) {
@@ -124,9 +125,6 @@ public class Biom {
                 }
             }
         }
-
-        modelViewSet();
-
     }
 
     private void modelViewSet() {

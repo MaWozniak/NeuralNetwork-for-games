@@ -1,6 +1,6 @@
 package GUI;
 
-import Main.Biom;
+import Game.Biom;
 
 import java.awt.*;
 import javax.swing.*;

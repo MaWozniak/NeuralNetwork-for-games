@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 import java.awt.*;
 
@@ -47,11 +47,11 @@ class Organism {
         return isAlive;
     }
 
-    public double getX() {
+    double getX() {
         return x;
     }
 
-    public double getY() {
+    double getY() {
         return y;
     }
 }

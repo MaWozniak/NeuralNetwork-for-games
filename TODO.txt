@@ -1,14 +1,12 @@
-enhance board - places to hide, places to feed, borders etc
+-add to modelView places to feed for Prey, places to hide etc.
 
--add Predators - logic to Eat a pray
-(add energy after consume, don't eat when it's full more than 90% energy etc)
+-Predators when came to borders has too fast reaction (change direction -100%)
 
--Predators cannot walk in to the middle-board, it's safe area for the Main.Prey like deep wood or smth
+-START NEURAL NETWORK developing:
+    first: making a neural network layers on harcoded values
+    input 13 -> 3 layers x 30 neurons -> 2 values on output
+    use weights and bias
+
+-remove /build and /gradle from remote repository
 
 -refactor code to be more SOLID, more Atomic, meaningful names
-
--class Main.Organism which other organism will be inherit
-//void move, paint, eat, dead etc
-
-Predator slow in gray, fast in white, energy only by eating
-Prey energy only by green, faster lose on white, slightly slower on white

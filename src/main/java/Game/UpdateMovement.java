@@ -1,23 +1,14 @@
-package Main;
+package Game;
 
 public class UpdateMovement extends Thread {
 
     private int millis;
+    private int direction = 0;
+    private double acceleration = 0.0;
 
     UpdateMovement(int framerate) {
         this.millis = 1000 / framerate;
     }
-
-    int getDirection() {
-        return direction;
-    }
-
-    double getAcceleration() {
-        return acceleration;
-    }
-
-    private int direction = 0;
-    private double acceleration = 0.0;
 
     public void run() {
 
@@ -33,9 +24,16 @@ public class UpdateMovement extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
+
+    int getDirection() {
+        return direction;
+    }
+
+    double getAcceleration() {
+        return acceleration;
+    }
+
 
 }

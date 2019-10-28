@@ -1,17 +1,16 @@
-package Main;
+package Game;
 
-class SimplyCPUpredator {
+class PredatorLogicSimple {
 
     private UpdateMovement updateMovement;
 
-    SimplyCPUpredator(int updateFramerate) {
+    PredatorLogicSimple(int updateFramerate) {
         updateMovement = new UpdateMovement(updateFramerate);
         updateMovement.start();
     }
 
     void thinking(char[][] model, Predator predator) {
 
-        //should be Get i Set
         int updateDirection = updateMovement.getDirection();
         double acceleration = updateMovement.getAcceleration();
 

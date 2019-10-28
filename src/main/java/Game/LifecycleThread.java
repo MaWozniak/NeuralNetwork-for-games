@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 public class LifecycleThread implements Runnable {
 
@@ -29,11 +29,11 @@ public class LifecycleThread implements Runnable {
         }
     }
 
-    public void setMillis(int millis) {
+    void setMillis(int millis) {
         this.millis = millis;
     }
 
-    public int getFramerate() {
+    int getFramerate() {
         return 1000 / millis;
     }
 }

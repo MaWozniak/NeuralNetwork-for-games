@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 import GUI.PreyGui;
 
@@ -6,7 +6,7 @@ import java.awt.*;
 
 class Prey extends Organism {
 
-    private SimplyCPUprey simplyCPUprey;
+    private PreyLogicSimple preyLogicSimple;
     private PreyGui preyGui;
 
     Prey(double xStartPos, double yStartPos, int updateFramerate) {
@@ -16,7 +16,7 @@ class Prey extends Organism {
         this.energy = 100;
         this.velocity = 2.0;
         preyGui = new PreyGui();
-        simplyCPUprey = new SimplyCPUprey(updateFramerate);
+        preyLogicSimple = new PreyLogicSimple(updateFramerate);
     }
 
     Prey(double xStartPos, double yStartPos) {
@@ -45,7 +45,7 @@ class Prey extends Organism {
     }
 
     void thinking(char[][] model) {
-        simplyCPUprey.thinking(model, this);
+        preyLogicSimple.thinking(model, this);
     }
 
     void setPosition() {

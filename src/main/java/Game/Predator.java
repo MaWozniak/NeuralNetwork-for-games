@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 import GUI.PredatorGui;
 
@@ -6,7 +6,7 @@ import java.awt.*;
 
 class Predator extends Organism {
 
-    private SimplyCPUpredator simplyCPUpredator;
+    private PredatorLogicSimple predatorLogicSimple;
     private PredatorGui predatorGui;
 
     Predator(double xStartPos, double yStartPos, int updateFramerate) {
@@ -16,7 +16,7 @@ class Predator extends Organism {
         this.energy = 130;
         this.velocity = 1.0;
         predatorGui = new PredatorGui();
-        simplyCPUpredator = new SimplyCPUpredator(updateFramerate);
+        predatorLogicSimple = new PredatorLogicSimple(updateFramerate);
     }
 
     void move(char[][] model) {
@@ -36,7 +36,7 @@ class Predator extends Organism {
     }
 
     void thinking(char[][] model) {
-        simplyCPUpredator.thinking(model, this);
+        predatorLogicSimple.thinking(model, this);
     }
 
     void energyCost() {

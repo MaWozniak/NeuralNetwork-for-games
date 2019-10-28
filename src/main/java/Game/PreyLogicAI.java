@@ -1,13 +1,13 @@
-package Main;
+package Game;
 
 import NeuralNetwork.BlackBox;
 import NeuralNetwork.OutputMove;
 
-class AiCPUprey {
+class PreyLogicAI {
 
     private BlackBox blackBox = new BlackBox();
 
-    AiCPUprey() {
+    PreyLogicAI() {
     }
 
     void thinking(char[][] model, PreyAI preyAI) {

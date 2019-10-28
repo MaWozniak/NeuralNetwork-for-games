@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 import GUI.ModelViewGui;
 

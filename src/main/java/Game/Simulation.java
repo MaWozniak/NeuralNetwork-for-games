@@ -1,4 +1,4 @@
-package Main;
+package Game;
 
 import GUI.GUI;
 
@@ -9,7 +9,5 @@ class Simulation {
         ModelView model = new ModelView(modelFrame);
         Biom biom = new Biom(preyNum, predatorsNum, AIpreyNum, biomFramerate, fullspeed, model, organismFramerate);
         GUI gui = new GUI(guiFramerate, biom);
-
-
     }
 }
