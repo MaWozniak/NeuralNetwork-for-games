@@ -131,13 +131,13 @@ public class Biom {
         model.clear();
 
         for (Predator generatedPredator : predators) {
-            model.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P');
+            model.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P', 40);
         }
         for (PreyAI generatedPreyAI : AI_prey) {
-            model.set((int) generatedPreyAI.getX(), (int) generatedPreyAI.getY(), 'X');
+            model.set((int) generatedPreyAI.getX(), (int) generatedPreyAI.getY(), 'X', 25);
         }
         for (Prey generatedPrey : prey) {
-            model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X');
+            model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 25);
         }
 
         model.repaintGui();

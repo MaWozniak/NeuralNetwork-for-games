@@ -1,5 +1,3 @@
--add to modelView places to feed for Prey, places to hide etc.
-
 -Predators when came to borders has too fast reaction (change direction -100%)
 
 -START NEURAL NETWORK developing:
