@@ -4,20 +4,16 @@ import java.util.Arrays;
 
 public class BlackBox {
 
-    double[] randomWeights1 = {Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5};
-    double[] randomBiases1 = {Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5};
-
-    double[] randomWeights2 = {Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5};
-    double[] randomBiases2 = {Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5};
+    private NeuralNetwork neuralNetwork = new NeuralNetwork(5, 2, 3, 30, true);
 
     public BlackBox() {
         //LOG:
-        System.out.println(this.hashCode());
-        System.out.println(Arrays.toString(randomWeights1));
-        System.out.println(Arrays.toString(randomBiases1));
-        System.out.println(Arrays.toString(randomWeights2));
-        System.out.println(Arrays.toString(randomBiases2));
-        System.out.println();
+//        System.out.println(this.hashCode());
+//        System.out.println(Arrays.toString(randomWeights1));
+//        System.out.println(Arrays.toString(randomBiases1));
+//        System.out.println(Arrays.toString(randomWeights2));
+//        System.out.println(Arrays.toString(randomBiases2));
+//        System.out.println();
     }
 
     public OutputMove move(char[][] model, double xPos, double yPos, double radians, double energy) {
@@ -84,19 +80,9 @@ public class BlackBox {
         //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
         double[] input = {convField1, convField2, convField3, radians / Math.PI, energy / 150};
 
-        //layer of 4 neurons
-        double[] layer1 = new double[4];
+        double[] output = neuralNetwork.generate(input);
 
-        layer1[0] = input[0] * randomWeights1[0] + randomBiases1[0] + input[1] * randomWeights1[1] + randomBiases1[1]
-                + input[2] * randomWeights1[2] + randomBiases1[2] + input[3] * randomWeights1[3] + randomBiases1[3];
-
-        layer1[1] = input[0] * randomWeights2[0] + randomBiases2[0] + input[1] * randomWeights2[1] + randomBiases2[1]
-                + input[2] * randomWeights2[2] + randomBiases2[2] + input[3] * randomWeights2[3] + randomBiases2[3];
-
-        //etc layer[2] & layer[3] --> layer1 -> layer2 --> layer2 -> output(2 nodes: angle & acceleration)
-        // GENERICS MECHANISM !!!
-
-        return new OutputMove((int) (10 * layer1[0]), layer1[1]);
+        return new OutputMove((int) (10 * (output[0] - 0.5)), output[1] - 0.5);
         //return new OutputMove(2, 0.1);
 
 
