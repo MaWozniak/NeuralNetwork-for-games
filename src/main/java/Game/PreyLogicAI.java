@@ -12,7 +12,7 @@ class PreyLogicAI {
 
     void thinking(char[][] model, PreyAI preyAI) {
 
-        OutputMove move = blackBox.move(model);
+        OutputMove move = blackBox.move(model, preyAI.getX(), preyAI.getY(), preyAI.getRadians(), preyAI.getEnergy());
 
         int updateDirection = move.getAngle();
         double acceleration = move.getAccelleration();

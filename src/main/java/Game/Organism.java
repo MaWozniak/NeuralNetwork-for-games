@@ -54,4 +54,12 @@ class Organism {
     double getY() {
         return y;
     }
+
+    double getEnergy() {
+        return energy;
+    }
+
+    public double getRadians() {
+        return radians;
+    }
 }

@@ -17,6 +17,10 @@ class ModelView {
         return model;
     }
 
+    char getField(int x, int y) {
+        return model[x][y];
+    }
+
     void repaintGui() {
         modelView.repaint();
         modelView.revalidate();

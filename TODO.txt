@@ -1,5 +1,7 @@
 -Predators when came to borders has too fast reaction (change direction -100%)
 
+-create 11 points of view for every Organism (now it is 3-5)
+
 -START NEURAL NETWORK developing:
     first: making a neural network layers on harcoded values
     input 13 -> 3 layers x 30 neurons -> 2 values on output
