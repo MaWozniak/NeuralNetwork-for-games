@@ -87,14 +87,8 @@ public class BlackBox {
         //layer of 4 neurons
         double[] layer1 = new double[4];
 
-//        double[] randomWeights1 = {Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5};
-//        double[] randomBiases1 = {Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5};
-
         layer1[0] = input[0] * randomWeights1[0] + randomBiases1[0] + input[1] * randomWeights1[1] + randomBiases1[1]
                 + input[2] * randomWeights1[2] + randomBiases1[2] + input[3] * randomWeights1[3] + randomBiases1[3];
-
-//        double[] randomWeights2 = {Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5};
-//        double[] randomBiases2 = {Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5, Math.random() -0.5};
 
         layer1[1] = input[0] * randomWeights2[0] + randomBiases2[0] + input[1] * randomWeights2[1] + randomBiases2[1]
                 + input[2] * randomWeights2[2] + randomBiases2[2] + input[3] * randomWeights2[3] + randomBiases2[3];
