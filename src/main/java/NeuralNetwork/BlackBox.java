@@ -7,22 +7,9 @@ public class BlackBox {
     private NeuralNetwork neuralNetwork = new NeuralNetwork(5, 2, 3, 30, true);
 
     public BlackBox() {
-        //LOG:
-//        System.out.println(this.hashCode());
-//        System.out.println(Arrays.toString(randomWeights1));
-//        System.out.println(Arrays.toString(randomBiases1));
-//        System.out.println(Arrays.toString(randomWeights2));
-//        System.out.println(Arrays.toString(randomBiases2));
-//        System.out.println();
     }
 
     public OutputMove move(char[][] model, double xPos, double yPos, double radians, double energy) {
-
-        /*
-        first: making a neural network layers on harcoded values
-        input 13 > 3 layers x 30 neurons > 2 values on output
-        use weights annd bias
-        */
 
         //now there is 3 point of view -> will be 11
         int x = (int) xPos - 5 + (int) (90.0 * Math.cos(radians));
@@ -78,21 +65,15 @@ public class BlackBox {
         double convField3 = convCharToDbl(field3);
 
         //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
-        double[] input = {convField1, convField2, convField3, radians / Math.PI, energy / 150};
+        double[] input = {convField1, convField2, convField3, radians, energy};
 
         double[] output = neuralNetwork.generate(input);
 
-        return new OutputMove((int) (10 * (output[0] - 0.5)), output[1] - 0.5);
-        //return new OutputMove(2, 0.1);
-
-
+        //return new OutputMove((int) (10 * (output[0] - 0.5)), output[1] - 0.2);
+        return new OutputMove((int) (20 * output[0] - 10.0), 0.8 * (output[1] / 5) - 0.05); // was: 0.8*(output[1] / 5) - 0.1
     }
 
-    public OutputMove mocapMove(char[][] model, double xPos, double yPos, double radians, double energy) {
-        return new OutputMove(2, 0.1);
-    }
-
-    double convCharToDbl(char ch) {
+    private double convCharToDbl(char ch) {
         double converted = 0.5; // nothing == '0'
         if (ch == 'F') { // feed
             converted = 0.99;
@@ -107,5 +88,9 @@ public class BlackBox {
             converted = 0.0;
         }
         return converted;
+    }
+
+    public String showGenome() {
+        return Arrays.deepToString(neuralNetwork.getGenome().getWeights()) + "\n" + Arrays.deepToString(neuralNetwork.getGenome().getWeights());
     }
 }

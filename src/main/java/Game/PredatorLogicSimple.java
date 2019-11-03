@@ -26,7 +26,7 @@ class PredatorLogicSimple {
 
         //////////////////////////////////////
         // this change  direction instantly when predator see "out of borders" - to fix
-        if (k < 180 || l < 0 || k > 1010 || l > 850) {
+        if (k < 170 || l < 0 || k > 1020 || l > 850) {
             predator.directionAngle -= 180;
         }
         //////////////////////////////////////

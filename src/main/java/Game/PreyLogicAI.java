@@ -22,4 +22,8 @@ class PreyLogicAI {
         preyAI.radians = (Math.PI / 180) * (preyAI.directionAngle);
 
     }
+
+    String showGenome() {
+        return blackBox.showGenome();
+    }
 }

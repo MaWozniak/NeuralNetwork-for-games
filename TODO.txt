@@ -1,11 +1,14 @@
+1) FAST create 11 points of view for every Organism (now it is 3-5)
+first in Gui, next in model;
+
+2) Activation Function don't work well? all scores is simillar to 0.5(?)
+more tests + check different activoation function (none, exponens, sinul, relu etc.)
+
+3) write Genomes(arrays of weights and biases) of all preyAI to file (to save progress)
+
+-experiment with diffrents Activation Function for Neural Network ( ReLU - Rectified Linear Unit!)
+
 -Predators when came to borders has too fast reaction (change direction -100%)
-
--create 11 points of view for every Organism (now it is 3-5)
-
--START NEURAL NETWORK developing:
-    first: making a neural network layers on harcoded values
-    input 13 -> 3 layers x 30 neurons -> 2 values on output
-    use weights and bias
 
 -remove /build and /gradle from remote repository
 

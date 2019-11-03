@@ -10,15 +10,19 @@ public class Biom {
     private List<Prey> prey = new ArrayList<>();
     private List<PreyAI> AI_prey = new ArrayList<>();
     private List<Predator> predators = new ArrayList<>();
+    private int predatorsNumber;
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
+    private Generations generations;
 
     Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
 
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
         this.addNewPreys(numPrey);
-        this.addNewAIPreys(numAIPrey);
+        this.generations = new Generations(AI_prey, numAIPrey);
+        this.generations.addNewGeneration();
+        this.predatorsNumber = numPred;
         this.addNewPredators(numPred);
         Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
         thread.start();
@@ -37,8 +41,10 @@ public class Biom {
 
         organismsMoves();
         modelViewSet();
-        randomAddPrey();
-        //randomKillPrey();
+        //randomAddPrey();
+        scoreAi();
+        checkPredators(predatorsNumber);
+        checkGenerations();
         validate();
 
     }
@@ -85,6 +91,22 @@ public class Biom {
         }
     }
 
+    private void checkPredators(int number) {
+        if (predators.size() == 0) this.addNewPredators(number);
+    }
+
+    private void checkGenerations() {
+        if (AI_prey.size() == 0) {
+            generations.addNewGeneration();
+        }
+    }
+
+    private void scoreAi() {
+        for (PreyAI preyAI : AI_prey) {
+            preyAI.updateScore();
+        }
+    }
+
     private void addNewAIPreys(int number) {
 
         for (int i = 0; i < number; i++) {
@@ -108,8 +130,10 @@ public class Biom {
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 20)) {
-                    generatedPrey.isDead();
-                    generatedPredator.eat();
+                    if (generatedPredator.getEnergy() < 260) {
+                        generatedPrey.isDead();
+                        generatedPredator.eat();
+                    }
                 }
             }
         }
@@ -120,8 +144,10 @@ public class Biom {
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 20)) {
-                    generatedPreyAI.isDead();
-                    generatedPredator.eat();
+                    if (generatedPredator.getEnergy() < 260) {
+                        generatedPreyAI.isDead();
+                        generatedPredator.eat();
+                    }
                 }
             }
         }
@@ -158,7 +184,7 @@ public class Biom {
                 generatedPrey.paint(g);
             }
         } catch (java.util.ConcurrentModificationException e) {
-            System.out.println("error: java.util.ConcurrentModificationException");
+            //System.out.println("error: java.util.ConcurrentModificationException");
         }
 
     }

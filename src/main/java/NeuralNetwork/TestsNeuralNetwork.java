@@ -8,7 +8,7 @@ public class TestsNeuralNetwork {
 
         //NeuralNetwork neuralNetwork = new NeuralNetwork(3,2,3,30,true);
         NeuralNetwork neuralNetwork = new NeuralNetwork(3, 2, 3, 30, true);
-        neuralNetwork.printOut();
+        neuralNetwork.getGenome().printOut();
         double[] testInput1 = {0.89, 0.1, 0.08};
         System.out.println("Output = " + Arrays.toString(neuralNetwork.generate(testInput1)));
         double[] testInput2 = {0.0, 0.4432, 0.58};
