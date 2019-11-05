@@ -9,6 +9,10 @@ public class BlackBox {
     public BlackBox() {
     }
 
+    public BlackBox(Genome genome) {
+        this.neuralNetwork.injectGenome(genome);
+    }
+
     public OutputMove move(char[][] model, double xPos, double yPos, double radians, double energy) {
 
         //now there is 3 point of view -> will be 11
@@ -92,5 +96,9 @@ public class BlackBox {
 
     public String showGenome() {
         return Arrays.deepToString(neuralNetwork.getGenome().getWeights()) + "\n" + Arrays.deepToString(neuralNetwork.getGenome().getWeights());
+    }
+
+    public Genome getGenome() {
+        return neuralNetwork.getGenome();
     }
 }

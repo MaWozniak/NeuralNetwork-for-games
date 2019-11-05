@@ -1,13 +1,19 @@
 package Game;
 
 import NeuralNetwork.BlackBox;
+import NeuralNetwork.Genome;
 import NeuralNetwork.OutputMove;
 
 class PreyLogicAI {
 
-    private BlackBox blackBox = new BlackBox();
+    private BlackBox blackBox;
 
     PreyLogicAI() {
+        blackBox = new BlackBox();
+    }
+
+    PreyLogicAI(Genome genome) {
+        blackBox = new BlackBox(genome);
     }
 
     void thinking(char[][] model, PreyAI preyAI) {
@@ -25,5 +31,9 @@ class PreyLogicAI {
 
     String showGenome() {
         return blackBox.showGenome();
+    }
+
+    Genome getGenome() {
+        return blackBox.getGenome();
     }
 }

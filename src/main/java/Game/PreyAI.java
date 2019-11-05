@@ -1,18 +1,25 @@
 package Game;
 
 import GUI.PreyAiGui;
+import NeuralNetwork.Genome;
 
 import java.awt.*;
 
-class PreyAI extends Prey {
+public class PreyAI extends Prey {
 
-    private PreyLogicAI ai = new PreyLogicAI();
+    private PreyLogicAI ai;
     private PreyAiGui preyAiGui = new PreyAiGui();
     private String id;
     private double score = 0.0;
 
-    PreyAI(double xStartPos, double yStartPos) {
+    public PreyAI(double xStartPos, double yStartPos) {
         super(xStartPos, yStartPos);
+        ai = new PreyLogicAI();
+    }
+
+    public PreyAI(double xStartPos, double yStartPos, Genome genome) {
+        super(xStartPos, yStartPos);
+        ai = new PreyLogicAI(genome);
     }
 
     void thinking(char[][] model) {
@@ -25,11 +32,11 @@ class PreyAI extends Prey {
         }
     }
 
-    void setId(int num, int generation) {
+    public void setId(int num, int generation) {
         this.id = "gen-" + generation + "[id-" + num + "]";
     }
 
-    private String getId() {
+    public String getId() {
         return id;
     }
 
@@ -37,7 +44,11 @@ class PreyAI extends Prey {
         return ai.showGenome();
     }
 
-    void isDead() {
+    public Genome getGenome() {
+        return ai.getGenome();
+    }
+
+    public void isDead() {
         this.energy = 0.0;
         this.isAlive = false;
         System.out.println("death: " + this.getId() + " score: " + this.getScore());
@@ -47,7 +58,7 @@ class PreyAI extends Prey {
         this.score += 0.001;
     }
 
-    private double getScore() {
+    public double getScore() {
         return score;
     }
 }

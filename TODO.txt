@@ -1,8 +1,12 @@
+0.1) check Memory (RAM) - for 1000 generations etc? Is Garbage Collector doing good job? ;)
+
+0.2) REFACTOR Generation, GenerationMemory, Scoring etc + refactor Input and Outputs in NeuralNetwork
+
 1) FAST create 11 points of view for every Organism (now it is 3-5)
 first in Gui, next in model;
 
 2) Activation Function don't work well? all scores is simillar to 0.5(?)
-more tests + check different activoation function (none, exponens, sinul, relu etc.)
+more tests + check different activation function (none, exponens, sinul, relu etc.)
 
 3) write Genomes(arrays of weights and biases) of all preyAI to file (to save progress)
 

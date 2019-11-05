@@ -17,6 +17,10 @@ class NeuralNetwork {
         genome = new Genome(layers, neurons, inputs, outputs, bias);
     }
 
+    void injectGenome(Genome genome) {
+        this.genome = genome;
+    }
+
     Genome getGenome() {
         return genome;
     }

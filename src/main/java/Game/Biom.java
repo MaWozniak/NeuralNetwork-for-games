@@ -1,10 +1,14 @@
 package Game;
 
+import Genetics.Generations;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Biom {
+
+    private Generations generations;
 
     private ModelView model;
     private List<Prey> prey = new ArrayList<>();
@@ -13,7 +17,6 @@ public class Biom {
     private int predatorsNumber;
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
-    private Generations generations;
 
     Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
 
@@ -21,7 +24,7 @@ public class Biom {
         this.organismUpdateFramerate = organismUpdateFramerate;
         this.addNewPreys(numPrey);
         this.generations = new Generations(AI_prey, numAIPrey);
-        this.generations.addNewGeneration();
+        this.generations.addFirstGeneration();
         this.predatorsNumber = numPred;
         this.addNewPredators(numPred);
         Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
@@ -145,7 +148,8 @@ public class Biom {
             for (Predator generatedPredator : predators) {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 20)) {
                     if (generatedPredator.getEnergy() < 260) {
-                        generatedPreyAI.isDead();
+                        generations.deathPrey(generatedPreyAI);
+                        //generatedPreyAI.isDead();
                         generatedPredator.eat();
                     }
                 }
