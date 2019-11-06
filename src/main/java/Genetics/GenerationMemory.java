@@ -49,7 +49,7 @@ class GenerationMemory {
         return genomes.get(i);
     }
 
-    double getAvarageScore() {
+    public double getAvarageScore() {
         return avarageScore;
     }
 

@@ -151,7 +151,14 @@ public class Generations {
             System.out.println("1st prey of ALL GENERATION: " + idOfBestScore + " score: " + bestScore);
             System.out.println("2nd prey of ALL GENERATION: " + idOfSecondBestScore + " score: " + secondBestScore);
             System.out.println("3rd prey of ALL GENERATION: " + idOfthirdBestScore + " score: " + thirdBestScore);
-            System.out.println("-----------------------\n");
+            System.out.println("\n\nlist of all:");
+            for (int i = 0; i < listGenerationMemory.size(); i++) {
+                System.out.print("--" + (i + 1) + "--\t" + listGenerationMemory.get(i).getAvarageScore() + "\t");
+                if ((i + 1) % 3 == 0) {
+                    System.out.println();
+                }
+            }
+            System.out.println("\n-------------------------\n");
             System.out.println("\n...START NEW GENERATION...\n");
         }
     }

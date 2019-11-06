@@ -9,7 +9,10 @@ public class Genome {
     private double score;
     private String id;
 
-    Genome(int numLayers, int numNeurons, int inputs, int outputs, boolean bias) {
+    public Genome() {
+    }
+
+    public Genome(int numLayers, int numNeurons, int inputs, int outputs, boolean bias) {
 
         weights = new double[numLayers + 2][numNeurons][numNeurons];
         generateWeights(numLayers, numNeurons, inputs, outputs);
@@ -20,15 +23,31 @@ public class Genome {
         }
     }
 
-    double[][][] getWeights() {
+    public double[][][] getWeights() {
         return weights;
     }
 
-    double[][] getBiases() {
+    public void setWeights(double[][][] weights) {
+        this.weights = weights;
+    }
+
+    public double[][] getBiases() {
         return biases;
     }
 
-    private void generateWeights(int numLayers, int numNeurons, int inputs, int outputs) {
+    public void setBiases(double[][] biases) {
+        this.biases = biases;
+    }
+
+    public void setWeight(int i, int j, int k, double newValue) {
+        this.weights[i][j][k] = newValue;
+    }
+
+    public void setBias(int i, int j, double newValue) {
+        this.biases[i][j] = newValue;
+    }
+
+    public void generateWeights(int numLayers, int numNeurons, int inputs, int outputs) {
 
         for (int n = 0; n < numNeurons; n++) {
 
@@ -47,7 +66,7 @@ public class Genome {
 
     }
 
-    private void generateBiases(int numLayers, int numNeurons, int inputs, int outputs) {
+    public void generateBiases(int numLayers, int numNeurons, int inputs, int outputs) {
 
         for (int i = 0; i < inputs; i++) {
             biases[0][i] = Math.random() - 0.5;
