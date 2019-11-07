@@ -143,6 +143,9 @@ public class Biom {
 
         for (PreyAI generatedPreyAI : AI_prey) {
             generatedPreyAI.move(model.getModel());
+            if (generatedPreyAI.getEnergy() < 0.001) {
+                generations.deathPrey(generatedPreyAI);
+            }
 
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {

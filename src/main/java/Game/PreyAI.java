@@ -48,10 +48,20 @@ public class PreyAI extends Prey {
         return ai.getGenome();
     }
 
+    void energyCost() {
+        energy -= 0.01;
+
+        if (x < 180 || x > 1100) {
+            energy -= 0.05;
+        }
+    }
+
     public void isDead() {
-        this.energy = 0.0;
-        this.isAlive = false;
-        System.out.println("death: " + this.getId() + " score: " + this.getScore());
+        if (this.isAlive) {
+            this.energy = 0.0;
+            this.isAlive = false;
+            System.out.println("death: " + this.getId() + " score: " + this.getScore());
+        }
     }
 
     void updateScore() {

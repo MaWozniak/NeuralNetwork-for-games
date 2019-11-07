@@ -25,17 +25,21 @@ class GenerationMemory {
 
     void add(PreyAI preyAI) {
 
-        if (genomes.size() < size) {
-            preyAI.getGenome().setId(preyAI.getId());
-            preyAI.getGenome().setScore(preyAI.getScore());
-            genomes.add(preyAI.getGenome());
-        } else if (preyAI.getScore() > genomes.get(size - 1).getScore()) {
-            preyAI.getGenome().setId(preyAI.getId());
-            preyAI.getGenome().setScore(preyAI.getScore());
-            genomes.set(size - 1, preyAI.getGenome());
-        }
+        if (!genomes.contains(preyAI.getGenome())) {
 
-        genomes.sort(Comparator.comparing(Genome::getScore).reversed());
+            if (genomes.size() < size) {
+                preyAI.getGenome().setId(preyAI.getId());
+                preyAI.getGenome().setScore(preyAI.getScore());
+                genomes.add(preyAI.getGenome());
+            } else if (preyAI.getScore() > genomes.get(size - 1).getScore()) {
+                preyAI.getGenome().setId(preyAI.getId());
+                preyAI.getGenome().setScore(preyAI.getScore());
+                genomes.set(size - 1, preyAI.getGenome());
+            }
+
+            genomes.sort(Comparator.comparing(Genome::getScore).reversed());
+
+        }
 
         avarageScore = (avarageScore * countAdding + preyAI.getScore()) / (countAdding + 1);
         countAdding++;

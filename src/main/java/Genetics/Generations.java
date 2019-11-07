@@ -144,6 +144,14 @@ public class Generations {
             System.out.println("\n-----------------------");
             System.out.println("\nBest prey: " + generationMemory.get(0).getId() + " score: " + generationMemory.get(0).getScore());
             System.out.println("\n-----------------------");
+
+            System.out.println("PAST genes to next gen: \ngenerationMemory.getSelectedGenomes().size(): " + generationMemory.getSelectedGenomes().size());
+
+            for (int i = 0; i < generationMemory.getSelectedGenomes().size(); i++) {
+                System.out.println(i + " - " + generationMemory.get(i).getId());
+            }
+            System.out.println("\n-----------------------\n");
+
             System.out.println("AVARAGE score of THIS GENERATION: " + generationMemory.getAvarageScore());
             System.out.println("AVARAGE score of ALL GENERATION: " + this.avarageScoreOfAllGenerations);
             System.out.println("AVARAGE score of BEST GENERATION: " + this.bestScoreOfALLGenerations + " ( " + this.indexOfBestGeneration + " generation )");
