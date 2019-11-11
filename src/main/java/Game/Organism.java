@@ -62,4 +62,12 @@ class Organism {
     public double getRadians() {
         return radians;
     }
+
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public int getDirectionAngle() {
+        return directionAngle;
+    }
 }

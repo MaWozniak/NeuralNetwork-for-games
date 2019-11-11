@@ -47,27 +47,27 @@ class GeneticsMethods {
         for (int i = 0; i < 5; i++) {
             Genome parent = pastGeneration.get(i);
             for (int j = 0; j < 5 - i; j++) {
-                newBorns.add(mutation(parent, 0.5, 0.2));
+                newBorns.add(mutation(parent, 0.6, 0.75));
             }
         }
     }
 
     private void randomize(int num) {
         for (int i = 0; i < num; i++) {
-            Genome newGenome = new Genome(3, 30, 5, 2, true);
-            newGenome.generateWeights(3, 30, 5, 2);
-            newGenome.generateBiases(3, 30, 5, 2);
+            Genome newGenome = new Genome(3, 30, 14, 2, true);
+            newGenome.generateWeights(3, 30, 14, 2);
+            newGenome.generateBiases(3, 30, 14, 2);
             newBorns.add(newGenome);
         }
     }
 
     private Genome selectMutation(Genome parent1, Genome parent2) {
         Genome newGenome = selection(parent1, parent2);
-        return mutation(newGenome, 0.51, 0.25);
+        return mutation(newGenome, 0.6, 0.35);
     }
 
     private Genome selection(Genome parent1, Genome parent2) {
-        Genome newGenome = new Genome(3, 30, 5, 2, true);
+        Genome newGenome = new Genome(3, 30, 14, 2, true);
         for (int n = 0; n < parent1.getWeights()[0][1].length; n++) {
 
             for (int i = 0; i < parent1.getWeights().length; i++) {
