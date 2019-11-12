@@ -3,6 +3,7 @@ package Game;
 import Genetics.Generations;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Biom {
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
 
-    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) {
+    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) throws IOException {
 
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
@@ -40,7 +41,7 @@ public class Biom {
         this.lifecycleThread.setMillis(1000 / framerate);
     }
 
-    void lifecycle() {
+    void lifecycle() throws IOException {
 
         organismsMoves();
         modelViewSet();
@@ -98,7 +99,7 @@ public class Biom {
         if (predators.size() == 0) this.addNewPredators(number);
     }
 
-    private void checkGenerations() {
+    private void checkGenerations() throws IOException {
         if (AI_prey.size() == 0) {
             generations.addNewGeneration();
         }

@@ -3,6 +3,9 @@ package Genetics;
 import Game.PreyAI;
 import NeuralNetwork.Genome;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,7 @@ public class Generations {
 
     private GeneticsMethods geneticsMethods;
 
-    private List<GenerationMemory> listGenerationMemory;
+    //private List<GenerationMemory> listGenerationMemory;
     private GenerationMemory generationMemory;
     private List<PreyAI> AI_prey;
     private int generationSize;
@@ -32,27 +35,30 @@ public class Generations {
         this.geneticsMethods = new GeneticsMethods();
         this.AI_prey = AI_prey;
         this.generationSize = size;
-        this.listGenerationMemory = new ArrayList<>();
+        //this.listGenerationMemory = new ArrayList<>();
     }
 
-    public void addFirstGeneration() {
+    public void addFirstGeneration() throws IOException {
 
         log("start");
         randomGeneration();
         generationMemory = new GenerationMemory(count, 10);
-        listGenerationMemory.add(generationMemory);
+        //listGenerationMemory.add(generationMemory);
+
         count++;
     }
 
-    public void addNewGeneration() {
+    public void addNewGeneration() throws IOException {
 
         updateAvaregeScores();
         updateBestIndividualScores();
         log("summary");
 
+        writeFileLog();
+
         geneticsNewGeneration(generationMemory.getSelectedGenomes());
         generationMemory = new GenerationMemory(count, 10);
-        listGenerationMemory.add(generationMemory);
+        //listGenerationMemory.add(generationMemory);
 
         log("start");
         count++;
@@ -160,14 +166,29 @@ public class Generations {
             System.out.println("2nd prey of ALL GENERATION: " + idOfSecondBestScore + " score: " + secondBestScore);
             System.out.println("3rd prey of ALL GENERATION: " + idOfthirdBestScore + " score: " + thirdBestScore);
             System.out.println("\n\nlist of all:");
-            for (int i = 0; i < listGenerationMemory.size(); i++) {
-                System.out.print("--" + (i + 1) + "--\t" + listGenerationMemory.get(i).getAvarageScore() + "\t");
-                if ((i + 1) % 3 == 0) {
-                    System.out.println();
-                }
-            }
+//            for (int i = 0; i < listGenerationMemory.size(); i++) {
+//                System.out.print("--" + (i + 1) + "--\t" + listGenerationMemory.get(i).getAvarageScore() + "\t");
+//                if ((i + 1) % 3 == 0) {
+//                    System.out.println();
+//                }
+//            }
             System.out.println("\n-------------------------\n");
             System.out.println("\n...START NEW GENERATION...\n");
         }
+    }
+
+    private void writeFileLog() throws IOException {
+        String fileContent = "GENERATION " + count + "\n";
+        if (count >= 1) {
+            for (int i = 0; i < generationMemory.getSize(); i++) {
+                fileContent += "Genome nr " + i + ": ";
+                fileContent += generationMemory.get(i).saveToMemory();
+                fileContent += "\n";
+            }
+        }
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/IdeaProjects/gameNeuralNet_LOGS/generation_" + count + ".txt"));
+        writer.write(fileContent);
+        writer.close();
+
     }
 }

@@ -101,4 +101,9 @@ public class Genome {
         System.out.println(Arrays.deepToString(this.weights));
         System.out.println(Arrays.deepToString(this.biases));
     }
+
+    public String saveToMemory() {
+        return this.toString() + "\n" + "weights: \n" + Arrays.deepToString(this.getWeights())
+                + "\nbiases: \n" + Arrays.deepToString(this.getBiases()) + "\n\n- - - - - - - - - - - - -\n";
+    }
 }

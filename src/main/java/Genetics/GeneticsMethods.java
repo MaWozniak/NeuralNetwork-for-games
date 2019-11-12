@@ -47,7 +47,7 @@ class GeneticsMethods {
         for (int i = 0; i < 5; i++) {
             Genome parent = pastGeneration.get(i);
             for (int j = 0; j < 5 - i; j++) {
-                newBorns.add(mutation(parent, 0.6, 0.75));
+                newBorns.add(mutation(parent, 0.65, 0.25));
             }
         }
     }
@@ -63,7 +63,7 @@ class GeneticsMethods {
 
     private Genome selectMutation(Genome parent1, Genome parent2) {
         Genome newGenome = selection(parent1, parent2);
-        return mutation(newGenome, 0.6, 0.35);
+        return mutation(newGenome, 0.15, 0.75);
     }
 
     private Genome selection(Genome parent1, Genome parent2) {
