@@ -13,7 +13,7 @@ public class Generations {
 
     private GeneticsMethods geneticsMethods;
 
-    //private List<GenerationMemory> listGenerationMemory;
+    private List<Double> generationsScoresList;
     private GenerationMemory generationMemory;
     private List<PreyAI> AI_prey;
     private int generationSize;
@@ -35,7 +35,7 @@ public class Generations {
         this.geneticsMethods = new GeneticsMethods();
         this.AI_prey = AI_prey;
         this.generationSize = size;
-        //this.listGenerationMemory = new ArrayList<>();
+        this.generationsScoresList = new ArrayList<>();
     }
 
     public void addFirstGeneration() throws IOException {
@@ -43,7 +43,6 @@ public class Generations {
         log("start");
         randomGeneration();
         generationMemory = new GenerationMemory(count, 10);
-        //listGenerationMemory.add(generationMemory);
 
         count++;
     }
@@ -58,7 +57,6 @@ public class Generations {
 
         geneticsNewGeneration(generationMemory.getSelectedGenomes());
         generationMemory = new GenerationMemory(count, 10);
-        //listGenerationMemory.add(generationMemory);
 
         log("start");
         count++;
@@ -166,27 +164,26 @@ public class Generations {
             System.out.println("2nd prey of ALL GENERATION: " + idOfSecondBestScore + " score: " + secondBestScore);
             System.out.println("3rd prey of ALL GENERATION: " + idOfthirdBestScore + " score: " + thirdBestScore);
             System.out.println("\n\nlist of all:");
-//            for (int i = 0; i < listGenerationMemory.size(); i++) {
-//                System.out.print("--" + (i + 1) + "--\t" + listGenerationMemory.get(i).getAvarageScore() + "\t");
-//                if ((i + 1) % 3 == 0) {
-//                    System.out.println();
-//                }
-//            }
+            generationsScoresList.add(generationMemory.getAvarageScore());
+            for (int i = 0; i < generationsScoresList.size(); i++) {
+                System.out.print("--" + (i + 1) + "--\t" + generationsScoresList.get(i) + "\t");
+                if ((i + 1) % 3 == 0) {
+                    System.out.println();
+                }
+            }
             System.out.println("\n-------------------------\n");
             System.out.println("\n...START NEW GENERATION...\n");
         }
     }
 
     private void writeFileLog() throws IOException {
-        String fileContent = "GENERATION " + count + "\n";
-        if (count >= 1) {
-            for (int i = 0; i < generationMemory.getSize(); i++) {
-                fileContent += "Genome nr " + i + ": ";
-                fileContent += generationMemory.get(i).saveToMemory();
-                fileContent += "\n";
-            }
+        String fileContent = "GENERATION " + (count - 1) + "\n";
+        for (int i = 0; i < generationMemory.getSize(); i++) {
+            fileContent += "Genome nr " + i + " id-" + generationMemory.get(i).getId() + ": ";
+            fileContent += generationMemory.get(i).saveToMemory();
+            fileContent += "\n";
         }
-        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/IdeaProjects/gameNeuralNet_LOGS/generation_" + count + ".txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/IdeaProjects/gameNeuralNet_LOGS/generation_" + (count - 1) + ".txt"));
         writer.write(fileContent);
         writer.close();
 
