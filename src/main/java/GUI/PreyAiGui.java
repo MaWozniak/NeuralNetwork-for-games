@@ -7,7 +7,7 @@ public class PreyAiGui {
     public PreyAiGui() {
     }
 
-    public void paint(Graphics2D g, double x, double y, double radians, double energy) {
+    public void paint(Graphics2D g, double x, double y, double angle, double energy) {
 
         g.setColor(Color.BLUE);
         //g.setColor(Color.GREEN);
@@ -16,48 +16,51 @@ public class PreyAiGui {
         //temp direction point:
         g.setColor(Color.CYAN);
         //x = x * 50 * Math.cos; y = y * 50 * Math.sin
-        g.fillOval(((int) x - 5) + (int) (55.0 * Math.cos(radians)), ((int) y - 5) + (int) (55.0 * Math.sin(radians)), 5, 5);
+        g.fillOval(((int) x - 5) + (int) (55.0 * Math.sin(angle)), ((int) y - 5) - (int) (55.0 * Math.cos(angle)), 5, 5);
 
 
-        g.fillOval(((int) x - 5) + (int) (40.0 * Math.cos(radians) - (int) (50.0 * Math.sin(radians))),
-                ((int) y - 5) + (int) (40.0 * Math.sin(radians) + (int) (50.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) + (int) (50.0 * Math.cos(angle) + (int) (40.0 * Math.sin(angle))),
+                ((int) y - 5) + (int) (50.0 * Math.sin(angle) - (int) (40.0 * Math.cos(angle))),
                 5,
                 5);
-        g.fillOval(((int) x - 5) + (int) (40.0 * Math.cos(radians) + (int) (50.0 * Math.sin(radians))),
-                ((int) y - 5) + (int) (40.0 * Math.sin(radians) - (int) (50.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) - (int) (50.0 * Math.cos(angle) - (int) (40.0 * Math.sin(angle))),
+                ((int) y - 5) - (int) (50.0 * Math.sin(angle) + (int) (40.0 * Math.cos(angle))),
                 5,
                 5);
+
+
+        //all point of view:
+
         /*
-
-        all point of view:
-
         g.setColor(Color.RED);
-        g.fillOval(((int) x - 5) + (int) (8.0 * Math.cos(radians)), ((int) y - 5) + (int) (8.0 * Math.sin(radians)), 5, 5);
-        g.fillOval(((int) x - 5) - (int) (14.0 * Math.cos(radians) + (int) (14.0 * Math.sin(radians))),
-                ((int) y - 5) - (int) (14.0 * Math.sin(radians) - (int) (14.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) + (int) (6.0 * Math.sin(angle)), ((int) y - 5) - (int) (6.0 * Math.cos(angle)), 5, 5);
+
+        g.fillOval(((int) x - 5) + (int) (18.0 * Math.cos(angle) - (int) (18.0 * Math.sin(angle))),
+                ((int) y - 5) + (int) (18.0 * Math.sin(angle) + (int) (18.0 * Math.cos(angle))),
                 5,
                 5);
-        g.fillOval(((int) x - 5) - (int) (14.0 * Math.cos(radians) - (int) (14.0 * Math.sin(radians))),
-                ((int) y - 5) - (int) (14.0 * Math.sin(radians) + (int) (14.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) - (int) (18.0 * Math.cos(angle) + (int) (18.0 * Math.sin(angle))),
+                ((int) y - 5) - (int) (18.0 * Math.sin(angle) - (int) (18.0 * Math.cos(angle))),
                 5,
                 5);
-        g.fillOval(((int) x - 5) + (int) (25.0 * Math.cos(radians) + (int) (20.0 * Math.sin(radians))),
-                ((int) y - 5) + (int) (25.0 * Math.sin(radians) - (int) (20.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) + (int) (20.0 * Math.cos(angle) + (int) (25.0 * Math.sin(angle))),
+                ((int) y - 5) + (int) (20.0 * Math.sin(angle) - (int) (25.0 * Math.cos(angle))),
                 5,
                 5);
-        g.fillOval(((int) x - 5) + (int) (25.0 * Math.cos(radians) - (int) (20.0 * Math.sin(radians))),
-                ((int) y - 5) + (int) (25.0 * Math.sin(radians) + (int) (20.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) - (int) (20.0 * Math.cos(angle) - (int) (25.0 * Math.sin(angle))),
+                ((int) y - 5) - (int) (20.0 * Math.sin(angle) + (int) (25.0 * Math.cos(angle))),
                 5,
                 5);
-        g.fillOval(((int) x - 5) + (int) (10.0 * Math.cos(radians) + (int) (40.0 * Math.sin(radians))),
-                ((int) y - 5) + (int) (10.0 * Math.sin(radians) - (int) (40.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) + (int) (40.0 * Math.cos(angle) + (int) (10.0 * Math.sin(angle))),
+                ((int) y - 5) + (int) (40.0 * Math.sin(angle) - (int) (10.0 * Math.cos(angle))),
                 5,
                 5);
-        g.fillOval(((int) x - 5) + (int) (10.0 * Math.cos(radians) - (int) (40.0 * Math.sin(radians))),
-                ((int) y - 5) + (int) (10.0 * Math.sin(radians) + (int) (40.0 * Math.cos(radians))),
+        g.fillOval(((int) x - 5) - (int) (40.0 * Math.cos(angle) - (int) (10.0 * Math.sin(angle))),
+                ((int) y - 5) - (int) (40.0 * Math.sin(angle) + (int) (10.0 * Math.cos(angle))),
                 5,
                 5);
          */
+
         g.setColor(Color.DARK_GRAY);
         if (energy < 60) {
             g.setColor(Color.GRAY);

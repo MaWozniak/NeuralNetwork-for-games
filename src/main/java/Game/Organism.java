@@ -7,9 +7,17 @@ class Organism {
     double y;
     double energy;
     boolean isAlive;
-    double velocity;
-    int directionAngle;
-    double radians;
+    double speed;
+    double angle;
+    double maxSpeed;
+    double acc;
+    double dec;
+    double turnSpeed;
+
+    boolean up = false;
+    boolean down = false;
+    boolean left = false;
+    boolean right = false;
 
     void move(char[][] model) {
     }
@@ -24,6 +32,10 @@ class Organism {
     }
 
     void setPosition() {
+    }
+
+    void steering() {
+
     }
 
     void energyCost() {
@@ -59,15 +71,11 @@ class Organism {
         return energy;
     }
 
-    public double getRadians() {
-        return radians;
+    double getAngle() {
+        return angle;
     }
 
-    public double getVelocity() {
-        return velocity;
-    }
-
-    public int getDirectionAngle() {
-        return directionAngle;
+    double getSpeed() {
+        return speed;
     }
 }

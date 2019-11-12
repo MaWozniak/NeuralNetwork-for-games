@@ -54,9 +54,9 @@ class GeneticsMethods {
 
     private void randomize(int num) {
         for (int i = 0; i < num; i++) {
-            Genome newGenome = new Genome(3, 30, 14, 2, true);
-            newGenome.generateWeights(3, 30, 14, 2);
-            newGenome.generateBiases(3, 30, 14, 2);
+            Genome newGenome = new Genome(3, 30, 13, 4, true);
+            newGenome.generateWeights(3, 30, 13, 4);
+            newGenome.generateBiases(3, 30, 13, 4);
             newBorns.add(newGenome);
         }
     }
@@ -67,7 +67,7 @@ class GeneticsMethods {
     }
 
     private Genome selection(Genome parent1, Genome parent2) {
-        Genome newGenome = new Genome(3, 30, 14, 2, true);
+        Genome newGenome = new Genome(3, 30, 13, 4, true);
         for (int n = 0; n < parent1.getWeights()[0][1].length; n++) {
 
             for (int i = 0; i < parent1.getWeights().length; i++) {

@@ -28,7 +28,7 @@ public class PreyAI extends Prey {
 
     void paint(Graphics2D g) {
         if (isAlive()) {
-            preyAiGui.paint(g, this.x, this.y, this.radians, this.energy);
+            preyAiGui.paint(g, this.x, this.y, this.angle, this.energy);
         }
     }
 

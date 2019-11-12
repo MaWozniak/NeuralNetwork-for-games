@@ -18,14 +18,12 @@ class PreyLogicAI {
 
     void thinking(char[][] model, PreyAI preyAI) {
 
-        OutputMove move = blackBox.move(model, preyAI.getX(), preyAI.getY(), preyAI.getRadians(), preyAI.getVelocity(), preyAI.getDirectionAngle(), preyAI.getEnergy());
+        OutputMove move = blackBox.move(model, preyAI.getX(), preyAI.getY(), preyAI.getAngle(), preyAI.getSpeed(), preyAI.getEnergy());
 
-        int updateDirection = move.getAngle();
-        double acceleration = move.getAccelleration();
-
-        preyAI.directionAngle += updateDirection;
-        preyAI.velocity += acceleration;
-        preyAI.radians = (Math.PI / 180) * (preyAI.directionAngle);
+        preyAI.up = move.isUp();
+        preyAI.down = move.isDown();
+        preyAI.right = move.isRight();
+        preyAI.left = move.isLeft();
 
     }
 

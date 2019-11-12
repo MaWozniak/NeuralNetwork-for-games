@@ -11,46 +11,86 @@ class PredatorLogicSimple {
 
     void thinking(char[][] model, Predator predator) {
 
-        int updateDirection = updateMovement.getDirection();
-        double acceleration = updateMovement.getAcceleration();
-
-        predator.directionAngle += updateDirection;
-        predator.velocity += acceleration;
-        predator.radians = (Math.PI / 180) * (predator.directionAngle);
-
-        double radians = (Math.PI / 180) * (predator.directionAngle);
+        predator.up = updateMovement.isUp();
+        predator.down = updateMovement.isDown();
+        predator.left = updateMovement.isLeft();
+        predator.right = updateMovement.isRight();
 
         //EYES of the main.Predator
-        int k = ((int) predator.getX() - 5) + (int) (90.0 * Math.cos(radians));
-        int l = ((int) predator.getY() - 5) + (int) (90.0 * Math.sin(radians));
-
-        //////////////////////////////////////
-        // this change  direction instantly when predator see "out of borders" - to fix
+        int k = ((int) predator.getX() - 5) + (int) (90.0 * Math.sin(predator.angle));
+        int l = ((int) predator.getY() - 5) - (int) (90.0 * Math.cos(predator.angle));
         if (k < 170 || l < 0 || k > 1020 || l > 850) {
-            predator.directionAngle -= 180;
+            predator.right = true;
         }
-        //////////////////////////////////////
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
             if (model[k][l] == 'X') {
-                // directionAngle = 0;
-                predator.velocity = 1.2 * predator.velocity;
+                predator.up = true;
             }
         }
-        k = ((int) predator.getX() - 5) + (int) (50.0 * Math.cos(radians) - (int) (70.0 * Math.sin(radians)));
-        l = ((int) predator.getY() - 5) + (int) (50.0 * Math.sin(radians) + (int) (70.0 * Math.cos(radians)));
+
+        k = ((int) predator.getX() - 5) + (int) (55.0 * Math.sin(predator.angle));
+        l = ((int) predator.getY() - 5) - (int) (55.0 * Math.cos(predator.angle));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
             if (model[k][l] == 'X') {
-                predator.directionAngle = predator.directionAngle + 10;
-                predator.velocity = 1.2 * predator.velocity;
+                predator.up = true;
             }
         }
-        k = ((int) predator.getX() - 5) + (int) (50.0 * Math.cos(radians) + (int) (70.0 * Math.sin(radians)));
-        l = ((int) predator.getY() - 5) + (int) (50.0 * Math.sin(radians) - (int) (70.0 * Math.cos(radians)));
+
+        k = ((int) predator.getX() - 5) + (int) (50.0 * Math.cos(predator.angle) + (int) (70.0 * Math.sin(predator.angle)));
+        l = ((int) predator.getY() - 5) + (int) (50.0 * Math.sin(predator.angle) - (int) (70.0 * Math.cos(predator.angle)));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
             if (model[k][l] == 'X') {
-                predator.directionAngle = predator.directionAngle + 10;
-                predator.velocity = 1.2 * predator.velocity;
+                predator.right = true;
+                predator.up = true;
             }
+        }
+
+        k = ((int) predator.getX() - 5) - (int) (50.0 * Math.cos(predator.angle) - (int) (70.0 * Math.sin(predator.angle)));
+        l = ((int) predator.getY() - 5) - (int) (50.0 * Math.sin(predator.angle) + (int) (70.0 * Math.cos(predator.angle)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                predator.left = true;
+                predator.up = true;
+            }
+        }
+        k = ((int) predator.getX() - 5) + (int) (80.0 * Math.cos(predator.angle) + (int) (35.0 * Math.sin(predator.angle)));
+        l = ((int) predator.getY() - 5) + (int) (80.0 * Math.sin(predator.angle) - (int) (35.0 * Math.cos(predator.angle)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                predator.right = true;
+                predator.up = true;
+            }
+        }
+
+        k = ((int) predator.getX() - 5) - (int) (80.0 * Math.cos(predator.angle) - (int) (35.0 * Math.sin(predator.angle)));
+        l = ((int) predator.getY() - 5) - (int) (80.0 * Math.sin(predator.angle) + (int) (35.0 * Math.cos(predator.angle)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                predator.left = true;
+                predator.up = true;
+            }
+        }
+
+        k = ((int) predator.getX() - 5) + (int) (35.0 * Math.cos(predator.angle) + (int) (30.0 * Math.sin(predator.angle)));
+        l = ((int) predator.getY() - 5) + (int) (35.0 * Math.sin(predator.angle) - (int) (30.0 * Math.cos(predator.angle)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                predator.right = true;
+                predator.up = true;
+            }
+        }
+
+        k = ((int) predator.getX() - 5) - (int) (35.0 * Math.cos(predator.angle) - (int) (30.0 * Math.sin(predator.angle)));
+        l = ((int) predator.getY() - 5) - (int) (35.0 * Math.sin(predator.angle) + (int) (30.0 * Math.cos(predator.angle)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'X') {
+                predator.left = true;
+                predator.up = true;
+            }
+        }
+
+        if (predator.energy < 45) {
+            predator.up = true;
         }
     }
 }

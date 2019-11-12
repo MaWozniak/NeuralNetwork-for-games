@@ -3,8 +3,10 @@ package Game;
 public class UpdateMovement extends Thread {
 
     private int millis;
-    private int direction = 0;
-    private double acceleration = 0.0;
+    private boolean up = false;
+    private boolean down = false;
+    private boolean left = false;
+    private boolean right = false;
 
     UpdateMovement(int framerate) {
         this.millis = 1000 / framerate;
@@ -14,8 +16,10 @@ public class UpdateMovement extends Thread {
 
         while (true) {
 
-            direction = (int) (20 * Math.random() - 10.0);
-            acceleration = 0.8 * ((Math.random() / 5) - 0.1);
+            up = Math.random() > 0.5;
+            down = Math.random() > 0.5;
+            right = Math.random() > 0.5;
+            left = Math.random() > 0.5;
 
             try {
                 Thread.sleep(millis);
@@ -25,13 +29,19 @@ public class UpdateMovement extends Thread {
         }
     }
 
-    int getDirection() {
-        return direction;
+    public boolean isUp() {
+        return up;
     }
 
-    double getAcceleration() {
-        return acceleration;
+    public boolean isDown() {
+        return down;
     }
 
+    public boolean isLeft() {
+        return left;
+    }
 
+    public boolean isRight() {
+        return right;
+    }
 }

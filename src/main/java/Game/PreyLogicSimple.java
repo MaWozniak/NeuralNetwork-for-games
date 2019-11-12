@@ -11,39 +11,61 @@ class PreyLogicSimple {
 
     void thinking(char[][] model, Prey prey) {
 
-        int updateDirection = updateMovement.getDirection();
-        double acceleration = updateMovement.getAcceleration();
+        prey.up = updateMovement.isUp();
+        prey.down = updateMovement.isDown();
+        prey.left = updateMovement.isLeft();
+        prey.right = updateMovement.isRight();
 
-        prey.directionAngle += updateDirection;
-        prey.velocity += acceleration;
-        prey.radians = (Math.PI / 180) * (prey.directionAngle);
-
-        double radians = (Math.PI / 180) * (prey.directionAngle);
-
-        //EYES of the main.Prey
-        int k = (int) prey.getX() - 5 + (int) (90.0 * Math.cos(radians));
-        int l = (int) prey.getY() - 5 + (int) (90.0 * Math.sin(radians));
+        //EYES:
+        int k = (int) prey.getX() - 5 + (int) (50.0 * Math.sin(prey.angle));
+        int l = (int) prey.getY() - 5 - (int) (50.0 * Math.cos(prey.angle));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
             if (model[k][l] == 'P') {
-                prey.directionAngle = -prey.directionAngle;
-                prey.velocity += 2 * prey.velocity;
+                prey.left = true;
+                prey.up = true;
+            }
+            if (prey.energy < 100 & model[k][l] == 'F') {
+                prey.up = true;
             }
         }
-        k = ((int) prey.getX() - 5) + (int) (40.0 * Math.cos(radians) - (int) (40.0 * Math.sin(radians)));
-        l = ((int) prey.getY() - 5) + (int) (40.0 * Math.sin(radians) + (int) (40.0 * Math.cos(radians)));
+
+        k = (int) prey.getX() - 5 + (int) (10.0 * Math.sin(prey.angle));
+        l = (int) prey.getY() - 5 - (int) (10.0 * Math.cos(prey.angle));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
-            if (model[k][l] == 'P') {
-                prey.directionAngle = prey.directionAngle - 30;
-                prey.velocity = 2 * prey.velocity;
+            if (prey.energy < 130 & model[k][l] == 'F') {
+                prey.down = true;
+            }
+            if (prey.energy > 130 & model[k][l] == 'M') {
+                prey.down = true;
             }
         }
-        k = ((int) prey.getX() - 5) + (int) (40.0 * Math.cos(radians) + (int) (40.0 * Math.sin(radians)));
-        l = ((int) prey.getY() - 5) + (int) (40.0 * Math.sin(radians) - (int) (40.0 * Math.cos(radians)));
+
+        k = ((int) prey.getX() - 5) + (int) (40.0 * Math.cos(prey.angle) + (int) (20.0 * Math.sin(prey.angle)));
+        l = ((int) prey.getY() - 5) + (int) (40.0 * Math.sin(prey.angle) - (int) (20.0 * Math.cos(prey.angle)));
         if (k > 0 && l > 0 && k < 1250 && l < 850) {
             if (model[k][l] == 'P') {
-                prey.directionAngle = prey.directionAngle + 30;
-                prey.velocity = 2 * prey.velocity;
+                prey.left = true;
+                prey.up = true;
             }
+            if (model[k][l] == 'F') {
+                prey.right = true;
+            }
+        }
+
+        k = ((int) prey.getX() - 5) - (int) (40.0 * Math.cos(prey.angle) - (int) (20.0 * Math.sin(prey.angle)));
+        l = ((int) prey.getY() - 5) - (int) (40.0 * Math.sin(prey.angle) + (int) (20.0 * Math.cos(prey.angle)));
+        if (k > 0 && l > 0 && k < 1250 && l < 850) {
+            if (model[k][l] == 'P') {
+                prey.right = true;
+                prey.up = true;
+            }
+            if (model[k][l] == 'F') {
+                prey.left = true;
+            }
+        }
+
+        if (prey.energy < 35 & prey.speed == 0) {
+            prey.up = true;
         }
     }
 }

@@ -46,10 +46,15 @@ class NeuralNetwork {
             //ADD BIAS
             layer2[i] += bias[i];
 
-            // ACTIVATION FUNCTION: Sigmoid Function / Try also STEP FUNCTION & SINUS
+            // ACTIVATION FUNCTION: Sigmoid Function // Try also STEP FUNCTION & SINUS
             //layer2[i] = 1 / (1 + Math.exp(layer2[i]));
-            // STEP:
-            //if(layer2[i] >= 0){layer2[i] = 1;} else {layer2[i] = 0;}
+
+            // ACTIVATION FUNCTION: Step
+            if (layer2[i] >= 0) {
+                layer2[i] = 1;
+            } else {
+                layer2[i] = 0;
+            }
         }
 
     }

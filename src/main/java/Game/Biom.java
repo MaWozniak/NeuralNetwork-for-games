@@ -152,7 +152,6 @@ public class Biom {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 20)) {
                     if (generatedPredator.getEnergy() < 260) {
                         generations.deathPrey(generatedPreyAI);
-                        //generatedPreyAI.isDead();
                         generatedPredator.eat();
                     }
                 }
@@ -167,10 +166,10 @@ public class Biom {
             model.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P', 40);
         }
         for (PreyAI generatedPreyAI : AI_prey) {
-            model.set((int) generatedPreyAI.getX(), (int) generatedPreyAI.getY(), 'X', 25);
+            model.set((int) generatedPreyAI.getX(), (int) generatedPreyAI.getY(), 'X', 12);
         }
         for (Prey generatedPrey : prey) {
-            model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 25);
+            model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 12);
         }
 
         model.repaintGui();
