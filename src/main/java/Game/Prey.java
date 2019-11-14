@@ -43,7 +43,8 @@ class Prey extends Organism {
 
     void feed() {
         if ((x > 400 && x < 450 && y > 500 && y < 680) || (x > 700 && x < 750 && y > 120 && y < 300)) {
-            energy += 0.5;
+            //if (((x > 400 && x < 450 && y > 500 && y < 680) || (x > 700 && x < 750 && y > 120 && y < 300)) && speed>0.1) {
+            energy += 0.05;
         }
         double maxEnergy = 150;
         if (energy > maxEnergy) {
@@ -107,10 +108,15 @@ class Prey extends Organism {
     }
 
     void energyCost() {
-        energy -= 0.01;
+        energy -= 0.01 * speed / 5;
 
         if (x < 180 || x > 1100) {
-            energy -= 0.05;
+            energy -= 0.05 * speed / 5;
+        }
+
+        //force to move
+        if (energy < 100 & speed < 1) {
+            energy -= 0.1;
         }
 
         //DEAD:

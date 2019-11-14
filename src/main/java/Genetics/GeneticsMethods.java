@@ -12,9 +12,14 @@ class GeneticsMethods {
     private int numOnlySelection = 12;
     private int numOnlyMutation = 10;
     private int numNewRandom = 3;
+    private int neuNetNumLeyers = 2;
+    private int neuNetNeurons = 12;
+    private int neuNetInputs = 12;
+    private int neuNetOutputs = 4;
 
     List<Genome> newGenePool(List<Genome> pastGeneration, int newGenerationSize) {
 
+        newBorns.clear();
         selectionPlusMutation(pastGeneration, numSelectionPlusMutation);
         onlySelection(pastGeneration, numOnlySelection);
         onlyMutation(pastGeneration, numOnlyMutation);
@@ -47,27 +52,33 @@ class GeneticsMethods {
         for (int i = 0; i < 5; i++) {
             Genome parent = pastGeneration.get(i);
             for (int j = 0; j < 5 - i; j++) {
-                newBorns.add(mutation(parent, 0.65, 0.25));
+                //light mutaion
+                //newBorns.add(mutation(parent, 0.5, 0.1));
+                //hard mutation
+                //newBorns.add(mutation(parent, 0.3, 0.999));
+                newBorns.add(mutation(parent, 0.05));
             }
         }
     }
 
     private void randomize(int num) {
         for (int i = 0; i < num; i++) {
-            Genome newGenome = new Genome(3, 30, 13, 4, true);
-            newGenome.generateWeights(3, 30, 13, 4);
-            newGenome.generateBiases(3, 30, 13, 4);
+            Genome newGenome = new Genome(neuNetNumLeyers, neuNetNeurons, neuNetInputs, neuNetOutputs, true);
+            newGenome.generateWeights(neuNetNumLeyers, neuNetNeurons, neuNetInputs, neuNetOutputs);
+            newGenome.generateBiases(neuNetNumLeyers, neuNetNeurons, neuNetInputs, neuNetOutputs);
             newBorns.add(newGenome);
         }
     }
 
     private Genome selectMutation(Genome parent1, Genome parent2) {
         Genome newGenome = selection(parent1, parent2);
-        return mutation(newGenome, 0.15, 0.75);
+        //hard mutation
+        //return mutation(newGenome, 0.2, 0.95);
+        return mutation(newGenome, 0.01);
     }
 
     private Genome selection(Genome parent1, Genome parent2) {
-        Genome newGenome = new Genome(3, 30, 13, 4, true);
+        Genome newGenome = new Genome(neuNetNumLeyers, neuNetNeurons, neuNetInputs, neuNetOutputs, true);
         for (int n = 0; n < parent1.getWeights()[0][1].length; n++) {
 
             for (int i = 0; i < parent1.getWeights().length; i++) {
@@ -96,7 +107,7 @@ class GeneticsMethods {
         return newGenome;
     }
 
-    private Genome mutation(Genome genome, double percent, double max) {
+    private Genome mutation(Genome genome, double percent) {
         for (int n = 0; n < genome.getWeights()[0][1].length; n++) {
 
             for (int i = 0; i < genome.getWeights().length; i++) {
@@ -104,8 +115,7 @@ class GeneticsMethods {
                 for (int j = 0; j < genome.getWeights()[0].length; j++) {
                     double x = Math.random();
                     if (x > +percent) {
-                        double changeValue = genome.getWeights()[i][j][n];
-                        changeValue += max * (Math.random() - 0.5);
+                        double changeValue = 2 * Math.random() - 0.5;
                         genome.setWeight(i, j, n, changeValue);
                     }
                 }
@@ -115,8 +125,7 @@ class GeneticsMethods {
             for (int j = 0; j < genome.getBiases()[0].length; j++) {
                 double x = Math.random();
                 if (x > +percent) {
-                    double changeValue = genome.getBiases()[i][j];
-                    changeValue += max * (Math.random() - 0.5);
+                    double changeValue = 2 * Math.random() - 0.5;
                     genome.setBias(i, j, changeValue);
                 }
             }

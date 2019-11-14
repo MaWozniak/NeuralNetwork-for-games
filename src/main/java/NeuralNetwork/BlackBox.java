@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public class BlackBox {
 
-    private NeuralNetwork neuralNetwork = new NeuralNetwork(13, 4, 3, 30, true);
+    //private NeuralNetwork neuralNetwork = new NeuralNetwork(13, 4, 3, 30, true);
+    private NeuralNetwork neuralNetwork = new NeuralNetwork(12, 4, 2, 12, true);
 
     public BlackBox() {
     }
@@ -13,7 +14,7 @@ public class BlackBox {
         this.neuralNetwork.injectGenome(genome);
     }
 
-    public OutputMove move(char[][] model, double xPos, double yPos, double angle, double velocity, double energy) {
+    public OutputMove move(char[][] model, double xPos, double yPos, double angle, double speed, double energy) {
 
         int x = (int) xPos - 5 + (int) (55.0 * Math.sin(angle));
         int y = (int) yPos - 5 - (int) (55.0 * Math.cos(angle));
@@ -189,7 +190,7 @@ public class BlackBox {
 
         //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
         double[] input = {convField1, convField2, convField3, convField4, convField5, convField6, convField7,
-                convField8, convField9, convField10, angle, velocity, energy};
+                convField8, convField9, convField10, speed / 15, energy / 150};
 
         double[] output = neuralNetwork.generate(input);
 

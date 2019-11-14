@@ -52,15 +52,15 @@ public class Genome {
         for (int n = 0; n < numNeurons; n++) {
 
             for (int i = 0; i < inputs; i++) {
-                weights[0][i][n] = Math.random() - 0.5;
+                weights[0][i][n] = 2 * Math.random() - 1;
             }
             for (int i = 1; i < numLayers + 1; i++) {
                 for (int j = 0; j < numNeurons; j++) {
-                    weights[i][j][n] = Math.random() - 0.5;
+                    weights[i][j][n] = 2 * Math.random() - 1;
                 }
             }
             for (int i = 0; i < outputs; i++) {
-                weights[numLayers + 1][i][n] = Math.random() - 0.5;
+                weights[numLayers + 1][i][n] = 2 * Math.random() - 1;
             }
         }
 
@@ -69,15 +69,15 @@ public class Genome {
     public void generateBiases(int numLayers, int numNeurons, int inputs, int outputs) {
 
         for (int i = 0; i < inputs; i++) {
-            biases[0][i] = Math.random() - 0.5;
+            biases[0][i] = 2 * Math.random() - 1;
         }
         for (int i = 1; i < numLayers + 1; i++) {
             for (int j = 0; j < numNeurons; j++) {
-                biases[i][j] = Math.random() - 0.5;
+                biases[i][j] = 2 * Math.random() - 1;
             }
         }
         for (int i = 0; i < outputs; i++) {
-            biases[numLayers + 1][i] = Math.random() - 0.5;
+            biases[numLayers + 1][i] = 2 * Math.random() - 1;
         }
     }
 

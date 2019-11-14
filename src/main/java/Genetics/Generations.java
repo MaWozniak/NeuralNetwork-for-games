@@ -13,6 +13,7 @@ public class Generations {
 
     private GeneticsMethods geneticsMethods;
 
+    private List<Genome> newGenePool;
     private List<Double> generationsScoresList;
     private GenerationMemory generationMemory;
     private List<PreyAI> AI_prey;
@@ -33,6 +34,7 @@ public class Generations {
 
     public Generations(List<PreyAI> AI_prey, int size) {
         this.geneticsMethods = new GeneticsMethods();
+        this.newGenePool = new ArrayList<>();
         this.AI_prey = AI_prey;
         this.generationSize = size;
         this.generationsScoresList = new ArrayList<>();
@@ -56,6 +58,11 @@ public class Generations {
         writeFileLog();
 
         geneticsNewGeneration(generationMemory.getSelectedGenomes());
+
+        // IS THIS HELP FOR CRASH?
+        generationMemory.getSelectedGenomes().clear();
+        //generationMemory = null;
+
         generationMemory = new GenerationMemory(count, 10);
 
         log("start");
@@ -75,12 +82,15 @@ public class Generations {
 
     private void geneticsNewGeneration(List<Genome> genomes) {
 
-        List<Genome> newGenePool = geneticsMethods.newGenePool(genomes, generationSize);
+        newGenePool.clear();
+        newGenePool = geneticsMethods.newGenePool(genomes, generationSize);
 
         for (int i = 0; i < generationSize; i++) {
 
-            double xStartPos = 1150 * Math.random();
-            double yStartPos = 750 * Math.random();
+//            double xStartPos = 1150 * Math.random();
+//            double yStartPos = 750 * Math.random();
+            double xStartPos = 450 + 50 * Math.random();
+            double yStartPos = 300 + 50 * Math.random();
 
             //INJECTION GENOMES (!)
             PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, newGenePool.get(i));
@@ -177,15 +187,31 @@ public class Generations {
     }
 
     private void writeFileLog() throws IOException {
-        String fileContent = "GENERATION " + (count - 1) + "\n";
+
+        StringBuffer fileContent = new StringBuffer();
+
+        fileContent.append("GENERATION ").append(count - 1).append("\n");
+
+        fileContent.append("\nAVARAGE score of THIS GENERATION: ").append(generationMemory.getAvarageScore());
+        fileContent.append("\nAVARAGE score of ALL GENERATION: ").append(this.avarageScoreOfAllGenerations);
+        fileContent.append("\nAVARAGE score of BEST GENERATION: ").append(this.bestScoreOfALLGenerations).append(" ( ").append(this.indexOfBestGeneration).append(" generation )");
+        fileContent.append("\n--------------------------------------");
+
+        fileContent.append("\n\n1st prey of ALL GENERATION: ").append(idOfBestScore).append(" score: ").append(bestScore);
+        fileContent.append("\n2nd prey of ALL GENERATION: ").append(idOfSecondBestScore).append(" score: ").append(secondBestScore);
+        fileContent.append("\n3rd prey of ALL GENERATION: ").append(idOfthirdBestScore).append(" score: ").append(thirdBestScore);
+        fileContent.append("\n--------------------------------------");
+
         for (int i = 0; i < generationMemory.getSize(); i++) {
-            fileContent += "Genome nr " + i + " id-" + generationMemory.get(i).getId() + ": ";
-            fileContent += generationMemory.get(i).saveToMemory();
-            fileContent += "\n";
+            fileContent.append("\n\nGenome nr ").append(i).append(" id-").append(generationMemory.get(i).getId()).append(": ");
+            fileContent.append(generationMemory.get(i).saveToMemory());
+            fileContent.append("\n");
         }
+
         BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/IdeaProjects/gameNeuralNet_LOGS/generation_" + (count - 1) + ".txt"));
-        writer.write(fileContent);
+        writer.write(String.valueOf(fileContent));
         writer.close();
 
+        fileContent.setLength(0);
     }
 }
