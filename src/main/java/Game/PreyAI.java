@@ -53,7 +53,7 @@ public class PreyAI extends Prey {
         //energy -= 0.01 * speed/10;
 
         if (x < 180 || x > 1100) {
-            energy -= 0.03;
+            energy -= 0.01;
             //energy -= 0.03 * speed/10;
         }
 

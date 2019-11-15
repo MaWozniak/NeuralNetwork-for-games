@@ -190,7 +190,7 @@ public class BlackBox {
 
         //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
         double[] input = {convField1, convField2, convField3, convField4, convField5, convField6, convField7,
-                convField8, convField9, convField10, speed / 15, energy / 150};
+                convField8, convField9, convField10, speed / 15, 1 - (energy / 150)};
 
         double[] output = neuralNetwork.generate(input);
 
@@ -205,21 +205,21 @@ public class BlackBox {
 
     private double convCharToDbl(char ch) {
 
-        double converted = 0.5; // nothing == '0'
+        double converted = 0.4; // nothing == '0'
         if (ch == 'F') { // feed
             //coverted = 0.99;
-            converted = 0.99;
+            converted = 0.0;
         }
         if (ch == 'M') { // hide place
             //converted = 0.75;
-            converted = 0.45;
+            converted = 0.3;
         }
         if (ch == 'X') { // another prey
             //converted = 0.55;
-            converted = 0.55;
+            converted = 0.5;
         }
         if (ch == 'P') { //predator
-            converted = 0.0;
+            converted = 2.0;
         }
         return converted;
     }
