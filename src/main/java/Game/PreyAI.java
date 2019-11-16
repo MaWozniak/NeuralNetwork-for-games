@@ -11,15 +11,18 @@ public class PreyAI extends Prey {
     private PreyAiGui preyAiGui = new PreyAiGui();
     private String id;
     private double score = 0.0;
+    private boolean energyCost;
 
-    public PreyAI(double xStartPos, double yStartPos) {
+    public PreyAI(double xStartPos, double yStartPos, boolean energyCost, boolean forcedMove) {
         super(xStartPos, yStartPos);
-        ai = new PreyLogicAI();
+        ai = new PreyLogicAI(forcedMove);
+        this.energyCost = energyCost;
     }
 
-    public PreyAI(double xStartPos, double yStartPos, Genome genome) {
+    public PreyAI(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove) {
         super(xStartPos, yStartPos);
-        ai = new PreyLogicAI(genome);
+        ai = new PreyLogicAI(genome, forcedMove);
+        this.energyCost = energyCost;
     }
 
     void thinking(char[][] model) {
@@ -49,17 +52,19 @@ public class PreyAI extends Prey {
     }
 
     void energyCost() {
-        energy -= 0.01;
-        //energy -= 0.01 * speed/10;
-
-        if (x < 180 || x > 1100) {
+        if (energyCost) {
             energy -= 0.01;
-            //energy -= 0.03 * speed/10;
-        }
+            //energy -= 0.01 * speed/10;
 
-        //force to move
-        if (energy < 100 & speed < 1) {
-            energy -= 0.07;
+            if (x < 180 || x > 1100) {
+                energy -= 0.01;
+                //energy -= 0.03 * speed/10;
+            }
+
+            //force to move
+            if (energy < 100 & speed < 1) {
+                energy -= 0.07;
+            }
         }
     }
 

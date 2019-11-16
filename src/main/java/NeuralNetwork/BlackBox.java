@@ -219,7 +219,7 @@ public class BlackBox {
             converted = 0.5;
         }
         if (ch == 'P') { //predator
-            converted = 2.0;
+            converted = 5.0;
         }
         return converted;
     }

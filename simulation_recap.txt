@@ -1,0 +1,24 @@
+At the moment - IT'S NOT WORKING
+
+There is 4 mayor element of the experiment, that could not work:
+
+ - SIMULATION GAME
+    - the problem itself could be very hard to train or to understand for NN
+    - game mechanics could be not very reasonable on make sense
+
+    for example: predators can be not very good at their job,
+    many times the best preys in the generation are just for lucky, not for their behavior
+
+ - OUTPUT-INPUT between Sim and Neural Network
+    - it could be not clear and not understable output from game simulation
+    - interpretation of this output could be misleading
+
+ - GENETICS METHODS
+    - it could pass not a best genes but do too much mutation
+    - it could be wrong writting and not working like it should do
+    - or it has bad assumption: wrong mutation limit, wrong number od randomness etc
+
+ - NEURAL NETWORK
+    - it could be wrong writting and not working like it should do
+    - or it's size: number of layers or neurons is not correct
+

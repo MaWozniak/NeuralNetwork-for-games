@@ -19,6 +19,8 @@ public class Generations {
     private List<PreyAI> AI_prey;
     private int generationSize;
     private int count = 1;
+    private boolean preyAiEnergyCost;
+    private boolean preyForcedMove;
 
     private double avarageScoreOfAllGenerations = 0.0;
     private double bestScoreOfALLGenerations = 0.0;
@@ -32,15 +34,17 @@ public class Generations {
     private String idOfthirdBestScore = "";
 
 
-    public Generations(List<PreyAI> AI_prey, int size) {
+    public Generations(List<PreyAI> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove) {
         this.geneticsMethods = new GeneticsMethods();
         this.newGenePool = new ArrayList<>();
         this.AI_prey = AI_prey;
         this.generationSize = size;
         this.generationsScoresList = new ArrayList<>();
+        this.preyAiEnergyCost = preyAiEnergyCost;
+        this.preyForcedMove = preyForcedMove;
     }
 
-    public void addFirstGeneration() throws IOException {
+    public void addFirstGeneration() {
 
         log("start");
         randomGeneration();
@@ -74,7 +78,7 @@ public class Generations {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove);
             newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
         }
@@ -87,13 +91,11 @@ public class Generations {
 
         for (int i = 0; i < generationSize; i++) {
 
-//            double xStartPos = 1150 * Math.random();
-//            double yStartPos = 750 * Math.random();
             double xStartPos = 500 + 150 * Math.random();
             double yStartPos = 350 + 150 * Math.random();
 
             //INJECTION GENOMES (!)
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, newGenePool.get(i));
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, newGenePool.get(i), preyAiEnergyCost, preyForcedMove);
             newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
         }

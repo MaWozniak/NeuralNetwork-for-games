@@ -18,14 +18,23 @@ public class Biom {
     private int predatorsNumber;
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
+    private boolean hiddenPlaces;
+    private boolean preyAiEnergyCost;
+    private boolean preyForcedMove;
+    private boolean predatorsEnergyCost;
 
-    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate) throws IOException {
+    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model,
+         int organismUpdateFramerate, boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove) throws IOException {
 
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
+        this.preyAiEnergyCost = preyAiEnergyCost;
+        this.preyForcedMove = preyForcedMove;
         this.addNewPreys(numPrey);
-        this.generations = new Generations(AI_prey, numAIPrey);
+        this.generations = new Generations(AI_prey, numAIPrey, preyAiEnergyCost, preyForcedMove);
         this.generations.addFirstGeneration();
+        this.hiddenPlaces = hiddenPlaces;
+        this.predatorsEnergyCost = predatorsEnergyCost;
         this.predatorsNumber = numPred;
         this.addNewPredators(numPred);
         Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
@@ -89,7 +98,7 @@ public class Biom {
 
             double xStartPos = 800 * Math.random() + 150;
             double yStartPos = 750 * Math.random();
-            Predator newPredator = new Predator(xStartPos, yStartPos, organismUpdateFramerate);
+            Predator newPredator = new Predator(xStartPos, yStartPos, organismUpdateFramerate, this.hiddenPlaces, this.predatorsEnergyCost);
 
             predators.add(newPredator);
         }
@@ -117,7 +126,7 @@ public class Biom {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove);
             AI_prey.add(newPreyAI);
         }
     }

@@ -1,3 +1,15 @@
+- Rethink Genetics Methods - amount of mutation and number of new random genomes
+
+- ? Maybe - change input to simple 0 or 1;
+smaller number of view point but different for every information for example:
+3 point for predator (0,1)
+3 point for feed + one where Prey is standing
++ 3 for other prey and hide places
+
+- VERY accurate tracking of what is happend in neural network; in every perceptron
+
+//In future - to consider add dynamic mutation system: genetics mutation smaller when progress, higher when static
+
 - 3 different Simulation scenario -
 
 A) main - prey + predators + hide places + feed places;
@@ -11,8 +23,6 @@ We teach prey to feed in feed places ONLY!
 
 Add some kind of bonus for active prey - to avoid passing through prey that don't move
 Maybe food can be placed in many small pieces on the board
-
-//In future - to consider add dynamic mutation system: genetics mutation smaller when progress, higher when static
 
 0.1) check Memory (RAM) - for 1000 generations etc? Is Garbage Collector doing good job? ;)
 

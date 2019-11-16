@@ -7,7 +7,7 @@ public class Genome {
     private double[][][] weights;
     private double[][] biases;
     private double score;
-    private String id;
+    private String id = "";
 
     public Genome() {
     }
@@ -97,7 +97,11 @@ public class Genome {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id + "-" + this.id;
+    }
+
+    public void appendId(String info) {
+        this.id += info;
     }
 
     void printOut() {

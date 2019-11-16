@@ -9,17 +9,21 @@ class Predator extends Organism {
     private PredatorLogicSimple predatorLogicSimple;
     private PredatorGui predatorGui;
 
-    private double maxSpeed = 15;
+    private double maxSpeed = 9;
     private double acc = 0.3;
     private double dec = 0.5;
     private double turnSpeed = 0.2;
+    private boolean energyCost;
+    private boolean hiddenPlaces;
 
-    Predator(double xStartPos, double yStartPos, int updateFramerate) {
+    Predator(double xStartPos, double yStartPos, int updateFramerate, boolean hiddenPlaces, boolean energyCost) {
         this.x = xStartPos;
         this.y = yStartPos;
         this.isAlive = true;
         this.energy = 130;
         this.speed = 1.0;
+        this.hiddenPlaces = hiddenPlaces;
+        this.energyCost = energyCost;
         predatorGui = new PredatorGui();
         predatorLogicSimple = new PredatorLogicSimple(updateFramerate);
     }
@@ -31,13 +35,14 @@ class Predator extends Organism {
     }
 
     void eat() {
-        energy += 25;
+        if (energyCost) {
+            energy += 25;
 
-        double maxEnergy = 300;
-        if (energy > maxEnergy) {
-            energy = maxEnergy;
+            double maxEnergy = 300;
+            if (energy > maxEnergy) {
+                energy = maxEnergy;
+            }
         }
-
     }
 
     void thinking(char[][] model) {
@@ -45,22 +50,24 @@ class Predator extends Organism {
     }
 
     void energyCost() {
-        energy -= 0.04;
+        if (energyCost) {
+            energy -= 0.04;
 
-        //FULL & TIRED:
-        if (energy > 250) {
-            speed -= 0.35;
-            angle = (int) (0.3 * angle);
-        }
+            //FULL & TIRED:
+            if (energy > 250) {
+                speed -= 0.35;
+                angle = (int) (0.3 * angle);
+            }
 
-        //DEAD:
-        if (energy <= 0) {
-            isAlive = false;
+            //DEAD:
+            if (energy <= 0) {
+                isAlive = false;
+            }
         }
     }
 
     void velocityLimits() {
-        if (speed > 13.0) {
+        if (speed > 9.0) {
             down = true;
         }
         if (speed < -0.1) {
@@ -114,8 +121,13 @@ class Predator extends Organism {
         x += Math.sin(angle) * speed;
         y -= Math.cos(angle) * speed;
 
-        int rightBorder = 1010;
-        int leftBorder = 190;
+        int leftBorder = 22;
+        int rightBorder = 1178;
+
+        if (hiddenPlaces) {
+            leftBorder = 190;
+            rightBorder = 1010;
+        }
         borderBouncing(leftBorder, rightBorder);
     }
 
