@@ -6,15 +6,19 @@ import NeuralNetwork.Genome;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Generations {
 
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
+
     private GeneticsMethods geneticsMethods;
 
     private List<Genome> newGenePool;
     private List<Double> generationsScoresList;
+    private List<Double> generationsAverageList;
     private GenerationMemory generationMemory;
     private List<PreyAI> AI_prey;
     private int generationSize;
@@ -41,6 +45,7 @@ public class Generations {
         this.AI_prey = AI_prey;
         this.generationSize = size;
         this.generationsScoresList = new ArrayList<>();
+        this.generationsAverageList = new ArrayList<>();
         this.preyAiEnergyCost = preyAiEnergyCost;
         this.preyForcedMove = preyForcedMove;
         this.preyAging = preyAging;
@@ -179,8 +184,10 @@ public class Generations {
             System.out.println("3rd prey of ALL GENERATION: " + idOfthirdBestScore + " score: " + thirdBestScore);
             System.out.println("\n\nlist of all:");
             generationsScoresList.add(generationMemory.getAvarageScore());
+            generationsAverageList.add(this.avarageScoreOfAllGenerations);
             for (int i = 0; i < generationsScoresList.size(); i++) {
-                System.out.print("--" + (i + 1) + "--\t" + generationsScoresList.get(i) + "\t");
+                System.out.print("--" + (i + 1) + "--\t\t " + df2.format(generationsScoresList.get(i)) + "  \t\t ( "
+                        + df2.format(generationsAverageList.get(i)) + " )" + "\t\t  ");
                 if ((i + 1) % 3 == 0) {
                     System.out.println();
                 }

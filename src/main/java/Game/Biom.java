@@ -23,14 +23,16 @@ public class Biom {
     private boolean preyForcedMove;
     private boolean predatorsEnergyCost;
     private boolean preyAging;
+    private double preyMaxAge;
 
     Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate,
-         boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
+         boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging, double preyMaxAge) {
 
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
         this.preyAiEnergyCost = preyAiEnergyCost;
         this.preyAging = preyAging;
+        this.preyMaxAge = preyMaxAge;
         this.preyForcedMove = preyForcedMove;
         this.addNewPreys(numPrey);
         this.generations = new Generations(AI_prey, numAIPrey, preyAiEnergyCost, preyForcedMove, preyAging);
@@ -145,7 +147,7 @@ public class Biom {
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 20)) {
-                    if (generatedPredator.getEnergy() < 260) {
+                    if (generatedPredator.getEnergy() < 250) {
                         generatedPrey.isDead();
                         generatedPredator.eat();
                     }
@@ -158,7 +160,7 @@ public class Biom {
             if (generatedPreyAI.getEnergy() < 0.001) {
                 generations.deathPrey(generatedPreyAI);
             }
-            if (generatedPreyAI.getAge() > 250.0) {
+            if (generatedPreyAI.getAge() > preyMaxAge) {
                 generations.deathPrey(generatedPreyAI);
             }
 

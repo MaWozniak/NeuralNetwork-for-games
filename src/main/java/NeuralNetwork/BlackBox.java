@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BlackBox {
 
     //private NeuralNetwork neuralNetwork = new NeuralNetwork(13, 4, 3, 30, true);
-    private NeuralNetwork neuralNetwork = new NeuralNetwork(9, 4, 1, 9, true);
+    private NeuralNetwork neuralNetwork = new NeuralNetwork(9, 4, 2, 9, true);
 
     public BlackBox() {
     }
@@ -208,18 +208,18 @@ public class BlackBox {
         double converted = 0.0; // nothing == '0'
         if (ch == 'F') { // feed
             //coverted = 0.99;
-            converted = 1.0;
+            converted = 2.0;
         }
         if (ch == 'M') { // hide place
             //converted = 0.75;
-            converted = 0.0;
+            converted = 0.2;
         }
         if (ch == 'X') { // another prey
             //converted = 0.55;
-            converted = 0.1;
+            converted = 0.5;
         }
         if (ch == 'P') { //predator
-            converted = 0.0;
+            converted = -2.0;
         }
         return converted;
     }

@@ -44,13 +44,13 @@ class NeuralNetwork {
                 layer2[i] += weights[j][i] * layer1[j];
             }
             //ADD BIAS
-            layer2[i] += bias[i];
+            // layer2[i] += bias[i];
 
             // ACTIVATION FUNCTION: Sigmoid Function // Try also STEP FUNCTION & SINUS
             //layer2[i] = 1 / (1 + Math.exp(layer2[i]));
 
             // ACTIVATION FUNCTION: Step
-            if (layer2[i] >= 0) {
+            if (layer2[i] > 0) {
                 layer2[i] = 1;
             } else {
                 layer2[i] = 0;
