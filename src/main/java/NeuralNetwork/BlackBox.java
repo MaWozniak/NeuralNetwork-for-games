@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BlackBox {
 
     //private NeuralNetwork neuralNetwork = new NeuralNetwork(13, 4, 3, 30, true);
-    private NeuralNetwork neuralNetwork = new NeuralNetwork(7, 4, 1, 7, true);
+    private NeuralNetwork neuralNetwork = new NeuralNetwork(9, 4, 1, 9, true);
 
     public BlackBox() {
     }
@@ -34,8 +34,8 @@ public class BlackBox {
         char field1 = model[x][y];
         double convField1 = convCharToDbl(field1);
 
-        x = (int) xPos - 5 + (int) (6.0 * Math.sin(angle));
-        y = (int) yPos - 5 - (int) (6.0 * Math.cos(angle));
+        x = (int) xPos - 5 + (int) (3.0 * Math.sin(angle));
+        y = (int) yPos - 5 - (int) (3.0 * Math.cos(angle));
         if (x < 0) {
             x = 0;
         } // TO REFACTOR!
@@ -189,7 +189,7 @@ public class BlackBox {
         double convField10 = convCharToDbl(field10);
 
         //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
-        double[] input = {convField1, convField2, convField3, convField5, convField6, convField9, convField10};
+        double[] input = {convField1, convField2, convField3, convField4, convField5, convField6, convField9, convField10, energy / 150};
 
         double[] output = neuralNetwork.generate(input);
 

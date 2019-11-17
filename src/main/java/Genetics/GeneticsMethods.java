@@ -13,8 +13,8 @@ class GeneticsMethods {
     private int numOnlyMutation = 20;
     private int numNewRandom = 5;
     private int neuNetNumLeyers = 1;
-    private int neuNetNeurons = 7;
-    private int neuNetInputs = 7;
+    private int neuNetNeurons = 9;
+    private int neuNetInputs = 9;
     private int neuNetOutputs = 4;
 
     List<Genome> newGenePool(List<Genome> pastGeneration, int newGenerationSize) {
