@@ -11,35 +11,21 @@ class GeneticsMethods {
     private int numSelectionPlusMutation = 25;
     private int numOnlySelection = 5;
     private int numOnlyMutation = 20;
-    private int numNewRandom = 2;
-    private int neuNetNumLeyers = 2;
-    private int neuNetNeurons = 12;
-    private int neuNetInputs = 12;
+    private int numNewRandom = 5;
+    private int neuNetNumLeyers = 1;
+    private int neuNetNeurons = 7;
+    private int neuNetInputs = 7;
     private int neuNetOutputs = 4;
 
     List<Genome> newGenePool(List<Genome> pastGeneration, int newGenerationSize) {
 
         newBorns.clear();
         selectionPlusMutation(pastGeneration, numSelectionPlusMutation);
-        for (int i = 0; i < newBorns.size(); i++) {
-            System.out.println(i + " - " + newBorns.get(i).getId());
-        }
         onlySelection(pastGeneration, numOnlySelection);
-        for (int i = 0; i < newBorns.size(); i++) {
-            System.out.println(i + " - " + newBorns.get(i).getId());
-        }
-        onlyMutation(pastGeneration, numOnlyMutation, 2);
-        for (int i = 0; i < newBorns.size(); i++) {
-            System.out.println(i + " - " + newBorns.get(i).getId());
-        }
-        onlyMutation(pastGeneration, numOnlyMutation, 1);
-        for (int i = 0; i < newBorns.size(); i++) {
-            System.out.println(i + " - " + newBorns.get(i).getId());
-        }
+        onlyMutation(pastGeneration, numOnlyMutation, 0.5);
+        onlyMutation(pastGeneration, numOnlyMutation, 3.33);
         randomize(numNewRandom);
-        for (int i = 0; i < newBorns.size(); i++) {
-            System.out.println(i + " - " + newBorns.get(i).getId());
-        }
+
         return newBorns;
     }
 
@@ -55,9 +41,9 @@ class GeneticsMethods {
     }
 
     private void onlySelection(List<Genome> pastGeneration, int num) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             Genome parent1 = pastGeneration.get(i);
-            for (int j = i; j < 3; j++) {
+            for (int j = i; j < 4; j++) {
                 Genome parent2 = pastGeneration.get(j);
                 newBorns.add(selection(parent1, parent2));
             }
@@ -86,7 +72,7 @@ class GeneticsMethods {
 
     private Genome selectMutation(Genome parent1, Genome parent2) {
         Genome newGenome = selection(parent1, parent2);
-        return mutation(newGenome, 5.0);
+        return mutation(newGenome, 2.0);
     }
 
     private Genome selection(Genome parent1, Genome parent2) {
@@ -140,7 +126,7 @@ class GeneticsMethods {
                 double x = 100 * Math.random();
                 if (x > +percent) {
                     //double changeValue = 2 * Math.random() - 1;
-                    double changeValue = 1;
+                    double changeValue = 0.2;
                     genome.setBias(i, j, changeValue);
                 }
             }

@@ -21,6 +21,7 @@ public class Generations {
     private int count = 1;
     private boolean preyAiEnergyCost;
     private boolean preyForcedMove;
+    private boolean preyAging;
 
     private double avarageScoreOfAllGenerations = 0.0;
     private double bestScoreOfALLGenerations = 0.0;
@@ -34,7 +35,7 @@ public class Generations {
     private String idOfthirdBestScore = "";
 
 
-    public Generations(List<PreyAI> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove) {
+    public Generations(List<PreyAI> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
         this.geneticsMethods = new GeneticsMethods();
         this.newGenePool = new ArrayList<>();
         this.AI_prey = AI_prey;
@@ -42,6 +43,7 @@ public class Generations {
         this.generationsScoresList = new ArrayList<>();
         this.preyAiEnergyCost = preyAiEnergyCost;
         this.preyForcedMove = preyForcedMove;
+        this.preyAging = preyAging;
     }
 
     public void addFirstGeneration() {
@@ -78,7 +80,7 @@ public class Generations {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove, preyAging);
             newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
         }
@@ -91,11 +93,11 @@ public class Generations {
 
         for (int i = 0; i < generationSize; i++) {
 
-            double xStartPos = 500 + 150 * Math.random();
-            double yStartPos = 350 + 150 * Math.random();
+            double xStartPos = 400 + 100 * Math.random();
+            double yStartPos = 250 + 100 * Math.random();
 
             //INJECTION GENOMES (!)
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, newGenePool.get(i), preyAiEnergyCost, preyForcedMove);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, newGenePool.get(i), preyAiEnergyCost, preyForcedMove, preyAging);
             newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
         }

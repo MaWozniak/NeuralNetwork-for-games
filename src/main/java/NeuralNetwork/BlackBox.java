@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BlackBox {
 
     //private NeuralNetwork neuralNetwork = new NeuralNetwork(13, 4, 3, 30, true);
-    private NeuralNetwork neuralNetwork = new NeuralNetwork(12, 4, 2, 12, true);
+    private NeuralNetwork neuralNetwork = new NeuralNetwork(7, 4, 1, 7, true);
 
     public BlackBox() {
     }
@@ -189,8 +189,7 @@ public class BlackBox {
         double convField10 = convCharToDbl(field10);
 
         //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
-        double[] input = {convField1, convField2, convField3, convField4, convField5, convField6, convField7,
-                convField8, convField9, convField10, speed / 15, 1 - (energy / 150)};
+        double[] input = {convField1, convField2, convField3, convField5, convField6, convField9, convField10};
 
         double[] output = neuralNetwork.generate(input);
 
@@ -205,21 +204,22 @@ public class BlackBox {
 
     private double convCharToDbl(char ch) {
 
-        double converted = 0.4; // nothing == '0'
+        //double converted = 0.5;
+        double converted = 0.0; // nothing == '0'
         if (ch == 'F') { // feed
             //coverted = 0.99;
-            converted = 0.0;
+            converted = 1.0;
         }
         if (ch == 'M') { // hide place
             //converted = 0.75;
-            converted = 0.3;
+            converted = 0.0;
         }
         if (ch == 'X') { // another prey
             //converted = 0.55;
-            converted = 0.5;
+            converted = 0.1;
         }
         if (ch == 'P') { //predator
-            converted = 5.0;
+            converted = 0.0;
         }
         return converted;
     }

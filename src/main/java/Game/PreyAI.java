@@ -12,17 +12,21 @@ public class PreyAI extends Prey {
     private String id;
     private double score = 0.0;
     private boolean energyCost;
+    private boolean aging;
+    private double age = 0.0;
 
-    public PreyAI(double xStartPos, double yStartPos, boolean energyCost, boolean forcedMove) {
+    public PreyAI(double xStartPos, double yStartPos, boolean energyCost, boolean forcedMove, boolean aging) {
         super(xStartPos, yStartPos);
         ai = new PreyLogicAI(forcedMove);
         this.energyCost = energyCost;
+        this.aging = aging;
     }
 
-    public PreyAI(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove) {
+    public PreyAI(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove, boolean aging) {
         super(xStartPos, yStartPos);
         ai = new PreyLogicAI(genome, forcedMove);
         this.energyCost = energyCost;
+        this.aging = aging;
     }
 
     void thinking(char[][] model) {
@@ -66,6 +70,9 @@ public class PreyAI extends Prey {
                 energy -= 0.07;
             }
         }
+        if (aging) {
+            age += 0.01;
+        }
     }
 
     public void isDead() {
@@ -82,5 +89,9 @@ public class PreyAI extends Prey {
 
     public double getScore() {
         return score;
+    }
+
+    public double getAge() {
+        return age;
     }
 }

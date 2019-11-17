@@ -22,16 +22,18 @@ public class Biom {
     private boolean preyAiEnergyCost;
     private boolean preyForcedMove;
     private boolean predatorsEnergyCost;
+    private boolean preyAging;
 
-    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model,
-         int organismUpdateFramerate, boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove) throws IOException {
+    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate,
+         boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
 
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
         this.preyAiEnergyCost = preyAiEnergyCost;
+        this.preyAging = preyAging;
         this.preyForcedMove = preyForcedMove;
         this.addNewPreys(numPrey);
-        this.generations = new Generations(AI_prey, numAIPrey, preyAiEnergyCost, preyForcedMove);
+        this.generations = new Generations(AI_prey, numAIPrey, preyAiEnergyCost, preyForcedMove, preyAging);
         this.generations.addFirstGeneration();
         this.hiddenPlaces = hiddenPlaces;
         this.predatorsEnergyCost = predatorsEnergyCost;
@@ -126,7 +128,7 @@ public class Biom {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove, preyAging);
             AI_prey.add(newPreyAI);
         }
     }
@@ -154,6 +156,9 @@ public class Biom {
         for (PreyAI generatedPreyAI : AI_prey) {
             generatedPreyAI.move(model.getModel());
             if (generatedPreyAI.getEnergy() < 0.001) {
+                generations.deathPrey(generatedPreyAI);
+            }
+            if (generatedPreyAI.getAge() > 250.0) {
                 generations.deathPrey(generatedPreyAI);
             }
 
