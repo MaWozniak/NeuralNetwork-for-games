@@ -212,11 +212,11 @@ public class BlackBox {
         }
         if (ch == 'M') { // hide place
             //converted = 0.75;
-            converted = 0.2;
+            converted = 0.0;
         }
         if (ch == 'X') { // another prey
             //converted = 0.55;
-            converted = 0.5;
+            converted = -0.1;
         }
         if (ch == 'P') { //predator
             converted = -2.0;

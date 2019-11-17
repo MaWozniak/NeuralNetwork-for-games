@@ -48,6 +48,10 @@ public class Genome {
         this.weights[i][j][k] = newValue;
     }
 
+    public void changeWeight(int i, int j, int k, double addValue) {
+        this.weights[i][j][k] += addValue;
+    }
+
     public void setBias(int i, int j, double newValue) {
         this.biases[i][j] = newValue;
     }

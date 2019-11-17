@@ -67,7 +67,7 @@ public class PreyAI extends Prey {
 
             //force to move
             if (energy < 100 & speed < 1) {
-                energy -= 0.07;
+                energy -= 0.02;
             }
         }
         if (aging) {
