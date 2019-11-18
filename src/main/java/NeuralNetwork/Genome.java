@@ -106,7 +106,7 @@ public class Genome {
     }
 
     public void setId(String id) {
-        this.id = id + "-" + this.id;
+        this.id = id;
     }
 
     public void appendId(String info) {

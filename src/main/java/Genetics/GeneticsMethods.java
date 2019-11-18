@@ -41,27 +41,27 @@ class GeneticsMethods {
 
     private void strongMutation(List<Genome> pastGeneration) {
         for (int i = 0; i < 10; i++) {
-            newBorns.get(i).clone(mutation(pastGeneration.get(0), 15 * Math.random()));
+            newBorns.get(i).clone(mutation(pastGeneration.get(0), 10 * Math.random()));
             newBorns.get(i).setId("Smut-" + 0 + "-" + i);
         }
         for (int i = 0; i < 10; i++) {
-            newBorns.get(i + 10).clone(mutation(pastGeneration.get(1), 15 * Math.random()));
+            newBorns.get(i + 10).clone(mutation(pastGeneration.get(1), 10 * Math.random()));
             newBorns.get(i + 10).setId("Smut-" + 1 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 20).clone(mutation(pastGeneration.get(2), 25 * Math.random()));
+            newBorns.get(i + 20).clone(mutation(pastGeneration.get(2), 15 * Math.random()));
             newBorns.get(i + 20).setId("Smut-" + 2 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 25).clone(mutation(pastGeneration.get(3), 25 * Math.random()));
+            newBorns.get(i + 25).clone(mutation(pastGeneration.get(3), 15 * Math.random()));
             newBorns.get(i + 25).setId("Smut-" + 3 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 30).clone(mutation(pastGeneration.get(4), 25 * Math.random()));
+            newBorns.get(i + 30).clone(mutation(pastGeneration.get(4), 20 * Math.random()));
             newBorns.get(i + 30).setId("Smut-" + 4 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 35).clone(mutation(pastGeneration.get(5), 30 * Math.random()));
+            newBorns.get(i + 35).clone(mutation(pastGeneration.get(5), 25 * Math.random()));
             newBorns.get(i + 35).setId("Smut-" + 5 + "-" + i);
         }
     }
