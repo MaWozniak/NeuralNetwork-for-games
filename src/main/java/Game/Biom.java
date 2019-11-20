@@ -109,7 +109,7 @@ public class Biom {
     }
 
     private void checkPredators(int number) {
-        if (predators.size() == 0) this.addNewPredators(number);
+        if (predators.size() < number) this.addNewPredators(number);
     }
 
     private void checkGenerations() throws IOException {

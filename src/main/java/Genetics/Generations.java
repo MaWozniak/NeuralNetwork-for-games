@@ -98,8 +98,8 @@ public class Generations {
 
         for (int i = 0; i < generationSize; i++) {
 
-            double xStartPos = 400 + 100 * Math.random();
-            double yStartPos = 250 + 100 * Math.random();
+            double xStartPos = 400 + 250 * Math.random();
+            double yStartPos = 250 + 250 * Math.random();
 
             //INJECTION GENOMES (!)
             PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, newGenePool.get(i), preyAiEnergyCost, preyForcedMove, preyAging);

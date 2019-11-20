@@ -12,9 +12,9 @@ class GeneticsMethods {
     private int numOnlySelection = 5;
     private int numOnlyMutation = 20;
     private int numNewRandom = 5;
-    private int neuNetNumLeyers = 2;
-    private int neuNetNeurons = 9;
-    private int neuNetInputs = 9;
+    private int neuNetNumLeyers = 1;
+    private int neuNetNeurons = 10;
+    private int neuNetInputs = 10;
     private int neuNetOutputs = 4;
 
     List<Genome> newGenePool(List<Genome> pastGeneration, int newGenerationSize) {
@@ -30,7 +30,7 @@ class GeneticsMethods {
         //        randomize(numNewRandom);
 
         strongMutation(pastGeneration);
-        strongSelection(pastGeneration);
+        //strongSelection(pastGeneration);
 
         for (Genome newBorn : newBorns) {
             System.out.println(newBorn.getId());
@@ -41,35 +41,45 @@ class GeneticsMethods {
 
     private void strongMutation(List<Genome> pastGeneration) {
         for (int i = 0; i < 10; i++) {
-            newBorns.get(i).clone(mutation(pastGeneration.get(0), 10 * Math.random()));
+            newBorns.get(i).clone(mutation(pastGeneration.get(0), 3 + (10 * Math.random()), 0.1));
             newBorns.get(i).setId("Smut-" + 0 + "-" + i);
         }
         for (int i = 0; i < 10; i++) {
-            newBorns.get(i + 10).clone(mutation(pastGeneration.get(1), 10 * Math.random()));
+            newBorns.get(i + 10).clone(mutation(pastGeneration.get(1), 5 + (10 * Math.random()), 0.1));
             newBorns.get(i + 10).setId("Smut-" + 1 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 20).clone(mutation(pastGeneration.get(2), 15 * Math.random()));
+            newBorns.get(i + 20).clone(mutation(pastGeneration.get(2), 5 + (15 * Math.random()), 0.1));
             newBorns.get(i + 20).setId("Smut-" + 2 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 25).clone(mutation(pastGeneration.get(3), 15 * Math.random()));
+            newBorns.get(i + 25).clone(mutation(pastGeneration.get(3), 5 + (15 * Math.random()), 0.1));
             newBorns.get(i + 25).setId("Smut-" + 3 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 30).clone(mutation(pastGeneration.get(4), 20 * Math.random()));
+            newBorns.get(i + 30).clone(mutation(pastGeneration.get(4), 5 + (20 * Math.random()), 0.1));
             newBorns.get(i + 30).setId("Smut-" + 4 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 35).clone(mutation(pastGeneration.get(5), 25 * Math.random()));
+            newBorns.get(i + 35).clone(mutation(pastGeneration.get(5), 5 + (25 * Math.random()), 0.1));
             newBorns.get(i + 35).setId("Smut-" + 5 + "-" + i);
+        }
+
+        //aditional stronger mutation
+        for (int i = 0; i < 5; i++) {
+            newBorns.get(i + 40).clone(mutation(pastGeneration.get(0), 10 * Math.random(), 0.5));
+            newBorns.get(i + 40).setId("Smut-" + 0 + "-" + i);
+        }
+        for (int i = 0; i < 5; i++) {
+            newBorns.get(i + 45).clone(mutation(pastGeneration.get(i + 5), 10 * Math.random(), 0.9));
+            newBorns.get(i + 45).setId("Smut-" + (i + 1) + "-" + i);
         }
     }
 
     private void strongSelection(List<Genome> pastGeneration) {
-        for (int i = 0; i < 10; i++) {
-            newBorns.get(i + 40).clone(selection(pastGeneration.get(0), pastGeneration.get(1)));
-            newBorns.get(i + 40).setId("Ssel-" + i);
+        for (int i = 0; i < 5; i++) {
+            newBorns.get(i + 45).clone(selection(pastGeneration.get(0), pastGeneration.get(i + 5))); //i+5 !!
+            newBorns.get(i + 45).setId("Ssel-" + i);
         }
     }
 
@@ -98,7 +108,7 @@ class GeneticsMethods {
         for (int i = 0; i < 4; i++) {
             Genome parent = pastGeneration.get(i);
             for (int j = 0; j < 4 - i; j++) {
-                newBorns.add(mutation(parent, percent));
+                newBorns.add(mutation(parent, percent, 0.1));
             }
         }
     }
@@ -116,7 +126,7 @@ class GeneticsMethods {
 
     private Genome selectMutation(Genome parent1, Genome parent2) {
         Genome newGenome = selection(parent1, parent2);
-        return mutation(newGenome, 2.0);
+        return mutation(newGenome, 2.0, 0.1);
     }
 
     private Genome selection(Genome parent1, Genome parent2) {
@@ -151,7 +161,7 @@ class GeneticsMethods {
         return newGenome;
     }
 
-    private Genome mutation(Genome genome, double percent) {
+    private Genome mutation(Genome genome, double percent, double amount) {
         for (int n = 0; n < genome.getWeights()[0][1].length; n++) {
 
             for (int i = 0; i < genome.getWeights().length; i++) {
@@ -161,7 +171,7 @@ class GeneticsMethods {
                     if (x > +percent) {
 //                        double changeValue = 2 * Math.random() - 1;
 //                        genome.setWeight(i, j, n, changeValue);
-                        double addValue = (2 * Math.random() - 1) / 10;
+                        double addValue = amount * (2 * Math.random() - 1);
                         genome.changeWeight(i, j, n, addValue);
                     }
                 }
