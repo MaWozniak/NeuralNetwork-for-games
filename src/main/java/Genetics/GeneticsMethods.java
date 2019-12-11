@@ -41,27 +41,27 @@ class GeneticsMethods {
 
     private void strongMutation(List<Genome> pastGeneration) {
         for (int i = 0; i < 10; i++) {
-            newBorns.get(i).clone(mutation(pastGeneration.get(0), 3 + (10 * Math.random()), 0.1));
+            newBorns.get(i).clone(mutation(pastGeneration.get(0), 1 + (5 * Math.random()), 0.05));
             newBorns.get(i).setId("Smut-" + 0 + "-" + i);
         }
         for (int i = 0; i < 10; i++) {
-            newBorns.get(i + 10).clone(mutation(pastGeneration.get(1), 5 + (10 * Math.random()), 0.1));
+            newBorns.get(i + 10).clone(mutation(pastGeneration.get(1), 2 + (5 * Math.random()), 0.05));
             newBorns.get(i + 10).setId("Smut-" + 1 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 20).clone(mutation(pastGeneration.get(2), 5 + (15 * Math.random()), 0.1));
+            newBorns.get(i + 20).clone(mutation(pastGeneration.get(2), 3 + (5 * Math.random()), 0.1));
             newBorns.get(i + 20).setId("Smut-" + 2 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 25).clone(mutation(pastGeneration.get(3), 5 + (15 * Math.random()), 0.1));
+            newBorns.get(i + 25).clone(mutation(pastGeneration.get(3), 5 + (10 * Math.random()), 0.1));
             newBorns.get(i + 25).setId("Smut-" + 3 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 30).clone(mutation(pastGeneration.get(4), 5 + (20 * Math.random()), 0.1));
+            newBorns.get(i + 30).clone(mutation(pastGeneration.get(4), 5 + (10 * Math.random()), 0.1));
             newBorns.get(i + 30).setId("Smut-" + 4 + "-" + i);
         }
         for (int i = 0; i < 5; i++) {
-            newBorns.get(i + 35).clone(mutation(pastGeneration.get(5), 5 + (25 * Math.random()), 0.1));
+            newBorns.get(i + 35).clone(mutation(pastGeneration.get(5), 5 + (15 * Math.random()), 0.1));
             newBorns.get(i + 35).setId("Smut-" + 5 + "-" + i);
         }
 
@@ -168,7 +168,7 @@ class GeneticsMethods {
 
                 for (int j = 0; j < genome.getWeights()[0].length; j++) {
                     double x = 100 * Math.random();
-                    if (x > +percent) {
+                    if (0.07 < Math.random()) {
 //                        double changeValue = 2 * Math.random() - 1;
 //                        genome.setWeight(i, j, n, changeValue);
                         double addValue = amount * (2 * Math.random() - 1);
@@ -180,7 +180,7 @@ class GeneticsMethods {
         for (int i = 1; i < genome.getBiases().length; i++) {
             for (int j = 0; j < genome.getBiases()[0].length; j++) {
                 double x = 100 * Math.random();
-                if (x > +percent) {
+                if (x < percent) {
                     //double changeValue = 2 * Math.random() - 1;
                     double changeValue = 1.0;
                     genome.setBias(i, j, changeValue);
