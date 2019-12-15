@@ -1,7 +1,9 @@
 package Genetics;
 
 import Game.PreyAI;
+import NeuralNetwork.Generation;
 import NeuralNetwork.Genome;
+import NeuralNetwork.NeuralNetwork;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -14,7 +16,9 @@ public class Generations {
 
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
-    private GeneticsMethods geneticsMethods;
+    //private GeneticsMethods geneticsMethods;
+    private Generation generation;
+    private NeuralNetwork protoplast = new NeuralNetwork(26, 2, 12, 4);
 
     private List<Genome> newGenePool;
     private List<Double> generationsScoresList;
@@ -40,10 +44,11 @@ public class Generations {
 
 
     public Generations(List<PreyAI> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
-        this.geneticsMethods = new GeneticsMethods();
-        this.newGenePool = new ArrayList<>();
-        this.AI_prey = AI_prey;
+        //this.geneticsMethods = new GeneticsMethods();
+        //this.newGenePool = new ArrayList<>();
         this.generationSize = size;
+        this.generation = new Generation(1, generationSize, protoplast);
+        this.AI_prey = AI_prey;
         this.generationsScoresList = new ArrayList<>();
         this.generationsAverageList = new ArrayList<>();
         this.preyAiEnergyCost = preyAiEnergyCost;
@@ -54,7 +59,7 @@ public class Generations {
     public void addFirstGeneration() {
 
         log("start");
-        randomGeneration();
+        randomGeneration(1);
         generationMemory = new GenerationMemory(count, 10);
 
         count++;
@@ -68,7 +73,10 @@ public class Generations {
 
         writeFileLog();
 
-        geneticsNewGeneration(generationMemory.getSelectedGenomes());
+        System.out.println("public void addNewGeneration() -> generation.showScores()");
+        generation.showScores();
+
+        geneticsNewGeneration(generation.bestSelection(7));
 
         // IS THIS HELP FOR CRASH?
         generationMemory.getSelectedGenomes().clear();
@@ -80,21 +88,24 @@ public class Generations {
         count++;
     }
 
-    private void randomGeneration() {
+    private void randomGeneration(int number) {
+
+        generation.randomize();
+
         for (int i = 0; i < generationSize; i++) {
 
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove, preyAging);
-            newPreyAI.setId(i, count);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging);
+            //newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
         }
     }
 
-    private void geneticsNewGeneration(List<Genome> genomes) {
+    private void geneticsNewGeneration(List<Genome> ancestors) {
 
-        newGenePool.clear();
-        newGenePool = geneticsMethods.newGenePool(genomes, generationSize);
+        //generation = null;
+        generation = new Generation(2, generationSize, ancestors, "type1");
 
         for (int i = 0; i < generationSize; i++) {
 
@@ -102,15 +113,19 @@ public class Generations {
             double yStartPos = 250 + 250 * Math.random();
 
             //INJECTION GENOMES (!)
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, newGenePool.get(i), preyAiEnergyCost, preyForcedMove, preyAging);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging);
             newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
         }
     }
 
     public void deathPrey(PreyAI preyAI) {
-        generationMemory.add(preyAI);
-        preyAI.isDead();
+        if (preyAI.isAlive()) {
+            preyAI.getGenome().setScore(preyAI.getScore());
+            System.out.println(preyAI.getGenome().getId() + "sc:" + preyAI.getGenome().getScore());
+            generationMemory.add(preyAI);
+            preyAI.isDead();
+        }
     }
 
     private void updateAvaregeScores() {

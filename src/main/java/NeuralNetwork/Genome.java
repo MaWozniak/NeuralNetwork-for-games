@@ -1,104 +1,47 @@
 package NeuralNetwork;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Random;
+
 
 public class Genome {
 
-    private double[][][] weights;
-    private double[][] biases;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
+    private NeuralNetwork neuralNetwork;
+    private String id;
     private double score;
-    private String id = "";
+    private String parentage;
 
-    public Genome() {
+
+    public Genome(int generationNumber, NeuralNetwork protoplast, String parantage) {
+        this.neuralNetwork = protoplast.copy();
+        this.id = "gen-" + generationNumber + "/" + generateId();
+        this.parentage = parantage;
+        this.score = 0.0;
     }
 
-    public Genome(int numLayers, int numNeurons, int inputs, int outputs, boolean bias) {
-
-        weights = new double[numLayers + 2][numNeurons][numNeurons];
-        generateWeights(numLayers, numNeurons, inputs, outputs);
-
-        biases = new double[numLayers + 2][numNeurons];
-        if (bias) {
-            generateBiases(numLayers, numNeurons, inputs, outputs);
+    void show(boolean showNetwork) {
+        System.out.println("GENOME id: " + this.id + "\n"
+                + "parentage: " + this.parentage + "\n"
+                + "SCORE" + this.score);
+        if (showNetwork) {
+            this.neuralNetwork.show();
         }
-    }
-
-    public void clone(Genome genome) {
-        this.weights = genome.getWeights();
-        this.biases = genome.getBiases();
-    }
-
-    public double[][][] getWeights() {
-        return weights;
-    }
-
-    public void setWeights(double[][][] weights) {
-        this.weights = weights;
-    }
-
-    public double[][] getBiases() {
-        return biases;
-    }
-
-    public void setBiases(double[][] biases) {
-        this.biases = biases;
-    }
-
-    public void setWeight(int i, int j, int k, double newValue) {
-        this.weights[i][j][k] = newValue;
-    }
-
-    public void changeWeight(int i, int j, int k, double addValue) {
-        if ((this.weights[i][j][k] + addValue > 1) || (this.weights[i][j][k] + addValue < -1)) {
-            this.weights[i][j][k] -= addValue;
-        } else {
-            this.weights[i][j][k] += addValue;
-        }
-    }
-
-    public void setBias(int i, int j, double newValue) {
-        this.biases[i][j] = newValue;
-    }
-
-    public void generateWeights(int numLayers, int numNeurons, int inputs, int outputs) {
-
-        for (int n = 0; n < numNeurons; n++) {
-
-            for (int i = 0; i < inputs; i++) {
-                weights[0][i][n] = 2 * Math.random() - 1;
-            }
-            for (int i = 1; i < numLayers + 1; i++) {
-                for (int j = 0; j < numNeurons; j++) {
-                    weights[i][j][n] = 2 * Math.random() - 1;
-                }
-            }
-            for (int i = 0; i < outputs; i++) {
-                weights[numLayers + 1][i][n] = 2 * Math.random() - 1;
-            }
-        }
+        System.out.println("\n");
 
     }
 
-    public void generateBiases(int numLayers, int numNeurons, int inputs, int outputs) {
-
-        for (int i = 0; i < inputs; i++) {
-            //biases[0][i] = 2 * Math.random() - 1;
-            biases[0][i] = 1.0;
-        }
-        for (int i = 1; i < numLayers + 1; i++) {
-            for (int j = 0; j < numNeurons; j++) {
-                //biases[i][j] = 2 * Math.random() - 1;
-                biases[i][j] = 1.0;
-            }
-        }
-        for (int i = 0; i < outputs; i++) {
-            //biases[numLayers + 1][i] = 2 * Math.random() - 1;
-            biases[numLayers + 1][i] = 1.0;
-        }
+    public NeuralNetwork getNeuralNetwork() {
+        return neuralNetwork;
     }
 
-    public double getScore() {
-        return score;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setParentage(String parentage) {
+        this.parentage = parentage;
     }
 
     public void setScore(double score) {
@@ -109,21 +52,28 @@ public class Genome {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public double getScore() {
+        return score;
     }
 
-    public void appendId(String info) {
-        //this.id += info;
-    }
+    public String generateId() {
+        StringBuilder key = new StringBuilder();
+        String alphabet1 = "abc";
+        String alphabet2 = "123456";
 
-    void printOut() {
-        System.out.println(Arrays.deepToString(this.weights));
-        System.out.println(Arrays.deepToString(this.biases));
+        Random r = new Random();
+        for (int i = 0; i < 3; i++) {
+            key.append(alphabet1.charAt(r.nextInt(alphabet1.length())));
+        }
+        for (int i = 0; i < 3; i++) {
+            key.append(alphabet2.charAt(r.nextInt(alphabet2.length())));
+        }
+        return key.toString();
     }
 
     public String saveToMemory() {
-        return this.toString() + "\n" + "weights: \n" + Arrays.deepToString(this.getWeights())
-                + "\nbiases: \n" + Arrays.deepToString(this.getBiases()) + "\n\n- - - - - - - - - - - - -\n";
+//        return this.toString() + "\n" + "weights: \n" + Arrays.deepToString(this.getWeights())
+//                + "\nbiases: \n" + Arrays.deepToString(this.getBiases()) + "\n\n- - - - - - - - - - - - -\n";
+        return "mock";
     }
 }

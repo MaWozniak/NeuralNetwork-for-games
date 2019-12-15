@@ -94,4 +94,8 @@ public class PreyAI extends Prey {
     public double getAge() {
         return age;
     }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
 }

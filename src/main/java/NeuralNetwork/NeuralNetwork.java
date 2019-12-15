@@ -1,61 +1,116 @@
 package NeuralNetwork;
 
-class NeuralNetwork {
+import java.util.ArrayList;
+import java.util.List;
 
-    private double[] inputs;
-    private double[] outputs;
-    private double[][] layers;
-    private int numOfLayers;
-    private Genome genome;
+public class NeuralNetwork {
 
-    NeuralNetwork(int inputs, int outputs, int layers, int neurons, boolean bias) {
+    private List<Layer> layers;
 
-        this.inputs = new double[inputs];
-        this.outputs = new double[outputs];
-        this.layers = new double[layers][neurons];
-        this.numOfLayers = layers;
-        genome = new Genome(layers, neurons, inputs, outputs, bias);
+    NeuralNetwork() {
     }
 
-    void injectGenome(Genome genome) {
-        this.genome = genome;
-    }
+    public NeuralNetwork(int inputs, int hiddenLayers, int perceptrons, int outputs) {
 
-    Genome getGenome() {
-        return genome;
-    }
+        layers = new ArrayList<>();
 
-    double[] generate(double[] inputs) {
+        layers.add(new Layer(inputs, perceptrons));
 
-        this.inputs = inputs;
-        calculate(this.inputs, layers[0], genome.getWeights()[0], genome.getBiases()[0]);
-        for (int i = 1; i < numOfLayers; i++) {
-            calculate(layers[i - 1], layers[i], genome.getWeights()[i], genome.getBiases()[i]);
-        }
-        calculate(layers[numOfLayers - 1], outputs, genome.getWeights()[numOfLayers + 1], genome.getBiases()[numOfLayers + 1]);
-        return outputs;
-    }
-
-    private void calculate(double[] layer1, double[] layer2, double[][] weights, double[] bias) {
-
-        for (int i = 0; i < layer2.length; i++) {
-            layer2[i] = 0.0;
-            for (int j = 0; j < layer1.length; j++) {
-                layer2[i] += weights[j][i] * layer1[j];
-            }
-            //ADD BIAS
-            // layer2[i] += bias[i];
-
-            // ACTIVATION FUNCTION: Sigmoid Function // Try also STEP FUNCTION & SINUS
-            //layer2[i] = 1 / (1 + Math.exp(layer2[i]));
-
-            // ACTIVATION FUNCTION: Step
-            if (layer2[i] > 0) {
-                layer2[i] = 1;
-            } else {
-                layer2[i] = 0;
-            }
+        for (int i = 0; i < hiddenLayers - 1; i++) {
+            layers.add(new Layer(perceptrons, perceptrons));
         }
 
+        layers.add(new Layer(perceptrons, outputs));
+    }
+
+    NeuralNetwork(NeuralNetwork neuralNetwork1, NeuralNetwork neuralNetwork2) {
+
+        layers = new ArrayList<>();
+
+        for (int i = 0; i < neuralNetwork1.layers.size(); i++) {
+            Layer layer = new Layer(neuralNetwork1.getLayer(i), neuralNetwork2.getLayer(i));
+            layers.add(layer);
+        }
+    }
+
+    double[] run(double[] inputs) {
+        for (Layer layer : layers) {
+            inputs = layer.run(inputs);
+        }
+        return inputs;
+    }
+
+    void fillRandomWeights() {
+        for (Layer layer : layers) {
+
+            for (int j = 0; j < layer.size(); j++) {
+
+                for (int k = 0; k < layer.getPerceptron(j).getWeightsNum(); k++) {
+
+                    double value = 2 * Math.random() - 1;
+                    layer.getPerceptron(j).setWeight(k, value);
+                }
+            }
+        }
+    }
+
+    void setAllBiases(double value) {
+        for (Layer layer : layers) {
+
+            for (int j = 0; j < layer.size(); j++) {
+
+                for (int k = 0; k < layer.getPerceptron(j).getWeightsNum(); k++) {
+
+                    layer.getPerceptron(j).setWeight(k, value);
+                }
+            }
+        }
+    }
+
+    void setBias(double bias) {
+        for (int i = 0; i < layers.size(); i++) {
+
+            for (int j = 0; j < layers.get(i).size(); j++) {
+
+                layers.get(i).getPerceptron(j).setBias(bias);
+            }
+        }
+    }
+
+    void show() {
+
+        System.out.println();
+        System.out.println("nn hashCode: " + this.hashCode());
+
+        for (int i = 0; i < layers.size(); i++) {
+            System.out.println("layer " + i);
+            layers.get(i).show();
+        }
+    }
+
+    Layer getLayer(int i) {
+        return layers.get(i);
+    }
+
+    int getLayersNum() {
+        return layers.size();
+    }
+
+    void mutation(double amount, double percent) {
+        for (Layer layer : layers) {
+            layer.mutation(amount, percent);
+        }
+    }
+
+    NeuralNetwork copy() {
+        NeuralNetwork newNeuralNetwork = new NeuralNetwork();
+
+        newNeuralNetwork.layers = new ArrayList<>();
+
+        for (int i = 0; i < this.layers.size(); i++) {
+            newNeuralNetwork.layers.add(new Layer(this.layers.get(i)));
+        }
+
+        return newNeuralNetwork;
     }
 }

@@ -1,6 +1,8 @@
 package Game;
 
 import Genetics.Generations;
+import NeuralNetwork.Genome;
+import NeuralNetwork.NeuralNetwork;
 
 import java.awt.*;
 import java.io.IOException;
