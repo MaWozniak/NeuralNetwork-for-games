@@ -20,7 +20,7 @@ public class Generations {
     private Generation generation;
     //private NeuralNetwork protoplast = new NeuralNetwork(37, 3, 20, 4);
     private NeuralNetwork protoplast = new NeuralNetwork(37, 1, 20, 4);
-    private double BIAS = 2.0;
+    private double BIAS = 1.0;
 
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
@@ -145,6 +145,7 @@ public class Generations {
             System.out.println(preyAI.getGenome().getId() + "sc:" + preyAI.getGenome().getScore());
             generationMemory.add(preyAI);
             preyAI.isDead();
+            preyAI.setFirstInGeneration(false);
         }
     }
 

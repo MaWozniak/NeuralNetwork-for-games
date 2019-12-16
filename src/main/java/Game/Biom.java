@@ -111,7 +111,7 @@ public class Biom {
     }
 
     private void checkPredators(int number) {
-        if (predators.size() < number) this.addNewPredators(number);
+        if (predators.size() < number) this.addNewPredators(1);
     }
 
     private void checkGenerations() throws IOException {
