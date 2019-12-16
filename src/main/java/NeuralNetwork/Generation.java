@@ -28,41 +28,52 @@ public class Generation {
 
     public Generation(int number, int size, List<Genome> ancestors, String type) {
         this.number = number;
+        double[] val = new double[8];
         if (type.equals("type1")) {
-            for (int i = 0; i < size; i++) {
-                if (i % 4 == 0) {
-                    int x = i % ancestors.size();
-                    String parentage = "1-parent-||" + ancestors.get(x).getId() + "||+mutation(0.5-0.1)";
-                    NeuralNetwork neuralNetwork = ancestors.get(x).getNeuralNetwork().copy();
-                    neuralNetwork.mutation(0.5, 0.1);
-                    genomes.add(new Genome(number, neuralNetwork, parentage));
-                }
-                if (i % 4 == 1) {
-                    int x1 = i % ancestors.size();
-                    int x2 = (i - 1) % ancestors.size();
-                    String parentage = "crossover-||" + ancestors.get(x1).getId() + "/" + ancestors.get(x2).getId() + "||+mutation(0.2-0.05)";
-                    NeuralNetwork neuralNetwork = new NeuralNetwork(ancestors.get(x1).getNeuralNetwork().copy(), ancestors.get(x2).getNeuralNetwork().copy());
-                    neuralNetwork.mutation(0.2, 0.05);
-                    genomes.add(new Genome(number, neuralNetwork, parentage));
-                }
-                if (i % 4 == 2) {
-                    int x1 = i % ancestors.size();
-                    int x2 = (i - 2) % ancestors.size();
-                    String parentage = "crossover-||" + ancestors.get(x1).getId() + "/" + ancestors.get(x2).getId() + "||+mutation(0.6-0.2)";
-                    NeuralNetwork neuralNetwork = new NeuralNetwork(ancestors.get(x1).getNeuralNetwork().copy(), ancestors.get(x2).getNeuralNetwork().copy());
-                    neuralNetwork.mutation(0.6, 0.2);
-                    genomes.add(new Genome(number, neuralNetwork, parentage));
-                }
-                if (i % 4 == 0) {
-                    int x = i % 3;
-                    String parentage = "1-parent-||" + ancestors.get(x).getId() + "||+mutation(0.2-0.1)";
-                    NeuralNetwork neuralNetwork = ancestors.get(x).getNeuralNetwork().copy();
-                    neuralNetwork.mutation(0.2, 0.1);
-                    genomes.add(new Genome(number, neuralNetwork, parentage));
-                }
-
+            val = new double[]{0.5, 0.1, 0.2, 0.05, 0.6, 0.2, 0.2, 0.1};
+        }
+        if (type.equals("type2")) {
+            val = new double[]{0.6, 0.4, 0.5, 0.1, 0.8, 0.4, 0.3, 0.15};
+        }
+        if (type.equals("type3")) {
+            val = new double[]{1.9, 0.5, 0.5, 0.25, 0.8, 0.5, 0.5, 0.1};
+        }
+        for (int i = 0; i < size; i++) {
+            if (i % 4 == 0) {
+                int x = i % ancestors.size();
+                String parentage = "1-parent-||" + ancestors.get(x).getId() + "||+mutation(0.5-0.1)";
+                NeuralNetwork neuralNetwork = ancestors.get(x).getNeuralNetwork().copy();
+                neuralNetwork.mutation(val[0], val[1]);
+                genomes.add(new Genome(number, neuralNetwork, parentage));
+            }
+            if (i % 4 == 1) {
+                int x1 = i % ancestors.size();
+                int x2 = (i - 1) % ancestors.size();
+                String parentage = "crossover-||" + ancestors.get(x1).getId() + "/" + ancestors.get(x2).getId() + "||+mutation(0.2-0.05)";
+                NeuralNetwork neuralNetwork = new NeuralNetwork(ancestors.get(x1).getNeuralNetwork().copy(), ancestors.get(x2).getNeuralNetwork().copy());
+                neuralNetwork.mutation(val[2], val[3]);
+                genomes.add(new Genome(number, neuralNetwork, parentage));
+            }
+            if (i % 4 == 2) {
+                int x1 = i % ancestors.size();
+                int x2 = (i - 2) % ancestors.size();
+                String parentage = "crossover-||" + ancestors.get(x1).getId() + "/" + ancestors.get(x2).getId() + "||+mutation(0.6-0.2)";
+                NeuralNetwork neuralNetwork = new NeuralNetwork(ancestors.get(x1).getNeuralNetwork().copy(), ancestors.get(x2).getNeuralNetwork().copy());
+                neuralNetwork.mutation(val[4], val[5]);
+                genomes.add(new Genome(number, neuralNetwork, parentage));
+            }
+            if (i % 4 == 3) {
+                int x = i % 3;
+                String parentage = "1-parent-||" + ancestors.get(x).getId() + "||+mutation(0.2-0.1)";
+                NeuralNetwork neuralNetwork = ancestors.get(x).getNeuralNetwork().copy();
+                neuralNetwork.mutation(val[6], val[7]);
+                genomes.add(new Genome(number, neuralNetwork, parentage));
             }
         }
+        //random fellow
+        NeuralNetwork neuralNetwork = ancestors.get(1).getNeuralNetwork().copy();
+        neuralNetwork.fillRandomWeights();
+        genomes.set(45, new Genome(number, neuralNetwork, "random-fellow"));
     }
 
     public List<Genome> getGenomes() {

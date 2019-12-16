@@ -52,6 +52,7 @@ class ModelView {
         //Feed Places
         this.setRectengle(425, 590, 'F', 180, 50);
         this.setRectengle(725, 210, 'F', 180, 50);
+
     }
 
     private void setRectengle(int x, int y, char ch, int height, int width) {

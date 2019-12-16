@@ -7,6 +7,8 @@ public class BlackBox {
     //private NeuralNetwork neuralNetwork = new NeuralNetwork(13, 4, 3, 30, true);
     //private NeuralNetwork neuralNetwork = new NeuralNetwork(10, 4, 1, 10, true);
     Genome genome;
+    double[] input;
+    double[] output;
 
     public BlackBox() {
     }
@@ -15,10 +17,24 @@ public class BlackBox {
         this.genome = genome;
     }
 
+    public double[] getInput() {
+        return input;
+    }
+
+    public double[] getOutput() {
+        return output;
+    }
+
     public OutputMove move(char[][] model, double xPos, double yPos, double angle, double speed, double energy) {
 
-        int x = (int) xPos - 5 + (int) (55.0 * Math.sin(angle));
-        int y = (int) yPos - 5 - (int) (55.0 * Math.cos(angle));
+        int x = (int) xPos - 5 + (int) (155.0 * Math.sin(angle));
+        int y = (int) yPos - 5 - (int) (155.0 * Math.cos(angle));
+        //borders
+        double borders1 = 0.0;
+        if (x < 3 || y < 3 || x > 1245 || y > 845) {
+            borders1 = 1.0;
+        }
+
         if (x < 0) {
             x = 0;
         } // TO REFACTOR!
@@ -35,7 +51,9 @@ public class BlackBox {
         char field1 = model[x][y];
         double convField1p = convCharToDbl(field1, 'P');
         double convField1f = convCharToDbl(field1, 'F');
+        double convField1m = convCharToDbl(field1, 'M');
         double convField1x = convCharToDbl(field1, 'X');
+
 
         x = (int) xPos - 5 + (int) (3.0 * Math.sin(angle));
         y = (int) yPos - 5 - (int) (3.0 * Math.cos(angle));
@@ -55,10 +73,17 @@ public class BlackBox {
         char field4 = model[x][y];
         double convField4p = convCharToDbl(field4, 'P');
         double convField4f = convCharToDbl(field4, 'F');
+        double convField4m = convCharToDbl(field4, 'M');
         double convField4x = convCharToDbl(field4, 'X');
 
-        x = ((int) xPos - 5) + (int) (50.0 * Math.cos(angle) + (int) (40.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) + (int) (50.0 * Math.sin(angle) - (int) (40.0 * Math.cos(angle)));
+        x = ((int) xPos - 5) + (int) (90.0 * Math.cos(angle) + (int) (80.0 * Math.sin(angle)));
+        y = ((int) yPos - 5) + (int) (90.0 * Math.sin(angle) - (int) (80.0 * Math.cos(angle)));
+        //borders
+        double borders2 = 0.0;
+        if (x < 3 || y < 3 || x > 1245 || y > 845) {
+            borders2 = 1.0;
+        }
+
         if (x < 0) {
             x = 0;
         } // TO REFACTOR!
@@ -74,10 +99,17 @@ public class BlackBox {
         char field2 = model[x][y];
         double convField2p = convCharToDbl(field2, 'P');
         double convField2f = convCharToDbl(field2, 'F');
+        double convField2m = convCharToDbl(field2, 'M');
         double convField2x = convCharToDbl(field2, 'X');
 
-        x = ((int) xPos - 5) - (int) (50.0 * Math.cos(angle) - (int) (40.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) - (int) (50.0 * Math.sin(angle) - +(int) (40.0 * Math.cos(angle)));
+        x = ((int) xPos - 5) - (int) (90.0 * Math.cos(angle) - (int) (80.0 * Math.sin(angle)));
+        y = ((int) yPos - 5) - (int) (90.0 * Math.sin(angle) - +(int) (80.0 * Math.cos(angle)));
+        //borders
+        double borders3 = 0.0;
+        if (x < 3 || y < 3 || x > 1245 || y > 845) {
+            borders3 = 1.0;
+        }
+
         if (x < 0) {
             x = 0;
         } // TO REFACTOR!
@@ -93,6 +125,7 @@ public class BlackBox {
         char field3 = model[x][y];
         double convField3p = convCharToDbl(field3, 'P');
         double convField3f = convCharToDbl(field3, 'F');
+        double convField3m = convCharToDbl(field3, 'M');
         double convField3x = convCharToDbl(field3, 'X');
 
         x = ((int) xPos - 5) + (int) (16.0 * Math.cos(angle) - (int) (16.0 * Math.sin(angle)));
@@ -112,6 +145,7 @@ public class BlackBox {
         char field5 = model[x][y];
         double convField5p = convCharToDbl(field5, 'P');
         double convField5f = convCharToDbl(field5, 'F');
+        double convField5m = convCharToDbl(field5, 'M');
         double convField5x = convCharToDbl(field5, 'X');
 
         x = ((int) xPos - 5) - (int) (16.0 * Math.cos(angle) + (int) (16.0 * Math.sin(angle)));
@@ -131,6 +165,7 @@ public class BlackBox {
         char field6 = model[x][y];
         double convField6p = convCharToDbl(field6, 'P');
         double convField6f = convCharToDbl(field6, 'F');
+        double convField6m = convCharToDbl(field6, 'M');
         double convField6x = convCharToDbl(field6, 'X');
 
         x = ((int) xPos - 5) + (int) (20.0 * Math.cos(angle) + (int) (25.0 * Math.sin(angle)));
@@ -188,6 +223,7 @@ public class BlackBox {
         char field9 = model[x][y];
         double convField9p = convCharToDbl(field9, 'P');
         double convField9f = convCharToDbl(field9, 'F');
+        double convField9m = convCharToDbl(field9, 'M');
         double convField9x = convCharToDbl(field9, 'X');
 
         x = ((int) xPos - 5) - (int) (40.0 * Math.cos(angle) - (int) (10.0 * Math.sin(angle)));
@@ -206,19 +242,25 @@ public class BlackBox {
         }
         char field10 = model[x][y];
         double convField10p = convCharToDbl(field10, 'P');
+        double convField10m = convCharToDbl(field10, 'M');
         double convField10f = convCharToDbl(field10, 'F');
         double convField10x = convCharToDbl(field10, 'X');
+
 
         //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
         //add simpleBias
         double simpleBias = 1.0;
-        double[] input = {convField1p, convField2p, convField3p, convField4p, convField5p, convField6p, convField9p, convField10p,
+        input = new double[]{borders1, borders2, borders3, convField1p, convField2p, convField3p, convField4p, convField5p, convField6p, convField9p, convField10p,
                 convField1x, convField2x, convField3x, convField4x, convField5x, convField6x, convField9x, convField10x,
+                convField1m, convField2m, convField3m, convField4m, convField5m, convField6m, convField9m, convField10m,
                 convField1f, convField2f, convField3f, convField4f, convField5f, convField6f, convField9f, convField10f,
-                energy / 150, simpleBias};
+                10 * energy / 150, simpleBias};
+//        double[] input = {borders1, borders2, borders3, convField1p, convField2p, convField3p, convField4p, convField5p, convField6p, convField9p, convField10p,
+//                convField1f, convField2f, convField3f, convField4f, convField5f, convField6f, convField9f, convField10f,
+//                energy / 150, simpleBias};
 
         //double[] output = neuralNetwork.generate(input);
-        double[] output = this.getGenome().getNeuralNetwork().run(input);
+        output = this.getGenome().getNeuralNetwork().run(input);
 
         //interpretation:
         boolean[] outputBool = new boolean[4];

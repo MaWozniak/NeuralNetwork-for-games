@@ -18,9 +18,10 @@ public class Generations {
 
     //private GeneticsMethods geneticsMethods;
     private Generation generation;
-    private NeuralNetwork protoplast = new NeuralNetwork(26, 2, 12, 4);
+    //private NeuralNetwork protoplast = new NeuralNetwork(37, 3, 20, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(37, 1, 20, 4);
+    private double BIAS = 2.0;
 
-    private List<Genome> newGenePool;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
     private GenerationMemory generationMemory;
@@ -30,6 +31,7 @@ public class Generations {
     private boolean preyAiEnergyCost;
     private boolean preyForcedMove;
     private boolean preyAging;
+    private boolean firstInGeneration;
 
     private double avarageScoreOfAllGenerations = 0.0;
     private double bestScoreOfALLGenerations = 0.0;
@@ -47,6 +49,7 @@ public class Generations {
         //this.geneticsMethods = new GeneticsMethods();
         //this.newGenePool = new ArrayList<>();
         this.generationSize = size;
+        protoplast.setAllBiases(BIAS);
         this.generation = new Generation(1, generationSize, protoplast);
         this.AI_prey = AI_prey;
         this.generationsScoresList = new ArrayList<>();
@@ -76,7 +79,7 @@ public class Generations {
         System.out.println("public void addNewGeneration() -> generation.showScores()");
         generation.showScores();
 
-        geneticsNewGeneration(generation.bestSelection(7));
+        geneticsNewGeneration(generation.bestSelection(20));
 
         // IS THIS HELP FOR CRASH?
         generationMemory.getSelectedGenomes().clear();
@@ -94,28 +97,45 @@ public class Generations {
 
         for (int i = 0; i < generationSize; i++) {
 
-            double xStartPos = 1150 * Math.random();
-            double yStartPos = 750 * Math.random();
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging);
+//            double xStartPos = 1150 * Math.random();
+//            double yStartPos = 750 * Math.random();
+            double xStartPos = 400 + 100 * Math.random();
+            double yStartPos = 250 + 100 * Math.random();
+
+            if (i == 0) {
+                firstInGeneration = true;
+            }
+
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
             //newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
+
+            firstInGeneration = false;
         }
     }
 
     private void geneticsNewGeneration(List<Genome> ancestors) {
 
         //generation = null;
-        generation = new Generation(2, generationSize, ancestors, "type1");
+        generation = new Generation(2, generationSize, ancestors, "type3");
 
         for (int i = 0; i < generationSize; i++) {
 
-            double xStartPos = 400 + 250 * Math.random();
-            double yStartPos = 250 + 250 * Math.random();
+            //double xStartPos = 400 + 250 * Math.random();
+            //double yStartPos = 250 + 250 * Math.random();
+            double xStartPos = 400 + 100 * Math.random();
+            double yStartPos = 250 + 100 * Math.random();
+
+            if (i == 0) {
+                firstInGeneration = true;
+            }
 
             //INJECTION GENOMES (!)
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging);
+            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
             newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
+
+            firstInGeneration = false;
         }
     }
 

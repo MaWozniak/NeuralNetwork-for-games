@@ -32,6 +32,13 @@ public class Genome {
 
     }
 
+    public String show() {
+
+        return "GENOME id: " + this.id + "\n"
+                + "parentage: " + this.parentage + "\n"
+                + "SCORE" + this.score + "\n";
+    }
+
     public NeuralNetwork getNeuralNetwork() {
         return neuralNetwork;
     }
@@ -74,6 +81,6 @@ public class Genome {
     public String saveToMemory() {
 //        return this.toString() + "\n" + "weights: \n" + Arrays.deepToString(this.getWeights())
 //                + "\nbiases: \n" + Arrays.deepToString(this.getBiases()) + "\n\n- - - - - - - - - - - - -\n";
-        return "mock";
+        return this.show();
     }
 }

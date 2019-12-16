@@ -43,4 +43,12 @@ class PreyLogicAI {
     Genome getGenome() {
         return blackBox.getGenome();
     }
+
+    double[] getInputs() {
+        return this.blackBox.getInput();
+    }
+
+    double[] getOutputs() {
+        return this.blackBox.getOutput();
+    }
 }

@@ -54,7 +54,7 @@ public class NeuralNetwork {
         }
     }
 
-    void setAllBiases(double value) {
+    public void setAllBiases(double value) {
         for (Layer layer : layers) {
 
             for (int j = 0; j < layer.size(); j++) {

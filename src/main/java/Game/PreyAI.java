@@ -1,5 +1,6 @@
 package Game;
 
+import GUI.NeuralNetworkView;
 import GUI.PreyAiGui;
 import NeuralNetwork.Genome;
 
@@ -9,11 +10,13 @@ public class PreyAI extends Prey {
 
     private PreyLogicAI ai;
     private PreyAiGui preyAiGui = new PreyAiGui();
+    private NeuralNetworkView networkView;
     private String id;
     private double score = 0.0;
     private boolean energyCost;
     private boolean aging;
     private double age = 0.0;
+    private boolean firstInGeneration;
 
     public PreyAI(double xStartPos, double yStartPos, boolean energyCost, boolean forcedMove, boolean aging) {
         super(xStartPos, yStartPos);
@@ -22,11 +25,15 @@ public class PreyAI extends Prey {
         this.aging = aging;
     }
 
-    public PreyAI(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove, boolean aging) {
+    public PreyAI(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove, boolean aging, boolean firstInGeneration) {
         super(xStartPos, yStartPos);
         ai = new PreyLogicAI(genome, forcedMove);
         this.energyCost = energyCost;
         this.aging = aging;
+        this.firstInGeneration = firstInGeneration;
+        if (firstInGeneration) {
+            this.networkView = new NeuralNetworkView();
+        }
     }
 
     void thinking(char[][] model) {
@@ -35,7 +42,10 @@ public class PreyAI extends Prey {
 
     void paint(Graphics2D g) {
         if (isAlive()) {
-            preyAiGui.paint(g, this.x, this.y, this.angle, this.energy);
+            preyAiGui.paint(g, this.x, this.y, this.angle, this.energy, this.firstInGeneration);
+        }
+        if (firstInGeneration) {
+            networkView.paint(g, x, y, angle, energy, ai.getInputs(), ai.getOutputs());
         }
     }
 
@@ -97,5 +107,13 @@ public class PreyAI extends Prey {
 
     public boolean isAlive() {
         return isAlive;
+    }
+
+    public boolean isFirstInGeneration() {
+        return firstInGeneration;
+    }
+
+    public void setFirstInGeneration(boolean firstInGeneration) {
+        this.firstInGeneration = firstInGeneration;
     }
 }

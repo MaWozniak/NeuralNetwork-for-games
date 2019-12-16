@@ -143,15 +143,19 @@ class Prey extends Organism {
     void borderBouncing(int x1, int x2) {
         if ((x < x1)) {
             x += 10;
+            energy -= 0.01;
         }
         if ((y < 22)) {
             y += 10;
+            energy -= 0.05;
         }
         if ((x > x2)) {
             x -= 10;
+            energy -= 0.01;
         }
         if ((y > 778)) {
             y -= 10;
+            energy -= 0.05;
         }
     }
 }
