@@ -6,6 +6,17 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+task neuralNetwork(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'neuralNetwork',
+                'Implementation-Version': version,
+                'Main-Class': 'Game.TestMain'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 repositories {
     mavenCentral()
 }

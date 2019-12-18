@@ -88,6 +88,17 @@ public class NeuralNetwork {
         }
     }
 
+    String showString() {
+
+        StringBuilder result = new StringBuilder();
+        result.append("nn hashCode: ").append(this.hashCode());
+        for (int i = 0; i < layers.size(); i++) {
+            result.append("\nlayer ").append(i).append(": \n");
+            result.append(layers.get(i).showString());
+        }
+        return result.toString();
+    }
+
     Layer getLayer(int i) {
         return layers.get(i);
     }

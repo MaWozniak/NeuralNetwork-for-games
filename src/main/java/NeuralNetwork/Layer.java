@@ -72,6 +72,16 @@ class Layer {
         }
     }
 
+    String showString() {
+
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < perceptronsNum; i++) {
+            result.append("\nPERC ").append(i).append(": \n");
+            result.append(perceptrons.get(i).toString());
+        }
+        return result.toString();
+    }
+
     void mutation(double amount, double percent) {
         for (int i = 0; i < perceptronsNum; i++) {
             perceptrons.get(i).mutate(amount, percent);
