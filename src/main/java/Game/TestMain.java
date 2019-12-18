@@ -12,7 +12,7 @@ public class TestMain {
 
         ModelView model = new ModelView(false);
         Biom biom = new Biom(0, 1, 50, 30, false, model, 15,
-                true, true, true, false, true, 400.0);
+                true, true, true, false, true, 700.0);
         GUI gui = new GUI(30, biom);
     }
 }
