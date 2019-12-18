@@ -176,7 +176,19 @@ public class Biom {
                 }
             }
         }
+
     }
+
+//    private void checkAiPreiToShowNetwork() {
+//        List<PreyAI> AI_prey_alive = new ArrayList<>();
+//        for (PreyAI generatedPreyAI : AI_prey) {
+//            if(generatedPreyAI.isAlive()){
+//                AI_prey_alive.add(generatedPreyAI);
+//            }
+//        }
+//        AI_prey_alive.get(0).setFirstInGeneration(true);
+//        AI_prey_alive.clear();
+//    }
 
     private void modelViewSet() {
         model.clear();
