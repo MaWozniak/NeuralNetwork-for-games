@@ -37,6 +37,7 @@ public class Generation {
         }
         if (type.equals("type3")) {
             val = new double[]{0.05, 0.1, 0.1, 1.5, 0.5, 0.2, 0.5, 0.9};
+            //val = new double[]{0.05, 0.1, 0.05, 1.2, 0.3, 0.15, 0.1, 0.9};
             //best at the moment:
             //val = new double[]{0.05, 0.1, 0.5, 1.5, 0.9, 0.25, 0.5, 0.9};
             //val = new double[]{0.15, 0.1, 0.5, 0.1, 0.2, 0.25, 0.3, 0.9};

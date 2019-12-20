@@ -222,8 +222,8 @@ public class Generations {
             generationsScoresList.add(generationMemory.getAvarageScore());
             generationsAverageList.add(this.avarageScoreOfAllGenerations);
             for (int i = 0; i < generationsScoresList.size(); i++) {
-                System.out.print("--" + (i + 1) + "--\t\t " + df2.format(generationsScoresList.get(i)) + "  \t\t ( "
-                        + df2.format(generationsAverageList.get(i)) + " )" + "\t\t  ");
+                System.out.print("\t\t--" + (i + 1) + "--\t\t" + df2.format(generationsScoresList.get(i)) + "\t\t( "
+                        + df2.format(generationsAverageList.get(i)) + " )" + "\t\t");
                 if ((i + 1) % 3 == 0) {
                     System.out.println();
                 }
@@ -255,7 +255,7 @@ public class Generations {
             fileContent.append("\n");
         }
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/IdeaProjects/gameNeuralNet_LOGS/generation_" + (count - 1) + ".txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/Documents/neuralNetworkTests/logs/generation_" + (count - 1) + ".txt"));
         writer.write(String.valueOf(fileContent));
         writer.close();
 

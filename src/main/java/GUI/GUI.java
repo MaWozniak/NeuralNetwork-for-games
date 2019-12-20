@@ -35,7 +35,7 @@ public class GUI extends JFrame {
         this.add(buttonPanel, BorderLayout.SOUTH);
         this.setSize(1200, 860);
         this.setVisible(true);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         int millis = 1000 / framerate;
