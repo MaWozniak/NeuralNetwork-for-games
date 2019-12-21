@@ -57,10 +57,6 @@ public class PreyAI extends Prey {
         return id;
     }
 
-    String showGenome() {
-        return ai.showGenome();
-    }
-
     public Genome getGenome() {
         return ai.getGenome();
     }

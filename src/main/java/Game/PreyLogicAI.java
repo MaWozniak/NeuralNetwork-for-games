@@ -36,10 +36,6 @@ class PreyLogicAI {
 
     }
 
-    String showGenome() {
-        return blackBox.showGenome();
-    }
-
     Genome getGenome() {
         return blackBox.getGenome();
     }

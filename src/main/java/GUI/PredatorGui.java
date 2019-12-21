@@ -11,7 +11,7 @@ public class PredatorGui {
 
         g.setColor(Color.RED);
         //g.setColor(Color.YELLOW);
-        g.fillOval((int) x - 15, (int) y - 15, 20, 20);
+        g.fillOval((int) x - 10, (int) y - 10, 20, 20);
 
         //temp direction point:
         g.setColor(Color.BLUE);

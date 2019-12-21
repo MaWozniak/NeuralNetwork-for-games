@@ -14,34 +14,65 @@ public class NeuralNetworkView {
 
         for (int i = 0; i < inputs.length; i++) {
             g.setColor(Color.DARK_GRAY);
-            if (i < 3) {
-                g.drawString("bo", 1050, 350 + i * 12);
+            if (i == 0) {
+                g.drawString("bF", 1050, 350 + i * 12);
+            }
+            if (i == 1) {
+                g.drawString("bN", 1050, 350 + i * 12);
             }
             g.setColor(Color.BLUE);
-            if ((i >= 3) && (i < 11)) {
-                g.drawString("Pr", 1050, 350 + i * 12);
+            if (i == 2) {
+                g.drawString("FL", 1050, 350 + i * 12);
+            }
+            if (i == 3) {
+                g.drawString("FF", 1050, 350 + i * 12);
+            }
+            if (i == 4) {
+                g.drawString("FR", 1050, 350 + i * 12);
+            }
+            if (i == 5) {
+                g.drawString("FC", 1050, 350 + i * 12);
+            }
+            if (i == 6) {
+                g.drawString("FiP", 1050, 350 + i * 12);
             }
             g.setColor(Color.DARK_GRAY);
-            if ((i >= 11) && (i < 19)) {
-                g.drawString("ap", 1050, 350 + i * 12);
+            if (i == 7) {
+                g.drawString("aL", 1050, 350 + i * 12);
+            }
+            if (i == 8) {
+                g.drawString("aF", 1050, 350 + i * 12);
+            }
+            if (i == 9) {
+                g.drawString("aR", 1050, 350 + i * 12);
             }
             g.setColor(Color.BLUE);
-            if ((i >= 19) && (i < 27)) {
-                g.drawString("Hi", 1050, 350 + i * 12);
+            if (i == 10) {
+                g.drawString("PrL", 1050, 350 + i * 12);
+            }
+            if (i == 11) {
+                g.drawString("PrR", 1050, 350 + i * 12);
+            }
+            if (i == 12) {
+                g.drawString("PrB", 1050, 350 + i * 12);
             }
             g.setColor(Color.DARK_GRAY);
-            if ((i >= 27) && (i < 35)) {
-                g.drawString("fd", 1050, 350 + i * 12);
+            if (i == 13) {
+                g.drawString("hF", 1050, 350 + i * 12);
+            }
+            if (i == 14) {
+                g.drawString("hiP", 1050, 350 + i * 12);
             }
             g.setColor(Color.BLUE);
-            if ((i == 35)) {
-                g.drawString("E", 1050, 350 + i * 12);
+            if (i == 15) {
+                g.drawString("spe", 1050, 350 + i * 12);
             }
-            g.setColor(Color.DARK_GRAY);
-            if ((i == 36)) {
-                g.drawString("b", 1050, 350 + i * 12);
+            if (i == 16) {
+                g.drawString("ene", 1050, 350 + i * 12);
             }
-            g.setColor(Color.BLACK);
+            if (i == 17) {
+                g.drawString("sBi", 1050, 350 + i * 12);
+            }
         }
 
         for (int i = 0; i < inputs.length; i++) {
@@ -57,7 +88,7 @@ public class NeuralNetworkView {
             if (outputs[i] > 0.1) {
                 g.setColor(Color.RED);
             }
-            g.drawString(String.valueOf((int) outputs[i]), 1092, 560 + i * 12);
+            g.drawString(String.valueOf((int) outputs[i]), 1092, 434 + i * 12);
 
             g.setColor(Color.BLACK);
         }

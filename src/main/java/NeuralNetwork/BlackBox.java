@@ -1,11 +1,9 @@
 package NeuralNetwork;
 
-import java.util.Arrays;
+import java.awt.*;
 
 public class BlackBox {
 
-    //private NeuralNetwork neuralNetwork = new NeuralNetwork(13, 4, 3, 30, true);
-    //private NeuralNetwork neuralNetwork = new NeuralNetwork(10, 4, 1, 10, true);
     Genome genome;
     double[] input;
     double[] output;
@@ -27,239 +25,109 @@ public class BlackBox {
 
     public OutputMove move(char[][] model, double xPos, double yPos, double angle, double speed, double energy) {
 
-        int x = (int) xPos - 5 + (int) (155.0 * Math.sin(angle));
-        int y = (int) yPos - 5 - (int) (155.0 * Math.cos(angle));
-        //borders
-        double borders1 = 0.0;
-        if (x < 3 || y < 3 || x > 1245 || y > 845) {
-            borders1 = 1.0;
+        // "F" = feed
+        // "X" = another prey
+        // "P" = predator
+        // "M" = hide place
+
+        double foodLeft = 0.0;
+        if (checkRectangleModelView('F', model, true, 0, 3, 20, 20,
+                280.0, -200.0, xPos, yPos, angle) == 1.0) {
+            foodLeft = 1.0;
         }
 
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
+        double foodFront = 0.0;
+        if (checkRectangleModelView('F', model, false, 1, 0, 20, 3,
+                280.0, -30.0, xPos, yPos, angle) == 1.0) {
+            foodFront = 1.0;
         }
-        if (y < 0) {
-            y = 0;
-        }
-        if (y > 850) {
-            y = 850;
+        if (checkRectangleModelView('F', model, false, 1, 0, 20, 3,
+                280.0, 30.0, xPos, yPos, angle) == 1.0) {
+            foodFront = 1.0;
         }
 
-        char field1 = model[x][y];
-        double convField1p = convCharToDbl(field1, 'P');
-        double convField1f = convCharToDbl(field1, 'F');
-        double convField1m = convCharToDbl(field1, 'M');
-        double convField1x = convCharToDbl(field1, 'X');
-
-
-        x = (int) xPos - 5 + (int) (3.0 * Math.sin(angle));
-        y = (int) yPos - 5 - (int) (3.0 * Math.cos(angle));
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-        if (y > 850) {
-            y = 850;
+        double foodRight = 0.0;
+        if (checkRectangleModelView('F', model, true, 0, 3, 20, 20,
+                280.0, 200.0, xPos, yPos, angle) == 1.0) {
+            foodRight = 1.0;
         }
 
-        char field4 = model[x][y];
-        double convField4p = convCharToDbl(field4, 'P');
-        double convField4f = convCharToDbl(field4, 'F');
-        double convField4m = convCharToDbl(field4, 'M');
-        double convField4x = convCharToDbl(field4, 'X');
-
-        x = ((int) xPos - 5) + (int) (90.0 * Math.cos(angle) + (int) (80.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) + (int) (90.0 * Math.sin(angle) - (int) (80.0 * Math.cos(angle)));
-        //borders
-        double borders2 = 0.0;
-        if (x < 3 || y < 3 || x > 1245 || y > 845) {
-            borders2 = 1.0;
+        double foodCenter = 0.0;
+        if (checkRectangleModelView('F', model, false, -2, 0, 3, 2,
+                12.0, -12.0, xPos, yPos, angle) == 1.0) {
+            foodCenter = 1.0;
+        }
+        if (checkRectangleModelView('F', model, false, -2, 0, 3, 2,
+                12.0, 12.0, xPos, yPos, angle) == 1.0) {
+            foodCenter = 1.0;
         }
 
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-        if (y > 850) {
-            y = 850;
-        }
-        char field2 = model[x][y];
-        double convField2p = convCharToDbl(field2, 'P');
-        double convField2f = convCharToDbl(field2, 'F');
-        double convField2m = convCharToDbl(field2, 'M');
-        double convField2x = convCharToDbl(field2, 'X');
+        double foodInPoint = checkModelView(model, xPos, yPos, angle, 'F', 0.0, 0.0);
 
-        x = ((int) xPos - 5) - (int) (90.0 * Math.cos(angle) - (int) (80.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) - (int) (90.0 * Math.sin(angle) - +(int) (80.0 * Math.cos(angle)));
-        //borders
-        double borders3 = 0.0;
-        if (x < 3 || y < 3 || x > 1245 || y > 845) {
-            borders3 = 1.0;
+        double anotherPreyLeft = 0.0;
+        if (checkRectangleModelView('X', model, true, 0, 2, 15, 15,
+                220.0, -180.0, xPos, yPos, angle) == 1.0) {
+            anotherPreyLeft = 1.0;
         }
 
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
+        double anotherPreyFront = 0.0;
+        if (checkRectangleModelView('X', model, false, 1, 0, 15, 3,
+                200.0, -30.0, xPos, yPos, angle) == 1.0) {
+            anotherPreyFront = 1.0;
         }
-        if (y < 0) {
-            y = 0;
+        if (checkRectangleModelView('X', model, false, 1, 0, 15, 3,
+                200.0, 30.0, xPos, yPos, angle) == 1.0) {
+            anotherPreyFront = 1.0;
         }
-        if (y > 850) {
-            y = 850;
-        }
-        char field3 = model[x][y];
-        double convField3p = convCharToDbl(field3, 'P');
-        double convField3f = convCharToDbl(field3, 'F');
-        double convField3m = convCharToDbl(field3, 'M');
-        double convField3x = convCharToDbl(field3, 'X');
 
-        x = ((int) xPos - 5) + (int) (16.0 * Math.cos(angle) - (int) (16.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) + (int) (16.0 * Math.sin(angle) + (int) (16.0 * Math.cos(angle)));
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
+        double anotherPreyRight = 0.0;
+        if (checkRectangleModelView('X', model, true, 0, 2, 15, 15,
+                220.0, 180.0, xPos, yPos, angle) == 1.0) {
+            anotherPreyRight = 1.0;
         }
-        if (y < 0) {
-            y = 0;
-        }
-        if (y > 850) {
-            y = 850;
-        }
-        char field5 = model[x][y];
-        double convField5p = convCharToDbl(field5, 'P');
-        double convField5f = convCharToDbl(field5, 'F');
-        double convField5m = convCharToDbl(field5, 'M');
-        double convField5x = convCharToDbl(field5, 'X');
 
-        x = ((int) xPos - 5) - (int) (16.0 * Math.cos(angle) + (int) (16.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) - (int) (16.0 * Math.sin(angle) - (int) (16.0 * Math.cos(angle)));
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
+        double predatorLeft = 0.0;
+        if (checkRectangleModelView('P', model, false, 0, 0, 20, 20,
+                270.0, -200.0, xPos, yPos, angle) == 1.0) {
+            predatorLeft = 1.0;
         }
-        if (y < 0) {
-            y = 0;
+        double predatorRight = 0.0;
+        if (checkRectangleModelView('P', model, false, 0, 0, 20, 20,
+                270.0, 200.0, xPos, yPos, angle) == 1.0) {
+            predatorRight = 1.0;
         }
-        if (y > 850) {
-            y = 850;
+        double predatorBack = 0.0;
+        if (checkRectangleModelView('P', model, false, 0, 0, 8, 8,
+                -70.0, -80.0, xPos, yPos, angle) == 1.0) {
+            predatorBack = 1.0;
         }
-        char field6 = model[x][y];
-        double convField6p = convCharToDbl(field6, 'P');
-        double convField6f = convCharToDbl(field6, 'F');
-        double convField6m = convCharToDbl(field6, 'M');
-        double convField6x = convCharToDbl(field6, 'X');
+        if (checkRectangleModelView('P', model, false, 0, 0, 8, 8,
+                -70.0, 80.0, xPos, yPos, angle) == 1.0) {
+            predatorBack = 1.0;
+        }
 
-        x = ((int) xPos - 5) + (int) (20.0 * Math.cos(angle) + (int) (25.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) + (int) (20.0 * Math.sin(angle) - (int) (25.0 * Math.cos(angle)));
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-        if (y > 850) {
-            y = 850;
-        }
-        char field7 = model[x][y];
-        double convField7p = convCharToDbl(field7, 'P');
-        double convField7f = convCharToDbl(field7, 'F');
-        double convField7x = convCharToDbl(field7, 'X');
+        double hidePlaceFront = checkModelView(model, xPos, yPos, angle, 'M', 160.0, 0.0);
+        double hidePlaceInPoint = checkModelView(model, xPos, yPos, angle, 'M', 0.0, 0.0);
 
-        x = ((int) xPos - 5) - (int) (20.0 * Math.cos(angle) - (int) (25.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) - (int) (20.0 * Math.sin(angle) + (int) (25.0 * Math.cos(angle)));
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
+        double borderFront = 0.0;
+        if ((xPos < 50) || (xPos > 1200) || (yPos < 50) || (yPos > 800)) {
+            borderFront = 1.0;
         }
-        if (y < 0) {
-            y = 0;
+        double borderNearFront = 0.0;
+        if ((xPos < 1) || (xPos > 1249) || (yPos < 1) || (yPos > 849)) {
+            borderNearFront = 1.0;
         }
-        if (y > 850) {
-            y = 850;
-        }
-        char field8 = model[x][y];
-        double convField8p = convCharToDbl(field8, 'P');
-        double convField8f = convCharToDbl(field8, 'F');
-        double convField8x = convCharToDbl(field8, 'X');
 
-        x = ((int) xPos - 5) + (int) (40.0 * Math.cos(angle) + (int) (10.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) + (int) (40.0 * Math.sin(angle) - (int) (10.0 * Math.cos(angle)));
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-        if (y > 850) {
-            y = 850;
-        }
-        char field9 = model[x][y];
-        double convField9p = convCharToDbl(field9, 'P');
-        double convField9f = convCharToDbl(field9, 'F');
-        double convField9m = convCharToDbl(field9, 'M');
-        double convField9x = convCharToDbl(field9, 'X');
-
-        x = ((int) xPos - 5) - (int) (40.0 * Math.cos(angle) - (int) (10.0 * Math.sin(angle)));
-        y = ((int) yPos - 5) - (int) (40.0 * Math.sin(angle) + (int) (10.0 * Math.cos(angle)));
-        if (x < 0) {
-            x = 0;
-        } // TO REFACTOR!
-        if (x > 1250) {
-            x = 1250;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-        if (y > 850) {
-            y = 850;
-        }
-        char field10 = model[x][y];
-        double convField10p = convCharToDbl(field10, 'P');
-        double convField10m = convCharToDbl(field10, 'M');
-        double convField10f = convCharToDbl(field10, 'F');
-        double convField10x = convCharToDbl(field10, 'X');
-
-
-        //inputs should be between 0.0 and 0.99 --> radians/Math.PI & energy/maxEnergy
         //add simpleBias
         double simpleBias = 1.0;
-        input = new double[]{borders1, borders2, borders3, convField1p, convField2p, convField3p, convField4p, convField5p, convField6p, convField9p, convField10p,
-                convField1x, convField2x, convField3x, convField4x, convField5x, convField6x, convField9x, convField10x,
-                convField1m, convField2m, convField3m, convField4m, convField5m, convField6m, convField9m, convField10m,
-                convField1f, convField2f, convField3f, convField4f, convField5f, convField6f, convField9f, convField10f,
-                10 * energy / 150, simpleBias};
-//        double[] input = {borders1, borders2, borders3, convField1p, convField2p, convField3p, convField4p, convField5p, convField6p, convField9p, convField10p,
-//                convField1f, convField2f, convField3f, convField4f, convField5f, convField6f, convField9f, convField10f,
-//                energy / 150, simpleBias};
 
-        //double[] output = neuralNetwork.generate(input);
+        input = new double[]{borderFront, borderNearFront,
+                foodLeft, foodFront, foodRight, foodCenter, foodInPoint,
+                anotherPreyLeft, anotherPreyFront, anotherPreyRight,
+                predatorLeft, predatorRight, predatorBack,
+                hidePlaceFront, hidePlaceInPoint,
+                speed, 10 * energy / 150, simpleBias};
+
         output = this.getGenome().getNeuralNetwork().run(input);
 
         //interpretation:
@@ -269,6 +137,47 @@ public class BlackBox {
             outputBool[i] = output[i] == 1;
         }
         return new OutputMove(outputBool[0], outputBool[1], outputBool[2], outputBool[3]);
+
+    }
+
+    double checkRectangleModelView(char checked, char[][] model, boolean TRIANGLE, int yStartPoint, int xStartPoint, int yNumPoints, int xNumPoints,
+                                   double FRONT_TRANSALTE, double SIDE_TRANSALTE, double x, double y, double angle) {
+        double result = 0.0;
+        int triangle = 0;
+        for (int i = yStartPoint; i < yNumPoints; i++) {
+            if (TRIANGLE) {
+                triangle = i;
+            }
+            for (int j = xStartPoint; j < xNumPoints - triangle; j++) {
+
+                if (checkModelView(model, x, y, angle, checked, FRONT_TRANSALTE, SIDE_TRANSALTE) == 1.0) {
+                    result = 1.0;
+                }
+            }
+        }
+        return result;
+    }
+
+    double checkModelView(char[][] model, double xPos, double yPos, double angle, char checked, double FRONT, double SIDE) {
+
+        int x = ((int) xPos - 6) - (int) (SIDE * Math.cos(angle) - (int) (FRONT * Math.sin(angle)));
+        int y = ((int) yPos - 6) - (int) (SIDE * Math.sin(angle) + (int) (FRONT * Math.cos(angle)));
+
+        if (x < 0) {
+            x = 0;
+        }
+        if (x > 1250) {
+            x = 1250;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+        if (y > 850) {
+            y = 850;
+        }
+
+        return convCharToDbl(model[x][y], checked);
+
     }
 
     private double convCharToDbl(char ch, char strike) {
@@ -279,34 +188,6 @@ public class BlackBox {
         }
 
         return converted;
-    }
-
-//    private double convCharToDbl(char ch) {
-//
-//        //double converted = 0.5;
-//        double converted = 0.0; // nothing == '0'
-//        if (ch == 'F') { // feed
-//            //coverted = 0.99;
-//            converted = -2.0;
-//        }
-//        if (ch == 'M') { // hide place
-//            //converted = 0.75;
-//            converted = 0.0;
-//        }
-//        if (ch == 'X') { // another prey
-//            //converted = 0.55;
-//            //converted = 0.1;
-//            converted = 0.0;
-//        }
-//        if (ch == 'P') { //predator
-//            converted = 2.0;
-//        }
-//        return converted;
-//    }
-
-    public String showGenome() {
-        //return Arrays.deepToString(neuralNetwork.getGenome().getWeights()) + "\n" + Arrays.deepToString(neuralNetwork.getGenome().getWeights());
-        return "mock";
     }
 
     public Genome getGenome() {
