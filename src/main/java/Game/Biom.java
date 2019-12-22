@@ -1,8 +1,6 @@
 package Game;
 
 import Genetics.Generations;
-import NeuralNetwork.Genome;
-import NeuralNetwork.NeuralNetwork;
 
 import java.awt.*;
 import java.io.IOException;
@@ -252,4 +250,14 @@ public class Biom {
             }
         }
     }
+
+    public List<Double> getGenerationsScores() {
+        return this.generations.getGenerationsScoresList();
+    }
+
+    public List<Double> getGenerationsAverageScores() {
+        return this.generations.getGenerationsAverageList();
+    }
+
+
 }

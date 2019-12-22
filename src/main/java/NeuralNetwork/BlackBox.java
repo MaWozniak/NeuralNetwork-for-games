@@ -31,23 +31,23 @@ public class BlackBox {
         // "M" = hide place
 
         double foodLeft = 0.0;
-        if (checkRectangleModelView('F', model, true, 0, 3, 20, 20,
+        if (checkRectangleModelView('F', model, true, 0, 3, 10, 10,
                 280.0, -200.0, xPos, yPos, angle) == 1.0) {
             foodLeft = 1.0;
         }
 
         double foodFront = 0.0;
-        if (checkRectangleModelView('F', model, false, 1, 0, 20, 3,
+        if (checkRectangleModelView('F', model, false, 1, 0, 10, 3,
                 280.0, -30.0, xPos, yPos, angle) == 1.0) {
             foodFront = 1.0;
         }
-        if (checkRectangleModelView('F', model, false, 1, 0, 20, 3,
+        if (checkRectangleModelView('F', model, false, 1, 0, 10, 3,
                 280.0, 30.0, xPos, yPos, angle) == 1.0) {
             foodFront = 1.0;
         }
 
         double foodRight = 0.0;
-        if (checkRectangleModelView('F', model, true, 0, 3, 20, 20,
+        if (checkRectangleModelView('F', model, true, 0, 3, 10, 10,
                 280.0, 200.0, xPos, yPos, angle) == 1.0) {
             foodRight = 1.0;
         }
@@ -65,34 +65,34 @@ public class BlackBox {
         double foodInPoint = checkModelView(model, xPos, yPos, angle, 'F', 0.0, 0.0);
 
         double anotherPreyLeft = 0.0;
-        if (checkRectangleModelView('X', model, true, 0, 2, 15, 15,
+        if (checkRectangleModelView('X', model, true, 0, 2, 10, 10,
                 220.0, -180.0, xPos, yPos, angle) == 1.0) {
             anotherPreyLeft = 1.0;
         }
 
         double anotherPreyFront = 0.0;
-        if (checkRectangleModelView('X', model, false, 1, 0, 15, 3,
+        if (checkRectangleModelView('X', model, false, 1, 0, 10, 3,
                 200.0, -30.0, xPos, yPos, angle) == 1.0) {
             anotherPreyFront = 1.0;
         }
-        if (checkRectangleModelView('X', model, false, 1, 0, 15, 3,
+        if (checkRectangleModelView('X', model, false, 1, 0, 10, 3,
                 200.0, 30.0, xPos, yPos, angle) == 1.0) {
             anotherPreyFront = 1.0;
         }
 
         double anotherPreyRight = 0.0;
-        if (checkRectangleModelView('X', model, true, 0, 2, 15, 15,
+        if (checkRectangleModelView('X', model, true, 0, 2, 10, 10,
                 220.0, 180.0, xPos, yPos, angle) == 1.0) {
             anotherPreyRight = 1.0;
         }
 
         double predatorLeft = 0.0;
-        if (checkRectangleModelView('P', model, false, 0, 0, 20, 20,
+        if (checkRectangleModelView('P', model, false, 0, 0, 15, 15,
                 270.0, -200.0, xPos, yPos, angle) == 1.0) {
             predatorLeft = 1.0;
         }
         double predatorRight = 0.0;
-        if (checkRectangleModelView('P', model, false, 0, 0, 20, 20,
+        if (checkRectangleModelView('P', model, false, 0, 0, 15, 15,
                 270.0, 200.0, xPos, yPos, angle) == 1.0) {
             predatorRight = 1.0;
         }
@@ -150,7 +150,7 @@ public class BlackBox {
             }
             for (int j = xStartPoint; j < xNumPoints - triangle; j++) {
 
-                if (checkModelView(model, x, y, angle, checked, FRONT_TRANSALTE, SIDE_TRANSALTE) == 1.0) {
+                if (checkModelView(model, x, y, angle, checked, i * (FRONT_TRANSALTE / yNumPoints), j * (SIDE_TRANSALTE / xNumPoints)) == 1.0) {
                     result = 1.0;
                 }
             }

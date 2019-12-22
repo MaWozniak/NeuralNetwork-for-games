@@ -24,11 +24,17 @@ public class GUI extends JFrame {
             biom.setFramerate(framerateCount.next());
             label.setText(framerateCount.getSelectedInString());
         });
+        JButton button3 = new JButton("Progres Chart");
+        button3.addActionListener(actionEvent3 -> {
+            renderPanel.getGenerationMemory(biom.getGenerationsScores(), biom.getGenerationsAverageScores());
+            renderPanel.setChartViewFlag();
+        });
 
         buttonPanel.setSize(100, 30);
         buttonPanel.add(button1);
         buttonPanel.add(label);
         buttonPanel.add(button2);
+        buttonPanel.add(button3);
 
         this.setLayout(new BorderLayout());
         this.add(renderPanel);
