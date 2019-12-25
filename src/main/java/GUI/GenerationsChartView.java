@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GenerationsChartView {
 
-    private final static boolean TEST = true;
+    private final static boolean TEST = false;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
     private List<Double> generationsScoresList = new ArrayList<>();
     private List<Double> generationsAverageList = new ArrayList<>();
