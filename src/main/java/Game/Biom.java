@@ -12,6 +12,7 @@ public class Biom {
     private Generations generations;
 
     private ModelView model;
+    private int numPrey;
     private List<Prey> prey = new ArrayList<>();
     private List<PreyAI> AI_prey = new ArrayList<>();
     private List<Predator> predators = new ArrayList<>();
@@ -34,6 +35,7 @@ public class Biom {
         this.preyAging = preyAging;
         this.preyMaxAge = preyMaxAge;
         this.preyForcedMove = preyForcedMove;
+        this.numPrey = numPrey;
         this.addNewPreys(numPrey);
         this.generations = new Generations(AI_prey, numAIPrey, preyAiEnergyCost, preyForcedMove, preyAging);
         this.generations.addFirstGeneration();
@@ -115,6 +117,9 @@ public class Biom {
     private void checkGenerations() throws IOException {
         if (AI_prey.size() == 0) {
             generations.addNewGeneration();
+        }
+        if (prey.size() == 0) {
+            addNewPreys(numPrey);
         }
     }
 

@@ -9,10 +9,10 @@ class Predator extends Organism {
     private PredatorLogicSimple predatorLogicSimple;
     private PredatorGui predatorGui;
 
-    private double maxSpeed = 9;
-    private double acc = 0.3;
-    private double dec = 0.5;
-    private double turnSpeed = 0.2;
+    private double maxSpeed = 3;
+    private double acc = 0.1;
+    private double dec = 0.2;
+    private double turnSpeed = 0.1;
     private boolean energyCost;
     private boolean hiddenPlaces;
 
@@ -67,7 +67,7 @@ class Predator extends Organism {
     }
 
     void velocityLimits() {
-        if (speed > 9.0) {
+        if (speed > 4.0) {
             down = true;
         }
         if (speed < -0.1) {
