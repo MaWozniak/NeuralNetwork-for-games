@@ -87,23 +87,67 @@ public class BlackBox {
         }
 
         double predatorLeft = 0.0;
-        if (checkRectangleModelView('P', model, false, 0, 0, 15, 15,
+        if (checkRectangleModelView('P', model, false, 0, 2, 15, 15,
                 270.0, -200.0, xPos, yPos, angle) == 1.0) {
             predatorLeft = 1.0;
         }
+
+        double predatorFront = 0.0;
+        if (checkRectangleModelView('P', model, false, 1, 0, 16, 5,
+                290.0, -30.0, xPos, yPos, angle) == 1.0) {
+            predatorFront = 1.0;
+        }
+        if (checkRectangleModelView('P', model, false, 1, 0, 16, 5,
+                290.0, 30.0, xPos, yPos, angle) == 1.0) {
+            predatorFront = 1.0;
+        }
+
         double predatorRight = 0.0;
-        if (checkRectangleModelView('P', model, false, 0, 0, 15, 15,
+        if (checkRectangleModelView('P', model, false, 0, 2, 15, 15,
                 270.0, 200.0, xPos, yPos, angle) == 1.0) {
             predatorRight = 1.0;
         }
-        double predatorBack = 0.0;
-        if (checkRectangleModelView('P', model, false, 0, 0, 8, 8,
+
+        double predatorNear = 0.0;
+        if (checkRectangleModelView('P', model, false, -4, 0, 8, 8,
+                24.0, -24.0, xPos, yPos, angle) == 1.0) {
+            predatorNear = 1.0;
+        }
+        if (checkRectangleModelView('P', model, false, -4, 0, 8, 8,
+                24.0, 24.0, xPos, yPos, angle) == 1.0) {
+            predatorNear = 1.0;
+        }
+
+        double predatorCenter = 0.0;
+        if (checkRectangleModelView('P', model, false, -2, 0, 5, 5,
+                12.0, -12.0, xPos, yPos, angle) == 1.0) {
+            predatorCenter = 1.0;
+        }
+        if (checkRectangleModelView('P', model, false, -2, 0, 5, 5,
+                12.0, 12.0, xPos, yPos, angle) == 1.0) {
+            predatorCenter = 1.0;
+        }
+
+        double predatorLeftBack = 0.0;
+        if (checkRectangleModelView('P', model, false, 0, 2, 8, 8,
                 -70.0, -80.0, xPos, yPos, angle) == 1.0) {
+            predatorLeftBack = 1.0;
+        }
+
+        double predatorBack = 0.0;
+        if (checkRectangleModelView('P', model, false, 0, 0, 8, 4,
+                -80.0, -30.0, xPos, yPos, angle) == 1.0) {
             predatorBack = 1.0;
         }
-        if (checkRectangleModelView('P', model, false, 0, 0, 8, 8,
-                -70.0, 80.0, xPos, yPos, angle) == 1.0) {
+        if (checkRectangleModelView('P', model, false, 0, 0, 8, 4,
+                -80.0, 30.0, xPos, yPos, angle) == 1.0) {
             predatorBack = 1.0;
+        }
+
+        double predatorRightBack = 0.0;
+        if (checkRectangleModelView('P', model, false, 0, 2, 8, 8,
+                -70.0, 80.0, xPos, yPos, angle) == 1.0) {
+            predatorRightBack = 1.0;
         }
 
         double hidePlaceFront = checkModelView(model, xPos, yPos, angle, 'M', 160.0, 0.0);
@@ -124,7 +168,7 @@ public class BlackBox {
         input = new double[]{borderFront, borderNearFront,
                 foodLeft, foodFront, foodRight, foodCenter, foodInPoint,
                 anotherPreyLeft, anotherPreyFront, anotherPreyRight,
-                predatorLeft, predatorRight, predatorBack,
+                predatorLeft, predatorFront, predatorRight, predatorNear, predatorCenter, predatorLeftBack, predatorBack, predatorRightBack,
                 hidePlaceFront, hidePlaceInPoint,
                 speed, 10 * energy / 150, simpleBias};
 

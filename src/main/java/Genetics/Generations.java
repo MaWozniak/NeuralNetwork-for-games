@@ -17,8 +17,7 @@ public class Generations {
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     private Generation generation;
-    //private NeuralNetwork protoplast = new NeuralNetwork(37, 3, 20, 4);
-    private NeuralNetwork protoplast = new NeuralNetwork(18, 2, 36, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(23, 2, 30, 4);
     private double BIAS = 1.0;
 
     private List<Double> generationsScoresList;
@@ -45,8 +44,6 @@ public class Generations {
 
 
     public Generations(List<PreyAI> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
-        //this.geneticsMethods = new GeneticsMethods();
-        //this.newGenePool = new ArrayList<>();
         this.generationSize = size;
         protoplast.setAllBiases(BIAS);
         this.generation = new Generation(1, generationSize, protoplast);
@@ -96,8 +93,6 @@ public class Generations {
 
         for (int i = 0; i < generationSize; i++) {
 
-//            double xStartPos = 1150 * Math.random();
-//            double yStartPos = 750 * Math.random();
             double xStartPos = 400 + 100 * Math.random();
             double yStartPos = 250 + 100 * Math.random();
 
@@ -106,7 +101,6 @@ public class Generations {
             }
 
             PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
-            //newPreyAI.setId(i, count);
             AI_prey.add(newPreyAI);
 
             firstInGeneration = false;
@@ -115,13 +109,10 @@ public class Generations {
 
     private void geneticsNewGeneration(List<Genome> ancestors) {
 
-        //generation = null;
         generation = new Generation(2, generationSize, ancestors, "type3");
 
         for (int i = 0; i < generationSize; i++) {
 
-            //double xStartPos = 400 + 250 * Math.random();
-            //double yStartPos = 250 + 250 * Math.random();
             double xStartPos = 400 + 100 * Math.random();
             double yStartPos = 250 + 100 * Math.random();
 

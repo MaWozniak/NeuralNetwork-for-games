@@ -27,7 +27,7 @@ public class GenerationsChartView {
         }
 
 
-        int delta = 1015 / (generationsScoresList.size() + 1);
+        int delta = 1050 / (generationsScoresList.size() + 1);
         int step = 1;
         if (generationsScoresList.size() > 900) {
             delta = 1;
@@ -40,16 +40,16 @@ public class GenerationsChartView {
 
         g.setColor(Color.BLUE);
         for (int i = 0; i < generationsAverageList.size(); i += step) {
-            g.fillOval(100 + i * delta, (int) (500 - 12 * (generationsAverageList.get(i))), 6, 6);
+            g.fillOval(100 + (i / step) * delta, (int) (500 - 12 * (generationsAverageList.get(i))), 6, 6);
             if (i % valueStep == 0) {
-                g.drawString(df2.format(generationsAverageList.get(i)), 100 + i * delta, 540);
+                g.drawString(df2.format(generationsAverageList.get(i)), 100 + (i / step) * delta, 540);
             }
         }
         g.setColor(Color.YELLOW);
         for (int i = 0; i < generationsScoresList.size(); i += step) {
-            g.fillOval(100 + i * delta, (int) (502 - 12 * (generationsScoresList.get(i))), 6, 6);
+            g.fillOval(100 + (i / step) * delta, (int) (502 - 12 * (generationsScoresList.get(i))), 6, 6);
             if (i % valueStep == 0) {
-                g.drawString(df2.format(generationsScoresList.get(i)), 100 + i * delta, 550);
+                g.drawString(df2.format(generationsScoresList.get(i)), 100 + (i / step) * delta, 550);
             }
         }
 
@@ -71,7 +71,7 @@ public class GenerationsChartView {
         generationsScoresList.clear();
         generationsAverageList.clear();
 
-        int size = 200;
+        int size = 900;
         //size = (int)(2500*Math.random());
 
         for (int i = 0; i < size; i++) {
