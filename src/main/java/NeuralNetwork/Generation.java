@@ -36,7 +36,7 @@ public class Generation {
             val = new double[]{0.6, 0.4, 0.5, 0.1, 0.8, 0.4, 0.3, 0.15};
         }
         if (type.equals("type3")) {
-            val = new double[]{0.05, 0.1, 0.1, 1.5, 0.25, 0.2, 0.25, 0.9};
+            val = new double[]{0.05, 0.1, 0.1, 1.5, 0.05, 0.1, 0.1, 0.9};
             //best at the moment:
             //val = new double[]{0.05, 0.1, 0.1, 1.5, 0.5, 0.2, 0.5, 0.9};
             //val = new double[]{0.1, 0.1, 0.1, 1.2, 0.5, 0.15, 0.35, 0.9};
@@ -79,9 +79,9 @@ public class Generation {
             }
         }
         //random fellow
-        NeuralNetwork neuralNetwork = ancestors.get(1).getNeuralNetwork().copy();
-        neuralNetwork.fillRandomWeights();
-        genomes.set(45, new Genome(number, neuralNetwork, "random-fellow"));
+//        NeuralNetwork neuralNetwork = ancestors.get(1).getNeuralNetwork().copy();
+//        neuralNetwork.fillRandomWeights();
+//        genomes.set(45, new Genome(number, neuralNetwork, "random-fellow"));
     }
 
     public List<Genome> getGenomes() {

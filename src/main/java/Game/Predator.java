@@ -56,7 +56,6 @@ class Predator extends Organism {
             //FULL & TIRED:
             if (energy > 250) {
                 speed -= 0.35;
-                angle = (int) (0.3 * angle);
             }
 
             //DEAD:
