@@ -182,17 +182,6 @@ public class Biom {
 
     }
 
-//    private void checkAiPreiToShowNetwork() {
-//        List<PreyAI> AI_prey_alive = new ArrayList<>();
-//        for (PreyAI generatedPreyAI : AI_prey) {
-//            if(generatedPreyAI.isAlive()){
-//                AI_prey_alive.add(generatedPreyAI);
-//            }
-//        }
-//        AI_prey_alive.get(0).setFirstInGeneration(true);
-//        AI_prey_alive.clear();
-//    }
-
     private void modelViewSet() {
         model.clear();
 
@@ -264,5 +253,22 @@ public class Biom {
         return this.generations.getGenerationsAverageList();
     }
 
+    public int getPredatorsNumber() {
+        return predatorsNumber;
+    }
+
+    public void addPredator() {
+        predatorsNumber += 1;
+    }
+
+    public void removePredator() {
+        if (predatorsNumber > 0) {
+            predatorsNumber -= 1;
+        }
+    }
+
+    public String getMutationRate() {
+        return generations.getMutationRate();
+    }
 
 }

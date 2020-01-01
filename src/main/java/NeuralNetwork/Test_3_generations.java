@@ -24,7 +24,7 @@ public class Test_3_generations {
         generation2.randomScores();
         generation2.showScores();
 
-        Generation generation3 = new Generation(3, 20, generation2.bestSelection(5), "type1");
+        Generation generation3 = new Generation(3, 20, generation2.bestSelection(5), "type1", 1.0);
         generation3.show(true);
     }
 

@@ -17,7 +17,7 @@ public class Generations {
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     private Generation generation;
-    private NeuralNetwork protoplast = new NeuralNetwork(23, 1, 8, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(23, 1, 6, 4);
     private double BIAS = 1.0;
 
     private List<Double> generationsScoresList;
@@ -42,6 +42,8 @@ public class Generations {
     private double thirdBestScore = 0.0;
     private String idOfthirdBestScore = "";
 
+    private double mutationRate;
+
 
     public Generations(List<PreyAI> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
         this.generationSize = size;
@@ -53,6 +55,7 @@ public class Generations {
         this.preyAiEnergyCost = preyAiEnergyCost;
         this.preyForcedMove = preyForcedMove;
         this.preyAging = preyAging;
+        this.mutationRate = 1.1;
     }
 
     public void addFirstGeneration() {
@@ -75,7 +78,7 @@ public class Generations {
         System.out.println("public void addNewGeneration() -> generation.showScores()");
         generation.showScores();
 
-        geneticsNewGeneration(generation.bestSelection(20));
+        geneticsNewGeneration(generation.bestSelection(10));
 
         // IS THIS HELP FOR CRASH?
         generationMemory.getSelectedGenomes().clear();
@@ -109,7 +112,10 @@ public class Generations {
 
     private void geneticsNewGeneration(List<Genome> ancestors) {
 
-        generation = new Generation(2, generationSize, ancestors, "type3");
+        double newMutationRate = (bestScoreOfALLGenerations - avarageScoreOfAllGenerations) / bestScoreOfALLGenerations;
+        setMutationRate(newMutationRate);
+
+        generation = new Generation(2, generationSize, ancestors, "type3", newMutationRate);
 
         for (int i = 0; i < generationSize; i++) {
 
@@ -258,5 +264,13 @@ public class Generations {
 
     public List<Double> getGenerationsAverageList() {
         return generationsAverageList;
+    }
+
+    public String getMutationRate() {
+        return df2.format(mutationRate);
+    }
+
+    public void setMutationRate(double mutationRate) {
+        this.mutationRate = mutationRate;
     }
 }

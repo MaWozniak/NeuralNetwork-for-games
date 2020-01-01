@@ -30,11 +30,37 @@ public class GUI extends JFrame {
             renderPanel.setChartViewFlag();
         });
 
+        JLabel label1 = new JLabel("Predators:");
+        JLabel label2 = new JLabel(Integer.toString(biom.getPredatorsNumber()));
+        JButton button4 = new JButton("-");
+        button4.addActionListener(actionEvent1 -> {
+            biom.removePredator();
+            label2.setText(Integer.toString(biom.getPredatorsNumber()));
+        });
+        JButton button5 = new JButton("+");
+        button5.addActionListener(actionEvent2 -> {
+            biom.addPredator();
+            label2.setText(Integer.toString(biom.getPredatorsNumber()));
+        });
+
+        JLabel label3 = new JLabel(biom.getMutationRate());
+        JButton button6 = new JButton("Get Mutation rate:");
+        button6.addActionListener(actionEvent2 -> {
+            label3.setText(biom.getMutationRate());
+        });
+
+
         buttonPanel.setSize(100, 30);
         buttonPanel.add(button1);
         buttonPanel.add(label);
         buttonPanel.add(button2);
         buttonPanel.add(button3);
+        buttonPanel.add(label1);
+        buttonPanel.add(button4);
+        buttonPanel.add(label2);
+        buttonPanel.add(button5);
+        buttonPanel.add(button6);
+        buttonPanel.add(label3);
 
         this.setLayout(new BorderLayout());
         this.add(renderPanel);
