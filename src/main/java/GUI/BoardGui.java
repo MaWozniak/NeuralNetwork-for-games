@@ -18,7 +18,7 @@ public class BoardGui {
         g.fillRect(20, 20, 1160, 760);
         g.setColor(Color.WHITE);
         g.fillRect(180, 20, 820, 760);
-        g.setColor(Color.BLUE);
+        g.setColor(new Color(35114));
         g.fillRect(400, 500, 50, 180);
         g.fillRect(700, 120, 50, 180);
 

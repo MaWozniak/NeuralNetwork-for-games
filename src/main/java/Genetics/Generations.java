@@ -112,7 +112,7 @@ public class Generations {
 
     private void geneticsNewGeneration(List<Genome> ancestors) {
 
-        double newMutationRate = (bestScoreOfALLGenerations - avarageScoreOfAllGenerations) / bestScoreOfALLGenerations;
+        double newMutationRate = (bestScore - avarageScoreOfAllGenerations) / bestScore;
         setMutationRate(newMutationRate);
 
         generation = new Generation(2, generationSize, ancestors, "type3", newMutationRate);
