@@ -5,11 +5,9 @@ import GUI.PreyGui;
 import java.awt.*;
 
 class Prey extends Organism {
-
     private PreyLogicSimple preyLogicSimple;
     private PreyGui preyGui;
-
-    private double maxSpeed = 15;
+    protected double maxSpeed = 15;
     private double acc = 0.6;
     private double dec = 0.5;
     private double turnSpeed = 0.2;
@@ -18,7 +16,7 @@ class Prey extends Organism {
         this.x = xStartPos;
         this.y = yStartPos;
         this.isAlive = true;
-        this.energy = 100;
+        this.energy = 30;
         this.speed = 0;
         this.angle = 0;
         preyGui = new PreyGui();
@@ -29,26 +27,22 @@ class Prey extends Organism {
         this.x = xStartPos;
         this.y = yStartPos;
         this.isAlive = true;
-        this.energy = 100;
+        this.energy = 30;
         this.speed = 0;
         this.angle = 0;
     }
 
     void move(char[][] model) {
-        feed();
         thinking(model);
         setPosition();
         energyCost();
     }
 
     void feed() {
-        if ((x > 400 && x < 450 && y > 500 && y < 680) || (x > 700 && x < 750 && y > 120 && y < 300)) {
-            //if (((x > 400 && x < 450 && y > 500 && y < 680) || (x > 700 && x < 750 && y > 120 && y < 300)) && speed>0.1) {
-            energy += 0.05;
-        }
+        this.energy += 20;
         double maxEnergy = 150;
-        if (energy > maxEnergy) {
-            energy = maxEnergy;
+        if (this.energy > maxEnergy) {
+            this.energy = maxEnergy;
         }
     }
 
@@ -57,17 +51,14 @@ class Prey extends Organism {
     }
 
     void setPosition() {
-
         velocityLimits();
-
         steering();
-
         x += Math.sin(angle) * speed;
         y -= Math.cos(angle) * speed;
-
         int leftBorder = 22;
         int rightBorder = 1178;
         borderBouncing(leftBorder, rightBorder);
+
     }
 
     void steering() {
@@ -109,16 +100,13 @@ class Prey extends Organism {
 
     void energyCost() {
         energy -= 0.01 * speed / 5;
-
         if (x < 180 || x > 1100) {
             energy -= 0.05 * speed / 5;
         }
-
         //force to move
         if (energy < 100 & speed < 1) {
             energy -= 0.1;
         }
-
         //DEAD:
         if (energy <= 0) {
             isAlive = false;
@@ -132,7 +120,7 @@ class Prey extends Organism {
     }
 
     void velocityLimits() {
-        if (speed > 8.0) {
+        if (speed > maxSpeed) {
             down = true;
         }
         if (speed < -0.1) {
@@ -141,21 +129,22 @@ class Prey extends Organism {
     }
 
     void borderBouncing(int x1, int x2) {
+        double penalty = 0.02;
         if ((x < x1)) {
             x += 10;
-            energy -= 0.01;
+            energy -= penalty;
         }
         if ((y < 22)) {
             y += 10;
-            energy -= 0.05;
+            energy -= penalty;
         }
         if ((x > x2)) {
             x -= 10;
-            energy -= 0.01;
+            energy -= penalty;
         }
         if ((y > 778)) {
             y -= 10;
-            energy -= 0.05;
+            energy -= penalty;
         }
     }
 }

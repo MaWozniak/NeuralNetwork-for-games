@@ -2,9 +2,9 @@ package Game;
 
 public class FramerateCount {
 
-    private int[] array = {1, 5, 10, 15, 30, 45, 60, 100, 200, 300, 500, 1000};
+    private final int[] array = {1, 5, 10, 15, 30, 45, 60, 100, 200, 300, 500, 1000};
     private int selectedIndex = 4;
-    private int selected = array[selectedIndex];
+    private int selected;
 
     private void updateSelected() {
         selected = array[selectedIndex];

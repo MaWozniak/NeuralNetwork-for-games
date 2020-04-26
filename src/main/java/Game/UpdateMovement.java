@@ -1,7 +1,6 @@
 package Game;
 
 public class UpdateMovement extends Thread {
-
     private int millis;
     private boolean up = false;
     private boolean down = false;
@@ -13,9 +12,7 @@ public class UpdateMovement extends Thread {
     }
 
     public void run() {
-
         while (true) {
-
             up = Math.random() > 0.5;
             down = Math.random() > 0.5;
             right = Math.random() > 0.5;

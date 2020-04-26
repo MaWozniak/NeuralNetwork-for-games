@@ -3,15 +3,17 @@ package Game;
 import GUI.NeuralNetworkView;
 import GUI.PreyAiGui;
 import NeuralNetwork.Genome;
-
 import java.awt.*;
 
 public class PreyAI extends Prey {
-
     private PreyLogicAI ai;
     private PreyAiGui preyAiGui = new PreyAiGui();
     private NeuralNetworkView networkView;
     private String id;
+    private double stamina = 10;
+    private double acc = 0.6;
+    private double dec = 0.5;
+    private double turnSpeed = 0.2;
     private double score = 0.0;
     private boolean energyCost;
     private boolean aging;
@@ -61,24 +63,76 @@ public class PreyAI extends Prey {
         return ai.getGenome();
     }
 
+    void steering() {
+        maxSpeed = stamina / 10 * 10;
+        if (up && speed < maxSpeed) {
+            if (speed < 0) {
+                speed += dec;
+            } else {
+                speed += acc;
+            }
+        }
+
+        if (down && speed > 0) {
+            speed -= acc;
+        }
+
+        if (!up && !down) {
+            if (speed - dec > 0) {
+                speed -= dec;
+            } else if (speed + dec < 0) {
+                speed += dec;
+            } else {
+                speed = 0;
+            }
+        }
+
+        if (right && speed != 0) {
+            angle += turnSpeed * speed / maxSpeed;
+        }
+
+        if (left && speed != 0) {
+            angle -= turnSpeed * speed / maxSpeed;
+        }
+
+        if (right) {
+            angle += turnSpeed * 6 / maxSpeed;
+        }
+
+        if (left) {
+            angle -= turnSpeed * 6 / maxSpeed;
+        }
+
+    }
+
+
     void energyCost() {
         if (energyCost) {
-            energy -= 0.02;
-            //energy -= 0.01 * speed/10;
-
-//            if (x < 180 || x > 1100) {
-//                energy -= 0.01;
-//                //energy -= 0.03 * speed/10;
-//            }
-
-//            //force to move
-//            if (energy < 100 & speed < 1) {
-//                energy -= 0.02;
-//            }
+            energy -= 0.05;
+            energy -= 0.1 * speed / maxSpeed;
         }
+
         if (aging) {
             age += 0.01;
         }
+
+        if (stamina > 1) {
+            stamina -= 0.01 * speed;
+        }
+
+        if (speed < 2.5 && stamina < 10) {
+            stamina += 0.03;
+        }
+
+    }
+
+    void feed() {
+        energy += 80;
+        double maxEnergy = 150;
+        if (energy > maxEnergy) {
+            energy = maxEnergy;
+        }
+
     }
 
     public void isDead() {
@@ -111,5 +165,9 @@ public class PreyAI extends Prey {
 
     public void setFirstInGeneration(boolean firstInGeneration) {
         this.firstInGeneration = firstInGeneration;
+    }
+
+    public double getStamina() {
+        return this.stamina;
     }
 }

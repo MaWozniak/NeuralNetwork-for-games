@@ -2,21 +2,18 @@ package Genetics;
 
 import Game.PreyAI;
 import NeuralNetwork.Genome;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 class GenerationMemory {
-
-    private List<Genome> genomes;
+    private List<Genome> genomes = new ArrayList();
     private int size;
     private int id;
     private double avarageScore;
     private int countAdding;
 
     GenerationMemory(int id, int numRememberedPreys) {
-        this.genomes = new ArrayList<>();
         this.size = numRememberedPreys;
         this.id = id;
         this.avarageScore = 0.0;
@@ -24,9 +21,7 @@ class GenerationMemory {
     }
 
     void add(PreyAI preyAI) {
-
         if (!genomes.contains(preyAI.getGenome())) {
-
             if (genomes.size() < size) {
                 preyAI.getGenome().setId(preyAI.getId());
                 preyAI.getGenome().setScore(preyAI.getScore());

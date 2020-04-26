@@ -5,7 +5,6 @@ import NeuralNetwork.Genome;
 import NeuralNetwork.OutputMove;
 
 class PreyLogicAI {
-
     private BlackBox blackBox;
     private boolean forceMove;
 
@@ -20,9 +19,7 @@ class PreyLogicAI {
     }
 
     void thinking(char[][] model, PreyAI preyAI) {
-
-        OutputMove move = blackBox.move(model, preyAI.getX(), preyAI.getY(), preyAI.getAngle(), preyAI.getSpeed(), preyAI.getEnergy());
-
+        OutputMove move = this.blackBox.move(model, preyAI.getX(), preyAI.getY(), preyAI.getAngle(), preyAI.getSpeed(), preyAI.getEnergy(), preyAI.getStamina(), preyAI.getAge());
         if (forceMove) {
             preyAI.up = true;
             preyAI.down = false;

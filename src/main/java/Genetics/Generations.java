@@ -4,7 +4,6 @@ import Game.PreyAI;
 import NeuralNetwork.Generation;
 import NeuralNetwork.Genome;
 import NeuralNetwork.NeuralNetwork;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,11 +14,9 @@ import java.util.List;
 public class Generations {
 
     private static DecimalFormat df2 = new DecimalFormat("#.##");
-
     private Generation generation;
     private NeuralNetwork protoplast = new NeuralNetwork(22, 2, 16, 4);
     private double BIAS = 1.0;
-
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
     private GenerationMemory generationMemory;
@@ -30,18 +27,15 @@ public class Generations {
     private boolean preyForcedMove;
     private boolean preyAging;
     private boolean firstInGeneration;
-
     private double avarageScoreOfAllGenerations = 0.0;
     private double bestScoreOfALLGenerations = 0.0;
     private int indexOfBestGeneration = 0;
-
     private double bestScore = 0.0;
     private String idOfBestScore = "";
     private double secondBestScore = 0.0;
     private String idOfSecondBestScore = "";
     private double thirdBestScore = 0.0;
     private String idOfthirdBestScore = "";
-
     private double mutationRate;
 
 
@@ -59,7 +53,6 @@ public class Generations {
     }
 
     public void addFirstGeneration() {
-
         log("start");
         randomGeneration(1);
         generationMemory = new GenerationMemory(count, 10);

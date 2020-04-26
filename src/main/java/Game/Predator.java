@@ -5,14 +5,12 @@ import GUI.PredatorGui;
 import java.awt.*;
 
 class Predator extends Organism {
-
     private PredatorLogicSimple predatorLogicSimple;
     private PredatorGui predatorGui;
-
     private double maxSpeed = 3;
-    private double acc = 0.1;
+    private double acc = 0.2;
     private double dec = 0.2;
-    private double turnSpeed = 0.1;
+    private double turnSpeed = 0.15;
     private boolean energyCost;
     private boolean hiddenPlaces;
 
@@ -37,7 +35,6 @@ class Predator extends Organism {
     void eat() {
         if (energyCost) {
             energy += 25;
-
             double maxEnergy = 300;
             if (energy > maxEnergy) {
                 energy = maxEnergy;
@@ -52,12 +49,10 @@ class Predator extends Organism {
     void energyCost() {
         if (energyCost) {
             energy -= 0.04;
-
             //FULL & TIRED:
             if (energy > 250) {
-                speed -= 0.35;
+                down = true;
             }
-
             //DEAD:
             if (energy <= 0) {
                 isAlive = false;
@@ -66,10 +61,10 @@ class Predator extends Organism {
     }
 
     void velocityLimits() {
-        if (speed > 4.0) {
+        if (speed > maxSpeed) {
             down = true;
         }
-        if (speed < -0.1) {
+        if (speed < -0.01) {
             speed = 0.0;
         }
     }
@@ -112,21 +107,17 @@ class Predator extends Organism {
     }
 
     void setPosition() {
-
         velocityLimits();
-
         steering();
-
         x += Math.sin(angle) * speed;
         y -= Math.cos(angle) * speed;
-
         int leftBorder = 22;
         int rightBorder = 1178;
-
         if (hiddenPlaces) {
             leftBorder = 190;
             rightBorder = 1010;
         }
+
         borderBouncing(leftBorder, rightBorder);
     }
 
@@ -139,19 +130,15 @@ class Predator extends Organism {
     void borderBouncing(int x1, int x2) {
         if ((x < x1)) {
             x += 10;
-            //speed = 0.8 * speed;
         }
         if ((y < 22)) {
             y += 10;
-            //speed = 0.8 * speed;
         }
         if ((x > x2)) {
             x -= 10;
-            //speed = 0.8 * speed;
         }
         if ((y > 778)) {
             y -= 10;
-            //speed = 0.8 * speed;
         }
     }
 }

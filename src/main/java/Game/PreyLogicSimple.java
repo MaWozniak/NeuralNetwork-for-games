@@ -1,7 +1,6 @@
 package Game;
 
 class PreyLogicSimple {
-
     private UpdateMovement updateMovement;
 
     PreyLogicSimple(int updateFramerate) {
@@ -10,12 +9,10 @@ class PreyLogicSimple {
     }
 
     void thinking(char[][] model, Prey prey) {
-
         prey.up = updateMovement.isUp();
         prey.down = updateMovement.isDown();
         prey.left = updateMovement.isLeft();
         prey.right = updateMovement.isRight();
-
         //EYES:
         int k = (int) prey.getX() - 5 + (int) (50.0 * Math.sin(prey.angle));
         int l = (int) prey.getY() - 5 - (int) (50.0 * Math.cos(prey.angle));
@@ -24,6 +21,7 @@ class PreyLogicSimple {
                 prey.left = true;
                 prey.up = true;
             }
+
             if (prey.energy < 100 & model[k][l] == 'F') {
                 prey.up = true;
             }
@@ -35,6 +33,7 @@ class PreyLogicSimple {
             if (prey.energy < 130 & model[k][l] == 'F') {
                 prey.down = true;
             }
+
             if (prey.energy > 130 & model[k][l] == 'M') {
                 prey.down = true;
             }
@@ -47,6 +46,7 @@ class PreyLogicSimple {
                 prey.left = true;
                 prey.up = true;
             }
+
             if (model[k][l] == 'F') {
                 prey.right = true;
             }
@@ -59,6 +59,7 @@ class PreyLogicSimple {
                 prey.right = true;
                 prey.up = true;
             }
+
             if (model[k][l] == 'F') {
                 prey.left = true;
             }

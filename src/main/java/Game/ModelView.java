@@ -8,17 +8,11 @@ class ModelView {
     private ModelViewGui modelView;
 
     ModelView(boolean visible) {
-
         modelView = new ModelViewGui(visible, model);
-
     }
 
     char[][] getModel() {
         return model;
-    }
-
-    char getField(int x, int y) {
-        return model[x][y];
     }
 
     void repaintGui() {
@@ -32,7 +26,8 @@ class ModelView {
                 model[i][j] = '0';
             }
         }
-        this.paintspecialPlaces();
+
+        this.paintSpecialPlaces();
     }
 
     void set(int x, int y, char ch, int radius) {
@@ -45,13 +40,10 @@ class ModelView {
         }
     }
 
-    private void paintspecialPlaces() {
+    private void paintSpecialPlaces() {
         //Darker/Hide Places
         this.setRectengle(90, 400, 'M', 800, 180);
         this.setRectengle(1120, 400, 'M', 800, 180);
-        //Feed Places
-        this.setRectengle(425, 590, 'F', 180, 50);
-        this.setRectengle(725, 210, 'F', 180, 50);
 
     }
 

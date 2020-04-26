@@ -1,21 +1,19 @@
 package Game;
 
 import Genetics.Generations;
-
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Biom {
-
     private Generations generations;
-
     private ModelView model;
     private int numPrey;
     private List<Prey> prey = new ArrayList<>();
     private List<PreyAI> AI_prey = new ArrayList<>();
     private List<Predator> predators = new ArrayList<>();
+    private List<Food> foodPoints = new ArrayList();
     private int predatorsNumber;
     private LifecycleThread lifecycleThread;
     private int organismUpdateFramerate;
@@ -25,10 +23,12 @@ public class Biom {
     private boolean predatorsEnergyCost;
     private boolean preyAging;
     private double preyMaxAge;
+    private int food;
+    private int foodMin;
 
     Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate,
-         boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging, double preyMaxAge) {
-
+         boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging,
+         double preyMaxAge, int food, int foodMin) {
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
         this.preyAiEnergyCost = preyAiEnergyCost;
@@ -43,6 +43,8 @@ public class Biom {
         this.predatorsEnergyCost = predatorsEnergyCost;
         this.predatorsNumber = numPred;
         this.addNewPredators(numPred);
+        this.food = food;
+        this.foodMin = foodMin;
         Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
         thread.start();
 
@@ -57,10 +59,9 @@ public class Biom {
     }
 
     void lifecycle() throws IOException {
-
+        this.generateFood();
         organismsMoves();
         modelViewSet();
-        //randomAddPrey();
         scoreAi();
         checkPredators(predatorsNumber);
         checkGenerations();
@@ -68,56 +69,53 @@ public class Biom {
 
     }
 
-    private void randomAddPrey() {
-        double randomNum = Math.random();
-        if (randomNum > 0.995) {
-            this.addNewPreys(1);
-        }
-    }
-
-    void randomKillPrey() {
-        double randomNum = Math.random();
-        if (!(prey.size() == 0)) {
-            if (randomNum > 0.99) {
-                if (prey.get(0).isAlive())
-                    this.prey.remove(0);
+    private void generateFood() {
+        if (this.foodPoints.size() <= this.foodMin) {
+            for (int i = 0; i < this.food - this.foodMin; ++i) {
+                int xStartPos = 100 + (int) (1000 * Math.random());
+                int yStartPos = 100 + (int) (600 * Math.random());
+                Food newFood = new Food(xStartPos, yStartPos);
+                this.foodPoints.add(newFood);
             }
         }
 
     }
 
     private void addNewPreys(int number) {
-
         for (int i = 0; i < number; i++) {
-
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
             Prey newPrey = new Prey(xStartPos, yStartPos, organismUpdateFramerate);
-
             prey.add(newPrey);
         }
+
     }
 
     private void addNewPredators(int number) {
-
         for (int i = 0; i < number; i++) {
-
             double xStartPos = 800 * Math.random() + 150;
             double yStartPos = 750 * Math.random();
             Predator newPredator = new Predator(xStartPos, yStartPos, organismUpdateFramerate, this.hiddenPlaces, this.predatorsEnergyCost);
-
             predators.add(newPredator);
         }
+
     }
 
     private void checkPredators(int number) {
-        if (predators.size() < number) this.addNewPredators(1);
+        this.predators.removeIf((generatedPredator) -> {
+            return !generatedPredator.isAlive;
+        });
+        if (this.predators.size() < number) {
+            this.addNewPredators(1);
+        }
+
     }
 
     private void checkGenerations() throws IOException {
         if (AI_prey.size() == 0) {
             generations.addNewGeneration();
         }
+
         if (prey.size() == 0) {
             addNewPreys(numPrey);
         }
@@ -127,17 +125,17 @@ public class Biom {
         for (PreyAI preyAI : AI_prey) {
             preyAI.updateScore();
         }
+
     }
 
     private void addNewAIPreys(int number) {
-
         for (int i = 0; i < number; i++) {
-
             double xStartPos = 1150 * Math.random();
             double yStartPos = 750 * Math.random();
             PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove, preyAging);
             AI_prey.add(newPreyAI);
         }
+
     }
 
     private void organismsMoves() {
@@ -169,6 +167,14 @@ public class Biom {
                 generations.deathPrey(generatedPreyAI);
             }
 
+            for (Food food : foodPoints) {
+                if (Math.abs((double) food.getX() - generatedPreyAI.getX()) < 10 && Math.abs((double) food.getY() - generatedPreyAI.getY()) < 10
+                        && generatedPreyAI.getEnergy() < 130) {
+                    generatedPreyAI.feed();
+                    food.eated();
+                }
+            }
+
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 20)) {
@@ -180,6 +186,8 @@ public class Biom {
             }
         }
 
+        this.foodPoints.removeIf(Food::isEated);
+
     }
 
     private void modelViewSet() {
@@ -188,9 +196,15 @@ public class Biom {
         for (Predator generatedPredator : predators) {
             model.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P', 40);
         }
+
+        for (Food food : foodPoints) {
+            model.set(food.getX(), food.getY(), 'F', 8);
+        }
+
         for (PreyAI generatedPreyAI : AI_prey) {
             model.set((int) generatedPreyAI.getX(), (int) generatedPreyAI.getY(), 'X', 12);
         }
+
         for (Prey generatedPrey : prey) {
             model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 12);
         }
@@ -203,6 +217,12 @@ public class Biom {
         try {
             for (Predator generatedPredator : predators) {
                 generatedPredator.paint(g);
+            }
+
+            for (Food food : foodPoints) {
+                if (!food.isEated()) {
+                    food.paint(g);
+                }
             }
 
             for (PreyAI generatedPreyAI : AI_prey) {
@@ -219,7 +239,7 @@ public class Biom {
     }
 
     private void validate() {
-        if (!(prey.size() == 0)) {
+        if (prey.size() != 0) {
             for (int i = 0; i < prey.size(); i++) {
                 if (!prey.get(i).isAlive()) {
                     prey.remove(i);
@@ -227,7 +247,7 @@ public class Biom {
                 }
             }
         }
-        if (!(predators.size() == 0)) {
+        if (predators.size() != 0) {
             for (int i = 0; i < predators.size(); i++) {
                 if (!predators.get(i).isAlive()) {
                     predators.remove(i);
@@ -235,7 +255,7 @@ public class Biom {
                 }
             }
         }
-        if (!(AI_prey.size() == 0)) {
+        if (AI_prey.size() != 0) {
             for (int i = 0; i < AI_prey.size(); i++) {
                 if (!AI_prey.get(i).isAlive()) {
                     AI_prey.remove(i);

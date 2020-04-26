@@ -17,7 +17,6 @@ public class LifecycleThread implements Runnable {
     @Override
     public void run() {
         while (true) {
-
             try {
                 biom.lifecycle();
             } catch (IOException e) {

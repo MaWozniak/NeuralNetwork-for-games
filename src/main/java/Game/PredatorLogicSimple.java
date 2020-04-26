@@ -1,7 +1,6 @@
 package Game;
 
 class PredatorLogicSimple {
-
     private UpdateMovement updateMovement;
 
     PredatorLogicSimple(int updateFramerate) {
@@ -10,12 +9,10 @@ class PredatorLogicSimple {
     }
 
     void thinking(char[][] model, Predator predator) {
-
         predator.up = updateMovement.isUp();
         predator.down = updateMovement.isDown();
         predator.left = updateMovement.isLeft();
         predator.right = updateMovement.isRight();
-
         //EYES of the main.Predator
         int k = ((int) predator.getX() - 5) + (int) (90.0 * Math.sin(predator.angle));
         int l = ((int) predator.getY() - 5) - (int) (90.0 * Math.cos(predator.angle));

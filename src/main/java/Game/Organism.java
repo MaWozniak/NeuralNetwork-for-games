@@ -13,11 +13,13 @@ class Organism {
     double acc;
     double dec;
     double turnSpeed;
-
     boolean up = false;
     boolean down = false;
     boolean left = false;
     boolean right = false;
+
+    Organism() {
+    }
 
     void move(char[][] model) {
     }
