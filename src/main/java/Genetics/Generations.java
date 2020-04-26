@@ -17,7 +17,7 @@ public class Generations {
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     private Generation generation;
-    private NeuralNetwork protoplast = new NeuralNetwork(23, 1, 6, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(22, 2, 16, 4);
     private double BIAS = 1.0;
 
     private List<Double> generationsScoresList;

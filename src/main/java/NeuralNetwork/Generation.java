@@ -36,7 +36,9 @@ public class Generation {
             val = new double[]{0.6, 0.4, 0.5, 0.1, 0.8, 0.4, 0.3, 0.15};
         }
         if (type.equals("type3")) {
-            val = new double[]{0.05 * mutationRate, 0.1, 0.1 * mutationRate, 1.5, 0.05 * mutationRate, 0.1, 0.1 * mutationRate, 0.9 * mutationRate};
+            //val = new double[]{0.05 * mutationRate, 0.1, 0.1 * mutationRate, 1.5, 0.05 * mutationRate, 0.1, 0.1 * mutationRate, 0.9 * mutationRate};
+            //from backup snapshot.jar:
+            val = new double[]{0.1, 0.03, 0.1, 0.05, 0.3, 0.05, 0.1, mutationRate / 3.0};
             //best at the moment:
             //val = new double[]{0.05, 0.1, 0.1, 1.5, 0.5, 0.2, 0.5, 0.9};
             //val = new double[]{0.1, 0.1, 0.1, 1.2, 0.5, 0.15, 0.35, 0.9};

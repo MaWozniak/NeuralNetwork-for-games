@@ -170,7 +170,7 @@ public class BlackBox {
                 anotherPreyLeft, anotherPreyFront, anotherPreyRight,
                 predatorLeft, predatorFront, predatorRight, predatorNear, predatorCenter, predatorLeftBack, predatorBack, predatorRightBack,
                 hidePlaceFront, hidePlaceInPoint,
-                speed, 10 * energy / 150, simpleBias};
+                speed, simpleBias};
 
         output = this.getGenome().getNeuralNetwork().run(input);
 

@@ -109,7 +109,10 @@ public class Perceptron {
 
             if (Math.random() < amount) {
 
-                double change = percent * Math.random();
+                double change = percent;
+                if (Math.random() < 0.5) {
+                    change = -percent;
+                }
 
                 if (Math.abs(weight[i] + change) > 1) {
                     weight[i] -= change;
