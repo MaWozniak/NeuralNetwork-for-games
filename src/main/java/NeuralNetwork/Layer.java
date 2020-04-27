@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Layer {
-
     private List<Perceptron> perceptrons;
     private int perceptronsNum;
     private int inputsNum;
@@ -25,10 +24,17 @@ class Layer {
         this.perceptrons = new ArrayList<Perceptron>();
         this.inputsNum = layer1.inputsNum;
 
-        for (int i = 0; i < perceptronsNum; i++) {
-            Perceptron perceptron = new Perceptron(layer1.getPerceptron(i), layer2.getPerceptron(i));
+        for (int i = 0; i < perceptronsNum; ++i) {
+            Perceptron perceptron;
+            if (Math.random() > 0.5) {
+                perceptron = new Perceptron(layer1.getPerceptron(i));
+            } else {
+                perceptron = new Perceptron(layer2.getPerceptron(i));
+            }
+
             perceptrons.add(perceptron);
         }
+
     }
 
     Layer(Layer layer1) {
@@ -65,26 +71,29 @@ class Layer {
     }
 
     void show() {
-
         for (int i = 0; i < perceptronsNum; i++) {
             System.out.print("PERC " + i + ": ");
             System.out.println(perceptrons.get(i).toString());
         }
+
     }
 
     String showString() {
-
         StringBuilder result = new StringBuilder();
+
         for (int i = 0; i < perceptronsNum; i++) {
             result.append("\nPERC ").append(i).append(": \n");
             result.append(perceptrons.get(i).toString());
         }
+
         return result.toString();
+
     }
 
     void mutation(double amount, double percent) {
         for (int i = 0; i < perceptronsNum; i++) {
             perceptrons.get(i).mutate(amount, percent);
         }
+
     }
 }

@@ -2,12 +2,14 @@ package GUI;
 
 import Game.Biom;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.JPanel;
+
 
 public class RenderPanel extends JPanel {
-
     private Biom biom;
     private BoardGui boardGui = new BoardGui();
     private GenerationsChartView chartView = new GenerationsChartView();
@@ -21,9 +23,7 @@ public class RenderPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         boardGui.paint(g2d);
         biom.paint(g2d);
         if (chartViewFlag) {

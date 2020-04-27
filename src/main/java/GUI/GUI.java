@@ -3,13 +3,14 @@ package GUI;
 import Game.Biom;
 import Game.FramerateCount;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class GUI extends JFrame {
-
     public GUI(int framerate, Biom biom) throws InterruptedException {
-
         RenderPanel renderPanel = new RenderPanel(biom);
         JPanel buttonPanel = new JPanel();
         FramerateCount framerateCount = new FramerateCount();
@@ -29,7 +30,6 @@ public class GUI extends JFrame {
             renderPanel.getGenerationMemory(biom.getGenerationsScores(), biom.getGenerationsAverageScores());
             renderPanel.setChartViewFlag();
         });
-
         JLabel label1 = new JLabel("Predators:");
         JLabel label2 = new JLabel(Integer.toString(biom.getPredatorsNumber()));
         JButton button4 = new JButton("-");
@@ -42,14 +42,11 @@ public class GUI extends JFrame {
             biom.addPredator();
             label2.setText(Integer.toString(biom.getPredatorsNumber()));
         });
-
         JLabel label3 = new JLabel(biom.getMutationRate());
         JButton button6 = new JButton("Get Mutation rate:");
         button6.addActionListener(actionEvent2 -> {
             label3.setText(biom.getMutationRate());
         });
-
-
         buttonPanel.setSize(100, 30);
         buttonPanel.add(button1);
         buttonPanel.add(label);
@@ -61,7 +58,6 @@ public class GUI extends JFrame {
         buttonPanel.add(button5);
         buttonPanel.add(button6);
         buttonPanel.add(label3);
-
         this.setLayout(new BorderLayout());
         this.add(renderPanel);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -69,16 +65,12 @@ public class GUI extends JFrame {
         this.setVisible(true);
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         int millis = 1000 / framerate;
 
         while (true) {
-
             renderPanel.revalidate();
             renderPanel.repaint();
-
             Thread.sleep(millis);
-
         }
     }
 }

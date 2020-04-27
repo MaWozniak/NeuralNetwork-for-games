@@ -1,18 +1,15 @@
 package NeuralNetwork;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Random;
 
 
 public class Genome {
-
     private static DecimalFormat df2 = new DecimalFormat("#.##");
     private NeuralNetwork neuralNetwork;
     private String id;
     private double score;
     private String parentage;
-
 
     public Genome(int generationNumber, NeuralNetwork protoplast, String parantage) {
         this.neuralNetwork = protoplast.copy();
@@ -28,12 +25,11 @@ public class Genome {
         if (showNetwork) {
             this.neuralNetwork.show();
         }
-        System.out.println("\n");
 
+        System.out.println("\n");
     }
 
     public String show() {
-
         return "GENOME id: " + this.id + "\n"
                 + "parentage: " + this.parentage + "\n"
                 + "SCORE" + this.score + "\n"
@@ -68,19 +64,20 @@ public class Genome {
         StringBuilder key = new StringBuilder();
         String alphabet1 = "abc";
         String alphabet2 = "123456";
-
         Random r = new Random();
+
         for (int i = 0; i < 3; i++) {
             key.append(alphabet1.charAt(r.nextInt(alphabet1.length())));
         }
+
         for (int i = 0; i < 3; i++) {
             key.append(alphabet2.charAt(r.nextInt(alphabet2.length())));
         }
+
         return key.toString();
     }
 
     public String saveToMemory() {
-
         return this.show();
     }
 }

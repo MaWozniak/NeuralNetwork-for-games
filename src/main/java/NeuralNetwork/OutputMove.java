@@ -1,11 +1,10 @@
 package NeuralNetwork;
 
 public class OutputMove {
-
-    private boolean up = false;
-    private boolean down = false;
-    private boolean left = false;
-    private boolean right = false;
+    private boolean up;
+    private boolean down;
+    private boolean left;
+    private boolean right;
 
     OutputMove(boolean up, boolean down, boolean right, boolean left) {
         this.up = up;

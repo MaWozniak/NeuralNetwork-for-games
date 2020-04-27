@@ -1,9 +1,9 @@
 package GUI;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class PreyAiGui {
-
     public PreyAiGui() {
     }
 
@@ -29,14 +29,12 @@ public class PreyAiGui {
     }
 
     public void paint(Graphics2D g, double x, double y, double angle, double energy, boolean firstInGen) {
-
         g.setColor(Color.BLUE);
         if (firstInGen) {
             g.setColor(Color.GREEN);
         }
         g.fillOval((int) x - 6, (int) y - 6, 12, 12);
-
-        //temp direction point:
+        //direction point:
         g.setColor(Color.CYAN);
         if (firstInGen) {
             g.setColor(Color.RED);

@@ -3,15 +3,10 @@ package NeuralNetwork;
 import java.text.DecimalFormat;
 
 public class Perceptron {
-
     private static DecimalFormat df2 = new DecimalFormat("#.##");
-
     private int inputsNum;
-
     private double[] weight;
-
     private double bias;
-
     private ActivationFunctions activationFunc;
 
     Perceptron(int inputsNum) {
@@ -26,13 +21,13 @@ public class Perceptron {
         weight = new double[perceptron1.inputsNum];
 
         for (int i = 0; i < weight.length; i++) {
-
             if (Math.random() > 0.5) {
                 weight[i] = perceptron1.weight[i];
             } else {
                 weight[i] = perceptron2.weight[i];
             }
         }
+
     }
 
     Perceptron(Perceptron perceptron1) {
@@ -42,9 +37,9 @@ public class Perceptron {
         this.bias = perceptron1.getBias();
 
         for (int i = 0; i < weight.length; i++) {
-
             weight[i] = perceptron1.weight[i];
         }
+
     }
 
     double calculate(double[] inputs) {
@@ -55,7 +50,6 @@ public class Perceptron {
         }
 
         output += bias;
-
         return activationFunc.run("STEP", output);
     }
 
@@ -67,7 +61,6 @@ public class Perceptron {
         }
 
         output += bias;
-
         return output;
     }
 
@@ -97,18 +90,18 @@ public class Perceptron {
 
     public String toString() {
         StringBuilder string = new StringBuilder("W:");
+
         for (double v : weight) {
             string.append("[").append(df2.format(v)).append("]");
         }
+
         string.append(" +B:[").append(df2.format(this.bias)).append("]");
         return string.toString();
     }
 
     void mutate(double amount, double percent) {
         for (int i = 0; i < weight.length; i++) {
-
             if (Math.random() < amount) {
-
                 double change = percent;
                 if (Math.random() < 0.5) {
                     change = -percent;
@@ -121,5 +114,6 @@ public class Perceptron {
                 }
             }
         }
+
     }
 }
