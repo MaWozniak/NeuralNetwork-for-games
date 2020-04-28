@@ -55,7 +55,16 @@ public class BlackBox {
             foodCenter = 1.0D;
         }
 
-        double foodInPoint = this.checkModelView(model, xPos, yPos, angle, 'F', 0.0D, 0.0D);
+        double foodInPoint = 0.0D;
+        if (this.checkRectangleModelView('F', model, false, -2, 0,
+                5, 5, 12.0D, -12.0D, xPos, yPos, angle) == 1.0D) {
+            foodInPoint = 1.0D;
+        }
+        if (this.checkRectangleModelView('F', model, false, -2, 0,
+                5, 5, 12.0D, 12.0D, xPos, yPos, angle) == 1.0D) {
+            foodInPoint = 1.0D;
+        }
+
         double anotherPreyLeft = 0.0D;
         if (this.checkRectangleModelView('X', model, true, 0, 2,
                 10, 10, 220.0D, -180.0D, xPos, yPos, angle) == 1.0D) {
@@ -148,7 +157,17 @@ public class BlackBox {
         }
 
         double hidePlaceFront = this.checkModelView(model, xPos, yPos, angle, 'M', 160.0D, 0.0D);
-        double hidePlaceInPoint = this.checkModelView(model, xPos, yPos, angle, 'M', 0.0D, 0.0D);
+
+        double hidePlaceInPoint = 0.0D;
+        if (this.checkRectangleModelView('M', model, false, -2, 0,
+                5, 5, 12.0D, -12.0D, xPos, yPos, angle) == 1.0D) {
+            hidePlaceInPoint = 1.0D;
+        }
+        if (this.checkRectangleModelView('M', model, false, -2, 0,
+                5, 5, 12.0D, 12.0D, xPos, yPos, angle) == 1.0D) {
+            hidePlaceInPoint = 1.0D;
+        }
+
         double borderFront = 0.0D;
         if (xPos < 50.0D || xPos > 1200.0D || yPos < 50.0D || yPos > 800.0D) {
             borderFront = 1.0D;

@@ -14,8 +14,9 @@ import java.util.List;
 public class Generations {
     private static DecimalFormat df2 = new DecimalFormat("#.##");
     private Generation generation;
+    // best score:
     // private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 7, 4);
-    private NeuralNetwork protoplast = new NeuralNetwork(25, 2, 50, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 25, 4);
     private double BIAS = 1.0;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
@@ -78,8 +79,8 @@ public class Generations {
         generation.randomize();
 
         for (int i = 0; i < generationSize; i++) {
-            double xStartPos = 400 + 100 * Math.random();
-            double yStartPos = 250 + 100 * Math.random();
+            double xStartPos = 600 + 800 * (Math.random() - 0.5);
+            double yStartPos = 400 + 600 * (Math.random() - 0.5);
             if (i == 0) {
                 firstInGeneration = true;
             }
@@ -95,10 +96,11 @@ public class Generations {
         double newMutationRate = (bestScore - avarageScoreOfAllGenerations) / bestScore;
         setMutationRate(newMutationRate);
         generation = new Generation(2, generationSize, ancestors, "top5smallMutation", newMutationRate);
+        // generation = new Generation(2, generationSize, ancestors, "top5bigRandom", newMutationRate);
 
         for (int i = 0; i < generationSize; i++) {
-            double xStartPos = 400 + 100 * Math.random();
-            double yStartPos = 250 + 100 * Math.random();
+            double xStartPos = 600 + 800 * (Math.random() - 0.5);
+            double yStartPos = 400 + 600 * (Math.random() - 0.5);
             if (i == 0) {
                 firstInGeneration = true;
             }
