@@ -29,6 +29,7 @@ public class Generations {
     private boolean preyAging;
     private boolean firstInGeneration;
     private double avarageScoreOfAllGenerations = 0.0;
+    private List<Double> avarageScores = new ArrayList<>();
     private double bestScoreOfALLGenerations = 0.0;
     private int indexOfBestGeneration = 0;
     private double bestScore = 0.0;
@@ -124,11 +125,33 @@ public class Generations {
 
     }
 
+    private Double calculateAvarageScoreFromXlastGenerations(int numOfGen) {
+        Double result = 0.0;
+        int lenght = avarageScores.size();
+        int startPoint = 0;
+        int divider = lenght;
+
+        if (numOfGen < lenght) {
+            startPoint = lenght - numOfGen;
+            divider = numOfGen;
+        }
+
+        for (int i = startPoint; i < lenght; i++) {
+            result += avarageScores.get(i);
+        }
+
+        return result / divider;
+    }
+
     private void updateAvaregeScores() {
+        avarageScores.add(generationMemory.getAvarageScore());
+
         if (avarageScoreOfAllGenerations == 0) {
             avarageScoreOfAllGenerations = generationMemory.getAvarageScore();
         } else {
-            avarageScoreOfAllGenerations = (avarageScoreOfAllGenerations * (count - 1) + generationMemory.getAvarageScore()) / (count);
+            //avarageScoreOfAllGenerations = (avarageScoreOfAllGenerations * (count - 1) + generationMemory.getAvarageScore()) / (count);
+
+            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(25);
         }
 
         if (generationMemory.getAvarageScore() > this.bestScoreOfALLGenerations) {

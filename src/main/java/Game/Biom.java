@@ -149,8 +149,8 @@ public class Biom {
 
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
-                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 20)) {
-                    if (generatedPredator.getEnergy() < 250) {
+                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 10) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 10)) {
+                    if (generatedPredator.getEnergy() < 260) {
                         generatedPrey.isDead();
                         generatedPredator.eat();
                     }
@@ -177,7 +177,7 @@ public class Biom {
 
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
-                if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 20) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 20)) {
+                if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 10) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 10)) {
                     if (generatedPredator.getEnergy() < 260) {
                         generations.deathPrey(generatedPreyAI);
                         generatedPredator.eat();

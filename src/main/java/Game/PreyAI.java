@@ -11,8 +11,8 @@ public class PreyAI extends Prey {
     private NeuralNetworkView networkView;
     private String id;
     private double stamina = 10;
-    private double acc = 0.6;
-    private double dec = 0.5;
+    private double acc = 0.4;
+    private double dec = 0.3;
     private double turnSpeed = 0.2;
     private double score = 0.0;
     private boolean energyCost;
@@ -64,7 +64,7 @@ public class PreyAI extends Prey {
     }
 
     void steering() {
-        maxSpeed = stamina / 10 * 10;
+        maxSpeed = 4 * stamina;
         if (up && speed < maxSpeed) {
             if (speed < 0) {
                 speed += dec;
@@ -108,22 +108,20 @@ public class PreyAI extends Prey {
 
     void energyCost() {
         if (energyCost) {
-            energy -= 0.05;
-            energy -= 0.1 * speed / maxSpeed;
+            energy -= 0.15;
+            energy -= Math.abs(0.2 * speed / maxSpeed);
         }
 
         if (aging) {
             age += 0.01;
         }
 
-        if (stamina > 1) {
-            //small change 0.01 -> 0.07
-            stamina -= 0.07 * speed;
+        if (stamina > 0) {
+            stamina -= 0.01 * speed;
         }
 
         if (speed < 2.5 && stamina < 10) {
-            //small change 0.03 -> 0.003
-            stamina += 0.003;
+            stamina += 0.05;
         }
 
     }
