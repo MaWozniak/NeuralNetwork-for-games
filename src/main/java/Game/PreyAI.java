@@ -117,11 +117,13 @@ public class PreyAI extends Prey {
         }
 
         if (stamina > 1) {
-            stamina -= 0.01 * speed;
+            //small change 0.01 -> 0.07
+            stamina -= 0.07 * speed;
         }
 
         if (speed < 2.5 && stamina < 10) {
-            stamina += 0.03;
+            //small change 0.03 -> 0.003
+            stamina += 0.003;
         }
 
     }
