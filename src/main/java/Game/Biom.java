@@ -26,9 +26,9 @@ public class Biom {
     private int food;
     private int foodMin;
 
-    Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate,
-         boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging,
-         double preyMaxAge, int food, int foodMin) {
+    public Biom(int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate,
+                boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging,
+                double preyMaxAge, int food, int foodMin) {
         this.model = model;
         this.organismUpdateFramerate = organismUpdateFramerate;
         this.preyAiEnergyCost = preyAiEnergyCost;

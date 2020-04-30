@@ -11,9 +11,9 @@ public class PreyAI extends Prey {
     private NeuralNetworkView networkView;
     private String id;
     private double stamina = 10;
-    private double acc = 0.4;
-    private double dec = 0.3;
-    private double turnSpeed = 0.2;
+    private double acc = 0.8;
+    private double dec = 1.4;
+    private double turnSpeed = 0.05;
     private double score = 0.0;
     private boolean energyCost;
     private boolean aging;
@@ -64,7 +64,7 @@ public class PreyAI extends Prey {
     }
 
     void steering() {
-        maxSpeed = 4 * stamina;
+        maxSpeed = 3 * stamina;
         if (up && speed < maxSpeed) {
             if (speed < 0) {
                 speed += dec;

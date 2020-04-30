@@ -2,12 +2,12 @@ package Game;
 
 import GUI.ModelViewGui;
 
-class ModelView {
+public class ModelView {
 
     private char[][] model = new char[1300][900];
     private ModelViewGui modelView;
 
-    ModelView(boolean visible) {
+    public ModelView(boolean visible) {
         modelView = new ModelViewGui(visible, model);
     }
 

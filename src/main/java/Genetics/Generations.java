@@ -16,7 +16,7 @@ public class Generations {
     private Generation generation;
     // best score:
     // private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 7, 4);
-    private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 25, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(25, 1, 50, 4);
     private double BIAS = 1.0;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
@@ -151,7 +151,14 @@ public class Generations {
         } else {
             //avarageScoreOfAllGenerations = (avarageScoreOfAllGenerations * (count - 1) + generationMemory.getAvarageScore()) / (count);
 
-            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(25);
+            int precise = 40;
+            if (count > 500) {
+                precise = 100;
+            }
+            if (count > 1000) {
+                precise = 200;
+            }
+            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(precise);
         }
 
         if (generationMemory.getAvarageScore() > this.bestScoreOfALLGenerations) {

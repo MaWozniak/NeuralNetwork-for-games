@@ -42,7 +42,7 @@ public class GenerationsChartView {
 
         g.setColor(Color.BLUE);
         for (int i = 0; i < generationsAverageList.size(); i += step) {
-            verticalFactor = (int) (50 * generationsAverageList.get(i));
+            verticalFactor = (int) (30 * generationsAverageList.get(i));
             g.fillOval(100 + i / step * delta, (int) (500 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
                 g.drawString(df2.format(generationsAverageList.get(i)), 100 + i / step * delta, 540);
@@ -53,7 +53,7 @@ public class GenerationsChartView {
         g.setColor(Color.YELLOW);
 
         for (int i = 0; i < generationsScoresList.size(); i += step) {
-            verticalFactor = (int) (50 * generationsScoresList.get(i));
+            verticalFactor = (int) (30 * generationsScoresList.get(i));
             g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
                 g.drawString(df2.format(generationsScoresList.get(i)), 100 + i / step * delta, 550);
