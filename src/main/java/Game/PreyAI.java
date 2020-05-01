@@ -12,8 +12,8 @@ public class PreyAI extends Prey {
     private String id;
     private double stamina = 10;
     private double acc = 0.8;
-    private double dec = 1.4;
-    private double turnSpeed = 0.05;
+    private double dec = 0.8;
+    private double turnSpeed = 0.5;
     private double score = 0.0;
     private boolean energyCost;
     private boolean aging;
@@ -108,7 +108,7 @@ public class PreyAI extends Prey {
 
     void energyCost() {
         if (energyCost) {
-            energy -= 0.15;
+            energy -= 0.1;
             energy -= Math.abs(0.2 * speed / maxSpeed);
         }
 
@@ -121,7 +121,7 @@ public class PreyAI extends Prey {
         }
 
         if (speed < 2.5 && stamina < 10) {
-            stamina += 0.05;
+            stamina += 0.02;
         }
 
     }

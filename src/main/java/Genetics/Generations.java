@@ -16,12 +16,13 @@ public class Generations {
     private Generation generation;
     // best score:
     // private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 7, 4);
-    private NeuralNetwork protoplast = new NeuralNetwork(25, 1, 50, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(25, 2, 16, 4);
     private double BIAS = 1.0;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
     private GenerationMemory generationMemory;
     private List<PreyAI> AI_prey;
+    private int resetGenerationNumber;
     private int generationSize;
     private int count = 1;
     private boolean preyAiEnergyCost;
@@ -41,7 +42,7 @@ public class Generations {
     private double mutationRate;
 
 
-    public Generations(List<PreyAI> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
+    public Generations(List<PreyAI> AI_prey, int size, int resetGen, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
         this.generationSize = size;
         protoplast.setAllBiases(BIAS);
         this.generation = new Generation(1, generationSize, protoplast);
@@ -52,11 +53,12 @@ public class Generations {
         this.preyForcedMove = preyForcedMove;
         this.preyAging = preyAging;
         this.mutationRate = 1.1;
+        this.resetGenerationNumber = resetGen;
     }
 
     public void addFirstGeneration() {
         log("start");
-        randomGeneration(1);
+        randomGeneration();
         generationMemory = new GenerationMemory(count, 10);
         count++;
     }
@@ -68,15 +70,19 @@ public class Generations {
         writeFileLog();
         System.out.println("public void addNewGeneration() -> generation.showScores()");
         generation.showScores();
-        geneticsNewGeneration(generation.bestSelection(10));
-        // IS THIS HELP FOR CRASH?
+        if (count % resetGenerationNumber == 0) {
+            randomGeneration();
+        } else {
+            geneticsNewGeneration(generation.bestSelection(10));
+        }
+
         generationMemory.getSelectedGenomes().clear();
         generationMemory = new GenerationMemory(count, 10);
         log("start");
         count++;
     }
 
-    private void randomGeneration(int number) {
+    private void randomGeneration() {
         generation.randomize();
 
         for (int i = 0; i < generationSize; i++) {
@@ -96,8 +102,8 @@ public class Generations {
     private void geneticsNewGeneration(List<Genome> ancestors) {
         double newMutationRate = (bestScore - avarageScoreOfAllGenerations) / bestScore;
         setMutationRate(newMutationRate);
-        generation = new Generation(2, generationSize, ancestors, "top5smallMutation", newMutationRate);
-        // generation = new Generation(2, generationSize, ancestors, "top5bigRandom", newMutationRate);
+        generation = new Generation(2, generationSize, ancestors, "top5simply", newMutationRate);
+        //generation = new Generation(2, generationSize, ancestors, "top5smallMutation", newMutationRate);
 
         for (int i = 0; i < generationSize; i++) {
             double xStartPos = 600 + 800 * (Math.random() - 0.5);
@@ -125,16 +131,17 @@ public class Generations {
 
     }
 
-    private Double calculateAvarageScoreFromXlastGenerations(int numOfGen) {
+    private Double calculateAvarageScoreFromXlastGenerations(int numOfGen, int start) {
         Double result = 0.0;
         int lenght = avarageScores.size();
-        int startPoint = 0;
-        int divider = lenght;
+        int startPoint = start;
+        int divider = lenght - start;
 
-        if (numOfGen < lenght) {
-            startPoint = lenght - numOfGen;
-            divider = numOfGen;
-        }
+//        if (numOfGen < lenght) {
+//            //startPoint = lenght - numOfGen;
+//            startPoint = start;
+//            divider = numOfGen;
+//        }
 
         for (int i = startPoint; i < lenght; i++) {
             result += avarageScores.get(i);
@@ -151,14 +158,17 @@ public class Generations {
         } else {
             //avarageScoreOfAllGenerations = (avarageScoreOfAllGenerations * (count - 1) + generationMemory.getAvarageScore()) / (count);
 
-            int precise = 40;
-            if (count > 500) {
-                precise = 100;
-            }
-            if (count > 1000) {
-                precise = 200;
-            }
-            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(precise);
+            int precise = resetGenerationNumber / 3;
+//            int precise = 40;
+//            if (count > 500) {
+//                precise = 100;
+//            }
+//            if (count > 1000) {
+//                precise = 200;
+//            }
+
+            int startPoint = (int) (Math.floor(count / (double) resetGenerationNumber)) * resetGenerationNumber;
+            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(precise, startPoint);
         }
 
         if (generationMemory.getAvarageScore() > this.bestScoreOfALLGenerations) {
