@@ -38,7 +38,7 @@ public class StartScreen extends JFrame {
     public void runSimulation() throws InterruptedException {
 
         ModelView model = new ModelView(false);
-        Biom biom = new Biom(0, 3, 50, 30, false, model, 15,
+        Biom biom = new Biom(45, 0, 3, 50, 30, false, model, 15,
                 true, false, true, false, true, 250, 90, 45);
         new GUI(30, biom);
     }
