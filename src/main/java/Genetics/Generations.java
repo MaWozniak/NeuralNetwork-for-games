@@ -40,6 +40,7 @@ public class Generations {
     private double thirdBestScore = 0.0;
     private String idOfthirdBestScore = "";
     private double mutationRate;
+    private int index = 0;
 
 
     public Generations(List<PreyAI> AI_prey, int size, int resetGen, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
@@ -102,7 +103,7 @@ public class Generations {
     private void geneticsNewGeneration(List<Genome> ancestors) {
         double newMutationRate = (bestScore - avarageScoreOfAllGenerations) / bestScore;
         setMutationRate(newMutationRate);
-        generation = new Generation(2, generationSize, ancestors, "top5simply", newMutationRate);
+        generation = new Generation(2, generationSize, ancestors, getGeneticsType(), newMutationRate);
         //generation = new Generation(2, generationSize, ancestors, "top5smallMutation", newMutationRate);
 
         for (int i = 0; i < generationSize; i++) {
@@ -118,6 +119,17 @@ public class Generations {
             firstInGeneration = false;
         }
 
+    }
+
+    public String getGeneticsType() {
+        String[] array = {"top5simply", "top5smallMutation", "top5bigRandom", "type3"};
+        if (count % resetGenerationNumber == 0) {
+            ++index;
+        }
+        if (index > array.length - 1) {
+            index = 0;
+        }
+        return array[index];
     }
 
     public void deathPrey(PreyAI preyAI) {
