@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Layer {
-    private List<Perceptron> perceptrons;
-    private int perceptronsNum;
-    private int inputsNum;
+    private final List<Perceptron> perceptron;
+    private final int perceptronNum;
+    private final int inputsNum;
 
-    Layer(int inputsNum, int perceptronsNum) {
-        this.perceptronsNum = perceptronsNum;
-        this.perceptrons = new ArrayList<Perceptron>();
+    Layer(int inputsNum, int perceptronNum) {
+        this.perceptronNum = perceptronNum;
+        this.perceptron = new ArrayList<>();
         this.inputsNum = inputsNum;
 
-        for (int i = 0; i < perceptronsNum; i++) {
+        for (int i = 0; i < perceptronNum; i++) {
             Perceptron perceptron = new Perceptron(inputsNum);
-            perceptrons.add(perceptron);
+            this.perceptron.add(perceptron);
         }
     }
 
     Layer(Layer layer1, Layer layer2) {
-        this.perceptronsNum = layer1.perceptronsNum;
-        this.perceptrons = new ArrayList<Perceptron>();
+        this.perceptronNum = layer1.perceptronNum;
+        this.perceptron = new ArrayList<>();
         this.inputsNum = layer1.inputsNum;
 
-        for (int i = 0; i < perceptronsNum; ++i) {
+        for (int i = 0; i < perceptronNum; ++i) {
             Perceptron perceptron;
             if (Math.random() > 0.5) {
                 perceptron = new Perceptron(layer1.getPerceptron(i));
@@ -32,48 +32,48 @@ class Layer {
                 perceptron = new Perceptron(layer2.getPerceptron(i));
             }
 
-            perceptrons.add(perceptron);
+            this.perceptron.add(perceptron);
         }
 
     }
 
     Layer(Layer layer1) {
-        this.perceptronsNum = layer1.perceptronsNum;
-        this.perceptrons = new ArrayList<Perceptron>();
+        this.perceptronNum = layer1.perceptronNum;
+        this.perceptron = new ArrayList<Perceptron>();
         this.inputsNum = layer1.inputsNum;
 
-        for (int i = 0; i < perceptronsNum; i++) {
+        for (int i = 0; i < perceptronNum; i++) {
             Perceptron perceptron = new Perceptron(layer1.getPerceptron(i));
-            perceptrons.add(perceptron);
+            this.perceptron.add(perceptron);
         }
     }
 
-    double[] run(double[] input) {
-        double[] output = new double[perceptronsNum];
+    public String toString() {
+        return "(in: " + this.inputsNum + "; perc: " + this.perceptronNum + ")";
+    }
 
-        for (int i = 0; i < perceptronsNum; i++) {
-            output[i] = perceptrons.get(i).calculate(input);
+    double[] run(double[] input) {
+        double[] output = new double[perceptronNum];
+
+        for (int i = 0; i < perceptronNum; i++) {
+            output[i] = perceptron.get(i).calculate(input);
         }
 
         return output;
     }
 
     Perceptron getPerceptron(int i) {
-        return perceptrons.get(i);
+        return perceptron.get(i);
     }
 
     int size() {
-        return perceptrons.size();
-    }
-
-    public String toString() {
-        return "(in: " + this.inputsNum + "; perc: " + this.perceptronsNum + ")";
+        return perceptron.size();
     }
 
     void show() {
-        for (int i = 0; i < perceptronsNum; i++) {
+        for (int i = 0; i < perceptronNum; i++) {
             System.out.print("PERC " + i + ": ");
-            System.out.println(perceptrons.get(i).toString());
+            System.out.println(perceptron.get(i).toString());
         }
 
     }
@@ -81,9 +81,9 @@ class Layer {
     String showString() {
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < perceptronsNum; i++) {
+        for (int i = 0; i < perceptronNum; i++) {
             result.append("\nPERC ").append(i).append(": \n");
-            result.append(perceptrons.get(i).toString());
+            result.append(perceptron.get(i).toString());
         }
 
         return result.toString();
@@ -91,8 +91,8 @@ class Layer {
     }
 
     void mutation(double amount, double percent) {
-        for (int i = 0; i < perceptronsNum; i++) {
-            perceptrons.get(i).mutate(amount, percent);
+        for (int i = 0; i < perceptronNum; i++) {
+            perceptron.get(i).mutate(amount, percent);
         }
 
     }

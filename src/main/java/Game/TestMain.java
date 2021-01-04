@@ -9,8 +9,8 @@ public class TestMain {
 
         //30FPS~ 33 - 60FPS~ 17 - 300FPS~ 3 - good for fast simulation
         ModelView model = new ModelView(false);
-        Biom biom = new Biom(50, 0, 3, 50, 30, false, model, 15,
-                true, false, true, false, true, 350, 150, 85);
+        Biom biom = new Biom(3500, 0, 0, 50, 30, false, model, 15,
+                true, false, true, false, true, 200, 230, 145);
         new GUI(30, biom);
 
         //  new StartScreen();

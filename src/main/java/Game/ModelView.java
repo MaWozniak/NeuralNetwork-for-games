@@ -42,8 +42,9 @@ public class ModelView {
 
     private void paintSpecialPlaces() {
         //Darker/Hide Places
-        this.setRectengle(90, 400, 'M', 800, 180);
-        this.setRectengle(1120, 400, 'M', 800, 180);
+//        this.setRectengle(90, 400, 'M', 800, 180);
+//        this.setRectengle(1120, 400, 'M', 800, 180);
+        this.setRectengle(600, 420, 'M', 280, 400);
 
     }
 

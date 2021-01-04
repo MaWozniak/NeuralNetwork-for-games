@@ -1,7 +1,6 @@
 package Game;
 
 import GUI.PreyGui;
-
 import java.awt.*;
 
 class Prey extends Organism {
@@ -16,7 +15,7 @@ class Prey extends Organism {
         this.x = xStartPos;
         this.y = yStartPos;
         this.isAlive = true;
-        this.energy = 30;
+        this.energy = 50;
         this.speed = 0;
         this.angle = 0;
         preyGui = new PreyGui();
@@ -99,13 +98,13 @@ class Prey extends Organism {
     }
 
     void energyCost() {
-        energy -= 0.01 * speed / 5;
-        if (x < 180 || x > 1100) {
-            energy -= 0.05 * speed / 5;
-        }
+        energy -= 0.01 * speed / 2;
+//        if (x < 180 || x > 1100) {
+//            energy -= 0.05 * speed / 5;
+//        }
         //force to move
         if (energy < 100 & speed < 1) {
-            energy -= 0.1;
+            energy -= 0.03;
         }
         //DEAD:
         if (energy <= 0) {

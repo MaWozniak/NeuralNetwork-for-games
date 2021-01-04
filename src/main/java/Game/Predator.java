@@ -113,10 +113,10 @@ class Predator extends Organism {
         y -= Math.cos(angle) * speed;
         int leftBorder = 22;
         int rightBorder = 1178;
-        if (hiddenPlaces) {
-            leftBorder = 190;
-            rightBorder = 1010;
-        }
+//        if (hiddenPlaces) {
+//            leftBorder = 190;
+//            rightBorder = 1010;
+//        }
 
         borderBouncing(leftBorder, rightBorder);
     }
@@ -139,6 +139,28 @@ class Predator extends Organism {
         }
         if ((y > 778)) {
             y -= 10;
+        }
+        if (hiddenPlaces) {
+            if (x > 380 && x < 430 && y > 275 && y < 555) {
+                x += 20;
+            }
+            if (x > 750 && x < 810 && y > 275 && y < 555) {
+                x -= 20;
+            }
+            if (x > 380 && x < 800 && y > 275 && y < 325) {
+                y -= 20;
+            }
+            if (x > 380 && x < 800 && y > 515 && y < 565) {
+                y += 20;
+            }
+            if (x > 430 && x < 750 && y > 325 && y < 515) {
+                x = 30;
+                y = 30;
+            }
+//            if(x > 380 && x < 800 && y > 275 && y < 555) {
+//                x = 30;
+//                y = 30;
+//            }
         }
     }
 }

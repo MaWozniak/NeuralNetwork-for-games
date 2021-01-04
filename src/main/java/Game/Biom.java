@@ -1,36 +1,39 @@
 package Game;
 
 import Genetics.Generations;
+import lombok.Data;
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class Biom {
-    private Generations generations;
-    private ModelView model;
-    private int numPrey;
-    private List<Prey> prey = new ArrayList<>();
-    private List<PreyAI> AI_prey = new ArrayList<>();
-    private List<Predator> predators = new ArrayList<>();
-    private List<Food> foodPoints = new ArrayList();
+    private final Generations generations;
+    private final ModelView model;
+    private final int numPrey;
+    private final List<Prey> prey = new ArrayList<>();
+    private final List<PreyAI> AI_prey = new ArrayList<>();
+    private final List<Predator> predators = new ArrayList<>();
+    private final List<Food> foodPoints = new ArrayList();
     private int predatorsNumber;
-    private LifecycleThread lifecycleThread;
-    private int organismUpdateFramerate;
-    private boolean hiddenPlaces;
-    private boolean preyAiEnergyCost;
-    private boolean preyForcedMove;
-    private boolean predatorsEnergyCost;
-    private boolean preyAging;
-    private double preyMaxAge;
-    private int food;
-    private int foodMin;
+    private final LifecycleThread lifecycleThread;
+    private final int organismUpdateFramerate;
+    private final boolean hiddenPlaces;
+    private final boolean preyAiEnergyCost;
+    private final boolean preyForcedMove;
+    private final boolean predatorsEnergyCost;
+    private final boolean preyAging;
+    private final double preyMaxAge;
+    private final int food;
+    private final int foodMin;
 
-    public Biom(int resetBucket, int numPrey, int numPred, int numAIPrey, int framerate, boolean fullspeed, ModelView model, int organismUpdateFramerate,
+    public Biom(int resetBucket, int numPrey, int numPredators, int numAIPrey, int frameRate, boolean fullSpeed, ModelView model, int organismUpdateFrameRate,
                 boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging,
                 double preyMaxAge, int food, int foodMin) {
         this.model = model;
-        this.organismUpdateFramerate = organismUpdateFramerate;
+        this.organismUpdateFramerate = organismUpdateFrameRate;
         this.preyAiEnergyCost = preyAiEnergyCost;
         this.preyAging = preyAging;
         this.preyMaxAge = preyMaxAge;
@@ -41,11 +44,11 @@ public class Biom {
         this.generations.addFirstGeneration();
         this.hiddenPlaces = hiddenPlaces;
         this.predatorsEnergyCost = predatorsEnergyCost;
-        this.predatorsNumber = numPred;
-        this.addNewPredators(numPred);
+        this.predatorsNumber = numPredators;
+        this.addNewPredators(numPredators);
         this.food = food;
         this.foodMin = foodMin;
-        Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, this));
+        Thread thread = new Thread(lifecycleThread = new LifecycleThread(frameRate, fullSpeed, this));
         thread.start();
 
     }
@@ -72,8 +75,36 @@ public class Biom {
     private void generateFood() {
         if (this.foodPoints.size() <= this.foodMin) {
             for (int i = 0; i < this.food - this.foodMin; ++i) {
-                int xStartPos = 100 + (int) (1000 * Math.random());
-                int yStartPos = 100 + (int) (600 * Math.random());
+                int xStartPosChange = 100;
+                int yStartPosChange = 100;
+                if (Math.random() > 0.5) {
+                    xStartPosChange = 1000;
+                }
+                int xStartPos = xStartPosChange + (int) (120 * Math.random());
+                int yStartPos = 400 + (int) (120 * Math.random());
+
+                //change in time
+                int firstFaze = 30; //200
+                int secondFaze = 1500; //600
+                if (this.generations.getCount() < firstFaze) {
+                    xStartPos = 100 + (int) (1000 * Math.random());
+                    yStartPos = 100 + (int) (600 * Math.random());
+                }
+                if (this.generations.getCount() >= firstFaze && this.generations.getCount() < secondFaze) {
+                    if (Math.random() > 0.5) {
+                        xStartPosChange = 900;
+                    }
+                    if (Math.random() > 0.5) {
+                        yStartPosChange = 600;
+                    }
+                    xStartPos = xStartPosChange + (int) (150 * Math.random());
+                    yStartPos = yStartPosChange + (int) (150 * Math.random());
+                }
+//                if(this.generations.getCount() < 40 && this.generations.getCount() >= 20) {
+//                    xStartPos = 200 + (int) (500 * Math.random());
+//                    yStartPos = 200 + (int) (300 * Math.random());
+//                }
+
                 Food newFood = new Food(xStartPos, yStartPos);
                 this.foodPoints.add(newFood);
             }
@@ -93,8 +124,12 @@ public class Biom {
 
     private void addNewPredators(int number) {
         for (int i = 0; i < number; i++) {
-            double xStartPos = 800 * Math.random() + 150;
-            double yStartPos = 750 * Math.random();
+            int yStartPosChange = 100;
+            if (Math.random() > 0.5) {
+                yStartPosChange = 700;
+            }
+            double xStartPos = 600 + 50 * Math.random();
+            double yStartPos = yStartPosChange + 20 * Math.random();
             Predator newPredator = new Predator(xStartPos, yStartPos, organismUpdateFramerate, this.hiddenPlaces, this.predatorsEnergyCost);
             predators.add(newPredator);
         }
@@ -102,9 +137,7 @@ public class Biom {
     }
 
     private void checkPredators(int number) {
-        this.predators.removeIf((generatedPredator) -> {
-            return !generatedPredator.isAlive;
-        });
+        this.predators.removeIf((generatedPredator) -> !generatedPredator.isAlive);
         if (this.predators.size() < number) {
             this.addNewPredators(1);
         }

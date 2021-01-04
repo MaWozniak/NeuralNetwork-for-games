@@ -87,7 +87,7 @@ public class Generations {
         generation.randomize();
 
         for (int i = 0; i < generationSize; i++) {
-            double xStartPos = 600 + 800 * (Math.random() - 0.5);
+            double xStartPos = 600 + 600 * (Math.random() - 0.5);
             double yStartPos = 400 + 600 * (Math.random() - 0.5);
             if (i == 0) {
                 firstInGeneration = true;
@@ -107,8 +107,8 @@ public class Generations {
         //generation = new Generation(2, generationSize, ancestors, "top5smallMutation", newMutationRate);
 
         for (int i = 0; i < generationSize; i++) {
-            double xStartPos = 600 + 800 * (Math.random() - 0.5);
-            double yStartPos = 400 + 600 * (Math.random() - 0.5);
+            double xStartPos = 600 + 60 * (Math.random() - 0.5);
+            double yStartPos = 400 + 60 * (Math.random() - 0.5);
             if (i == 0) {
                 firstInGeneration = true;
             }
@@ -270,10 +270,10 @@ public class Generations {
             fileContent.append("\n");
         }
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/Documents/neuralNetworkTests/logs/generation_" + (count - 1) + ".txt"));
-        writer.write(String.valueOf(fileContent));
-        writer.close();
-        fileContent.setLength(0);
+//        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/Documents/neuralNetworkTests/logs/generation_" + (count - 1) + ".txt"));
+//        writer.write(String.valueOf(fileContent));
+//        writer.close();
+//        fileContent.setLength(0);
     }
 
     public List<Double> getGenerationsScoresList() {
@@ -290,5 +290,9 @@ public class Generations {
 
     public void setMutationRate(double mutationRate) {
         this.mutationRate = mutationRate;
+    }
+
+    public int getCount() {
+        return count;
     }
 }
