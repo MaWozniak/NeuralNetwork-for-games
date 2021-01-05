@@ -1,6 +1,6 @@
-package Game;
+package GUI;
 
-public class FramerateCount {
+public class FrameRateCount {
 
     private final int[] array = {1, 5, 10, 15, 30, 45, 60, 100, 200, 300, 500, 1000};
     private int selectedIndex = 4;

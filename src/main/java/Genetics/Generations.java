@@ -1,28 +1,27 @@
 package Genetics;
 
-import Game.PreyAI;
+import Game.Organisms.Prey;
 import NeuralNetwork.Generation;
 import NeuralNetwork.Genome;
 import NeuralNetwork.NeuralNetwork;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Generations {
-    private static DecimalFormat df2 = new DecimalFormat("#.##");
+    private static final DecimalFormat DF_2 = new DecimalFormat("#.##");
+    private static final int RESET_GENERATION = 50000000;
+
     private Generation generation;
-    // best score:
     // private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 7, 4);
     private NeuralNetwork protoplast = new NeuralNetwork(25, 2, 16, 4);
     private double BIAS = 1.0;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
     private GenerationMemory generationMemory;
-    private List<PreyAI> AI_prey;
-    private int resetGenerationNumber;
+    private List<Prey> AI_prey;
     private int generationSize;
     private int count = 1;
     private boolean preyAiEnergyCost;
@@ -43,7 +42,7 @@ public class Generations {
     private int index = 0;
 
 
-    public Generations(List<PreyAI> AI_prey, int size, int resetGen, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
+    public Generations(List<Prey> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
         this.generationSize = size;
         protoplast.setAllBiases(BIAS);
         this.generation = new Generation(1, generationSize, protoplast);
@@ -54,7 +53,6 @@ public class Generations {
         this.preyForcedMove = preyForcedMove;
         this.preyAging = preyAging;
         this.mutationRate = 1.1;
-        this.resetGenerationNumber = resetGen;
     }
 
     public void addFirstGeneration() {
@@ -71,7 +69,7 @@ public class Generations {
         writeFileLog();
         System.out.println("public void addNewGeneration() -> generation.showScores()");
         generation.showScores();
-        if (count % resetGenerationNumber == 0) {
+        if (count % RESET_GENERATION == 0) {
             randomGeneration();
         } else {
             geneticsNewGeneration(generation.bestSelection(10));
@@ -93,8 +91,8 @@ public class Generations {
                 firstInGeneration = true;
             }
 
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
-            AI_prey.add(newPreyAI);
+            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
+            AI_prey.add(newPrey);
             firstInGeneration = false;
         }
 
@@ -113,9 +111,9 @@ public class Generations {
                 firstInGeneration = true;
             }
 
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
-            newPreyAI.setId(i, count);
-            AI_prey.add(newPreyAI);
+            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
+            newPrey.setId(i, count);
+            AI_prey.add(newPrey);
             firstInGeneration = false;
         }
 
@@ -123,7 +121,7 @@ public class Generations {
 
     public String getGeneticsType() {
         String[] array = {"top5simply", "top5smallMutation", "top5bigRandom", "type3"};
-        if (count % resetGenerationNumber == 0) {
+        if (count % RESET_GENERATION == 0) {
             ++index;
         }
         if (index > array.length - 1) {
@@ -132,13 +130,13 @@ public class Generations {
         return array[index];
     }
 
-    public void deathPrey(PreyAI preyAI) {
-        if (preyAI.isAlive()) {
-            preyAI.getGenome().setScore(preyAI.getScore());
-            System.out.println(preyAI.getGenome().getId() + "sc:" + preyAI.getGenome().getScore());
-            generationMemory.add(preyAI);
-            preyAI.isDead();
-            preyAI.setFirstInGeneration(false);
+    public void deathPrey(Prey prey) {
+        if (prey.isAlive()) {
+            prey.getGenome().setScore(prey.getScore());
+            System.out.println(prey.getGenome().getId() + "sc:" + prey.getGenome().getScore());
+            generationMemory.add(prey);
+            prey.isDead();
+            prey.setFirstInGeneration(false);
         }
 
     }
@@ -170,7 +168,7 @@ public class Generations {
         } else {
             //avarageScoreOfAllGenerations = (avarageScoreOfAllGenerations * (count - 1) + generationMemory.getAvarageScore()) / (count);
 
-            int precise = resetGenerationNumber / 3;
+            int precise = RESET_GENERATION / 3;
 //            int precise = 40;
 //            if (count > 500) {
 //                precise = 100;
@@ -179,7 +177,7 @@ public class Generations {
 //                precise = 200;
 //            }
 
-            int startPoint = (int) (Math.floor(count / (double) resetGenerationNumber)) * resetGenerationNumber;
+            int startPoint = (int) (Math.floor(count / (double) RESET_GENERATION)) * RESET_GENERATION;
             avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(precise, startPoint);
         }
 
@@ -240,7 +238,7 @@ public class Generations {
             generationsAverageList.add(this.avarageScoreOfAllGenerations);
 
             for (int i = 0; i < generationsScoresList.size(); i++) {
-                System.out.print("\t\t--" + (i + 1) + "--\t\t" + df2.format(this.generationsScoresList.get(i)) + "\t\t( " + df2.format(this.generationsAverageList.get(i)) + " )\t\t");
+                System.out.print("\t\t--" + (i + 1) + "--\t\t" + DF_2.format(this.generationsScoresList.get(i)) + "\t\t( " + DF_2.format(this.generationsAverageList.get(i)) + " )\t\t");
                 if ((i + 1) % 3 == 0) {
                     System.out.println();
                 }
@@ -285,7 +283,7 @@ public class Generations {
     }
 
     public String getMutationRate() {
-        return df2.format(mutationRate);
+        return DF_2.format(mutationRate);
     }
 
     public void setMutationRate(double mutationRate) {

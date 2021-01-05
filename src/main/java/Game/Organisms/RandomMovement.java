@@ -1,14 +1,18 @@
-package Game;
+package Game.Organisms;
 
-public class UpdateMovement extends Thread {
-    private int millis;
+import Game.Game;
+
+public class RandomMovement extends Thread {
+
+    private static final int UPDATE_FRAME_RATE = 30;
+    private final int millis;
     private boolean up = false;
     private boolean down = false;
     private boolean left = false;
     private boolean right = false;
 
-    UpdateMovement(int framerate) {
-        this.millis = 1000 / framerate;
+    RandomMovement() {
+        this.millis = 1000 / UPDATE_FRAME_RATE;
     }
 
     public void run() {

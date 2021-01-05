@@ -1,6 +1,6 @@
 package GUI;
 
-import Game.Biom;
+import Game.Game;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,13 +10,13 @@ import javax.swing.JPanel;
 
 
 public class RenderPanel extends JPanel {
-    private Biom biom;
+    private Game game;
     private BoardGui boardGui = new BoardGui();
     private GenerationsChartView chartView = new GenerationsChartView();
     private boolean chartViewFlag = false;
 
-    RenderPanel(Biom biom) {
-        this.biom = biom;
+    RenderPanel(Game game) {
+        this.game = game;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class RenderPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         boardGui.paint(g2d);
-        biom.paint(g2d);
+        game.paint(g2d);
         if (chartViewFlag) {
             chartView.paint(g2d);
         }

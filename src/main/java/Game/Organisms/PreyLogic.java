@@ -1,35 +1,35 @@
-package Game;
+package Game.Organisms;
 
 import NeuralNetwork.BlackBox;
 import NeuralNetwork.Genome;
 import NeuralNetwork.OutputMove;
 
-class PreyLogicAI {
+class PreyLogic {
     private BlackBox blackBox;
     private boolean forceMove;
 
-    PreyLogicAI(boolean forceMove) {
+    PreyLogic(boolean forceMove) {
         blackBox = new BlackBox();
         this.forceMove = forceMove;
     }
 
-    PreyLogicAI(Genome genome, boolean forceMove) {
+    PreyLogic(Genome genome, boolean forceMove) {
         blackBox = new BlackBox(genome);
         this.forceMove = forceMove;
     }
 
-    void thinking(char[][] model, PreyAI preyAI) {
-        OutputMove move = this.blackBox.move(model, preyAI.getX(), preyAI.getY(), preyAI.getAngle(), preyAI.getSpeed(), preyAI.getEnergy(), preyAI.getStamina(), preyAI.getAge());
+    void thinking(char[][] model, Prey prey) {
+        OutputMove move = this.blackBox.move(model, prey.getX(), prey.getY(), prey.getAngle(), prey.getSpeed(), prey.getEnergy(), prey.getStamina(), prey.getAge());
         if (forceMove) {
-            preyAI.up = true;
-            preyAI.down = false;
+            prey.up = true;
+            prey.down = false;
         } else {
-            preyAI.up = move.isUp();
-            preyAI.down = move.isDown();
+            prey.up = move.isUp();
+            prey.down = move.isDown();
         }
 
-        preyAI.right = move.isRight();
-        preyAI.left = move.isLeft();
+        prey.right = move.isRight();
+        prey.left = move.isLeft();
 
     }
 

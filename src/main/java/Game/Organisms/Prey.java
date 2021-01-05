@@ -1,12 +1,25 @@
-package Game;
+package Game.Organisms;
 
 import GUI.NeuralNetworkView;
 import GUI.PreyAiGui;
 import NeuralNetwork.Genome;
+
 import java.awt.*;
 
-public class PreyAI extends Prey {
-    private PreyLogicAI ai;
+//@Data
+public class Prey {
+    double x;
+    double y;
+    double energy;
+    boolean isAlive;
+    double speed;
+    double angle;
+    boolean up = false;
+    boolean down = false;
+    boolean left = false;
+    boolean right = false;
+    protected double maxSpeed = 15;
+    private PreyLogic ai;
     private PreyAiGui preyAiGui = new PreyAiGui();
     private NeuralNetworkView networkView;
     private String id;
@@ -20,16 +33,14 @@ public class PreyAI extends Prey {
     private double age = 0.0;
     private boolean firstInGeneration;
 
-    public PreyAI(double xStartPos, double yStartPos, boolean energyCost, boolean forcedMove, boolean aging) {
-        super(xStartPos, yStartPos);
-        ai = new PreyLogicAI(forcedMove);
-        this.energyCost = energyCost;
-        this.aging = aging;
-    }
-
-    public PreyAI(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove, boolean aging, boolean firstInGeneration) {
-        super(xStartPos, yStartPos);
-        ai = new PreyLogicAI(genome, forcedMove);
+    public Prey(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove, boolean aging, boolean firstInGeneration) {
+        this.x = xStartPos;
+        this.y = yStartPos;
+        this.isAlive = true;
+        this.energy = 30;
+        this.speed = 0;
+        this.angle = 0;
+        ai = new PreyLogic(genome, forcedMove);
         this.energyCost = energyCost;
         this.aging = aging;
         this.firstInGeneration = firstInGeneration;
@@ -38,11 +49,21 @@ public class PreyAI extends Prey {
         }
     }
 
+    public void move(char[][] model) {
+        thinking(model);
+        setPosition();
+        energyCost();
+    }
+
+    public double getX() {
+        return this.x;
+    }
+
     void thinking(char[][] model) {
         ai.thinking(model, this);
     }
 
-    void paint(Graphics2D g) {
+    public void paint(Graphics2D g) {
         if (isAlive()) {
             preyAiGui.paint(g, this.x, this.y, this.angle, this.energy, this.firstInGeneration);
         }
@@ -61,6 +82,46 @@ public class PreyAI extends Prey {
 
     public Genome getGenome() {
         return ai.getGenome();
+    }
+
+    void setPosition() {
+        velocityLimits();
+        steering();
+        x += Math.sin(angle) * speed;
+        y -= Math.cos(angle) * speed;
+        int leftBorder = 22;
+        int rightBorder = 1178;
+        borderBouncing(leftBorder, rightBorder);
+
+    }
+
+    void borderBouncing(int x1, int x2) {
+        double penalty = 0.02;
+        if ((x < x1)) {
+            x += 10;
+            energy -= penalty;
+        }
+        if ((y < 22)) {
+            y += 10;
+            energy -= penalty;
+        }
+        if ((x > x2)) {
+            x -= 10;
+            energy -= penalty;
+        }
+        if ((y > 778)) {
+            y -= 10;
+            energy -= penalty;
+        }
+    }
+
+    void velocityLimits() {
+        if (speed > maxSpeed) {
+            down = true;
+        }
+        if (speed < -0.1) {
+            speed = 0.0;
+        }
     }
 
     void steering() {
@@ -126,7 +187,7 @@ public class PreyAI extends Prey {
 
     }
 
-    void feed() {
+    public void feed() {
         energy += 80;
         double maxEnergy = 150;
         if (energy > maxEnergy) {
@@ -143,7 +204,7 @@ public class PreyAI extends Prey {
         }
     }
 
-    void updateScore() {
+    public void updateScore() {
         this.score += 0.001;
     }
 
@@ -159,15 +220,27 @@ public class PreyAI extends Prey {
         return isAlive;
     }
 
-    public boolean isFirstInGeneration() {
-        return firstInGeneration;
-    }
-
     public void setFirstInGeneration(boolean firstInGeneration) {
         this.firstInGeneration = firstInGeneration;
     }
 
     public double getStamina() {
         return this.stamina;
+    }
+
+    public double getAngle() {
+        return this.angle;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public double getEnergy() {
+        return energy;
     }
 }

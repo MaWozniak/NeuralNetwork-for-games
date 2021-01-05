@@ -1,5 +1,8 @@
 package Game;
 
+import Game.Food.Food;
+import Game.Organisms.Predator;
+import Game.Organisms.Prey;
 import Genetics.Generations;
 import lombok.Data;
 
@@ -9,17 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class Biom {
+public class Game {
     private final Generations generations;
     private final ModelView model;
-    private final int numPrey;
-    private final List<Prey> prey = new ArrayList<>();
-    private final List<PreyAI> AI_prey = new ArrayList<>();
+    private final List<Prey> AI_prey = new ArrayList<>();
     private final List<Predator> predators = new ArrayList<>();
     private final List<Food> foodPoints = new ArrayList();
     private int predatorsNumber;
-    private final LifecycleThread lifecycleThread;
-    private final int organismUpdateFramerate;
+    private final GameLoop gameLoop;
     private final boolean hiddenPlaces;
     private final boolean preyAiEnergyCost;
     private final boolean preyForcedMove;
@@ -29,18 +29,15 @@ public class Biom {
     private final int food;
     private final int foodMin;
 
-    public Biom(int resetBucket, int numPrey, int numPredators, int numAIPrey, int frameRate, boolean fullSpeed, ModelView model, int organismUpdateFrameRate,
+    public Game(int numPredators, int numAIPrey, ModelView model,
                 boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging,
                 double preyMaxAge, int food, int foodMin) {
         this.model = model;
-        this.organismUpdateFramerate = organismUpdateFrameRate;
         this.preyAiEnergyCost = preyAiEnergyCost;
         this.preyAging = preyAging;
         this.preyMaxAge = preyMaxAge;
         this.preyForcedMove = preyForcedMove;
-        this.numPrey = numPrey;
-        this.addNewPreys(numPrey);
-        this.generations = new Generations(AI_prey, numAIPrey, resetBucket, preyAiEnergyCost, preyForcedMove, preyAging);
+        this.generations = new Generations(AI_prey, numAIPrey, preyAiEnergyCost, preyForcedMove, preyAging);
         this.generations.addFirstGeneration();
         this.hiddenPlaces = hiddenPlaces;
         this.predatorsEnergyCost = predatorsEnergyCost;
@@ -48,20 +45,20 @@ public class Biom {
         this.addNewPredators(numPredators);
         this.food = food;
         this.foodMin = foodMin;
-        Thread thread = new Thread(lifecycleThread = new LifecycleThread(frameRate, fullSpeed, this));
+        Thread thread = new Thread(gameLoop = new GameLoop(this));
         thread.start();
 
     }
 
     public int getFramerate() {
-        return this.lifecycleThread.getFramerate();
+        return this.gameLoop.getFramerate();
     }
 
     public void setFramerate(int framerate) {
-        this.lifecycleThread.setMillis(1000 / framerate);
+        this.gameLoop.setMillis(1000 / framerate);
     }
 
-    void lifecycle() throws IOException {
+    void gameLoop() throws IOException {
         this.generateFood();
         organismsMoves();
         modelViewSet();
@@ -112,16 +109,6 @@ public class Biom {
 
     }
 
-    private void addNewPreys(int number) {
-        for (int i = 0; i < number; i++) {
-            double xStartPos = 1150 * Math.random();
-            double yStartPos = 750 * Math.random();
-            Prey newPrey = new Prey(xStartPos, yStartPos, organismUpdateFramerate);
-            prey.add(newPrey);
-        }
-
-    }
-
     private void addNewPredators(int number) {
         for (int i = 0; i < number; i++) {
             int yStartPosChange = 100;
@@ -130,14 +117,14 @@ public class Biom {
             }
             double xStartPos = 600 + 50 * Math.random();
             double yStartPos = yStartPosChange + 20 * Math.random();
-            Predator newPredator = new Predator(xStartPos, yStartPos, organismUpdateFramerate, this.hiddenPlaces, this.predatorsEnergyCost);
+            Predator newPredator = new Predator(xStartPos, yStartPos, this.hiddenPlaces, this.predatorsEnergyCost);
             predators.add(newPredator);
         }
 
     }
 
     private void checkPredators(int number) {
-        this.predators.removeIf((generatedPredator) -> !generatedPredator.isAlive);
+        this.predators.removeIf((generatedPredator) -> !generatedPredator.isAlive());
         if (this.predators.size() < number) {
             this.addNewPredators(1);
         }
@@ -149,24 +136,11 @@ public class Biom {
             generations.addNewGeneration();
         }
 
-        if (prey.size() == 0) {
-            addNewPreys(numPrey);
-        }
     }
 
     private void scoreAi() {
-        for (PreyAI preyAI : AI_prey) {
-            preyAI.updateScore();
-        }
-
-    }
-
-    private void addNewAIPreys(int number) {
-        for (int i = 0; i < number; i++) {
-            double xStartPos = 1150 * Math.random();
-            double yStartPos = 750 * Math.random();
-            PreyAI newPreyAI = new PreyAI(xStartPos, yStartPos, preyAiEnergyCost, preyForcedMove, preyAging);
-            AI_prey.add(newPreyAI);
+        for (Prey prey : AI_prey) {
+            prey.updateScore();
         }
 
     }
@@ -177,49 +151,35 @@ public class Biom {
             generatedPredator.move(model.getModel());
         }
 
-        for (Prey generatedPrey : prey) {
+        for (Prey generatedPrey : AI_prey) {
             generatedPrey.move(model.getModel());
-
-            //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
-            for (Predator generatedPredator : predators) {
-                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 10) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 10)) {
-                    if (generatedPredator.getEnergy() < 260) {
-                        generatedPrey.isDead();
-                        generatedPredator.eat();
-                    }
-                }
+            if (generatedPrey.getEnergy() < 0.001) {
+                generations.deathPrey(generatedPrey);
             }
-        }
-
-        for (PreyAI generatedPreyAI : AI_prey) {
-            generatedPreyAI.move(model.getModel());
-            if (generatedPreyAI.getEnergy() < 0.001) {
-                generations.deathPrey(generatedPreyAI);
-            }
-            if (generatedPreyAI.getAge() > preyMaxAge) {
-                generations.deathPrey(generatedPreyAI);
+            if (generatedPrey.getAge() > preyMaxAge) {
+                generations.deathPrey(generatedPrey);
             }
 
             for (Food food : foodPoints) {
-                if (Math.abs((double) food.getX() - generatedPreyAI.getX()) < 10 && Math.abs((double) food.getY() - generatedPreyAI.getY()) < 10
-                        && generatedPreyAI.getEnergy() < 130) {
-                    generatedPreyAI.feed();
+                if (Math.abs((double) food.getX() - generatedPrey.getX()) < 10 && Math.abs((double) food.getY() - generatedPrey.getY()) < 10
+                        && generatedPrey.getEnergy() < 130) {
+                    generatedPrey.feed();
                     food.eated();
                 }
             }
 
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
-                if ((Math.abs((int) (generatedPredator.getX() - generatedPreyAI.getX())) < 10) && (Math.abs((int) (generatedPredator.getY() - generatedPreyAI.getY())) < 10)) {
+                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 10) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 10)) {
                     if (generatedPredator.getEnergy() < 260) {
-                        generations.deathPrey(generatedPreyAI);
+                        generations.deathPrey(generatedPrey);
                         generatedPredator.eat();
                     }
                 }
             }
         }
 
-        this.foodPoints.removeIf(Food::isEated);
+        this.foodPoints.removeIf(Food::isEaten);
 
     }
 
@@ -234,11 +194,7 @@ public class Biom {
             model.set(food.getX(), food.getY(), 'F', 8);
         }
 
-        for (PreyAI generatedPreyAI : AI_prey) {
-            model.set((int) generatedPreyAI.getX(), (int) generatedPreyAI.getY(), 'X', 12);
-        }
-
-        for (Prey generatedPrey : prey) {
+        for (Prey generatedPrey : AI_prey) {
             model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 12);
         }
 
@@ -253,18 +209,15 @@ public class Biom {
             }
 
             for (Food food : foodPoints) {
-                if (!food.isEated()) {
+                if (!food.isEaten()) {
                     food.paint(g);
                 }
             }
 
-            for (PreyAI generatedPreyAI : AI_prey) {
-                generatedPreyAI.paint(g);
-            }
-
-            for (Prey generatedPrey : prey) {
+            for (Prey generatedPrey : AI_prey) {
                 generatedPrey.paint(g);
             }
+
         } catch (java.util.ConcurrentModificationException e) {
             //System.out.println("error: java.util.ConcurrentModificationException");
         }
@@ -272,14 +225,6 @@ public class Biom {
     }
 
     private void validate() {
-        if (prey.size() != 0) {
-            for (int i = 0; i < prey.size(); i++) {
-                if (!prey.get(i).isAlive()) {
-                    prey.remove(i);
-                    break;
-                }
-            }
-        }
         if (predators.size() != 0) {
             for (int i = 0; i < predators.size(); i++) {
                 if (!predators.get(i).isAlive()) {

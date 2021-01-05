@@ -1,7 +1,6 @@
 package GUI;
 
-import Game.Biom;
-import Game.FramerateCount;
+import Game.Game;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -10,42 +9,42 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GUI extends JFrame {
-    public GUI(int framerate, Biom biom) throws InterruptedException {
-        RenderPanel renderPanel = new RenderPanel(biom);
+    public GUI(int framerate, Game game) throws InterruptedException {
+        RenderPanel renderPanel = new RenderPanel(game);
         JPanel buttonPanel = new JPanel();
-        FramerateCount framerateCount = new FramerateCount();
-        JLabel label = new JLabel(Integer.toString(biom.getFramerate()));
+        FrameRateCount framerateCount = new FrameRateCount();
+        JLabel label = new JLabel(Integer.toString(game.getFramerate()));
         JButton button1 = new JButton("Slower");
         button1.addActionListener(actionEvent1 -> {
-            biom.setFramerate(framerateCount.previous());
+            game.setFramerate(framerateCount.previous());
             label.setText(framerateCount.getSelectedInString());
         });
         JButton button2 = new JButton("Faster");
         button2.addActionListener(actionEvent2 -> {
-            biom.setFramerate(framerateCount.next());
+            game.setFramerate(framerateCount.next());
             label.setText(framerateCount.getSelectedInString());
         });
         JButton button3 = new JButton("Progres Chart");
         button3.addActionListener(actionEvent3 -> {
-            renderPanel.getGenerationMemory(biom.getGenerationsScores(), biom.getGenerationsAverageScores());
+            renderPanel.getGenerationMemory(game.getGenerationsScores(), game.getGenerationsAverageScores());
             renderPanel.setChartViewFlag();
         });
         JLabel label1 = new JLabel("Predators:");
-        JLabel label2 = new JLabel(Integer.toString(biom.getPredatorsNumber()));
+        JLabel label2 = new JLabel(Integer.toString(game.getPredatorsNumber()));
         JButton button4 = new JButton("-");
         button4.addActionListener(actionEvent1 -> {
-            biom.removePredator();
-            label2.setText(Integer.toString(biom.getPredatorsNumber()));
+            game.removePredator();
+            label2.setText(Integer.toString(game.getPredatorsNumber()));
         });
         JButton button5 = new JButton("+");
         button5.addActionListener(actionEvent2 -> {
-            biom.addPredator();
-            label2.setText(Integer.toString(biom.getPredatorsNumber()));
+            game.addPredator();
+            label2.setText(Integer.toString(game.getPredatorsNumber()));
         });
-        JLabel label3 = new JLabel(biom.getMutationRate());
+        JLabel label3 = new JLabel(game.getMutationRate());
         JButton button6 = new JButton("Get Mutation rate:");
         button6.addActionListener(actionEvent2 -> {
-            label3.setText(biom.getMutationRate());
+            label3.setText(game.getMutationRate());
         });
         buttonPanel.setSize(100, 30);
         buttonPanel.add(button1);

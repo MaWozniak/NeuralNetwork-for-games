@@ -1,6 +1,6 @@
 package Genetics;
 
-import Game.PreyAI;
+import Game.Organisms.Prey;
 import NeuralNetwork.Genome;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,23 +20,23 @@ class GenerationMemory {
         this.countAdding = 1;
     }
 
-    void add(PreyAI preyAI) {
-        if (!genomes.contains(preyAI.getGenome())) {
+    void add(Prey prey) {
+        if (!genomes.contains(prey.getGenome())) {
             if (genomes.size() < size) {
-                preyAI.getGenome().setId(preyAI.getId());
-                preyAI.getGenome().setScore(preyAI.getScore());
-                genomes.add(preyAI.getGenome());
-            } else if (preyAI.getScore() > genomes.get(size - 1).getScore()) {
-                preyAI.getGenome().setId(preyAI.getId());
-                preyAI.getGenome().setScore(preyAI.getScore());
-                genomes.set(size - 1, preyAI.getGenome());
+                prey.getGenome().setId(prey.getId());
+                prey.getGenome().setScore(prey.getScore());
+                genomes.add(prey.getGenome());
+            } else if (prey.getScore() > genomes.get(size - 1).getScore()) {
+                prey.getGenome().setId(prey.getId());
+                prey.getGenome().setScore(prey.getScore());
+                genomes.set(size - 1, prey.getGenome());
             }
 
             genomes.sort(Comparator.comparing(Genome::getScore).reversed());
 
         }
 
-        avarageScore = (avarageScore * countAdding + preyAI.getScore()) / (countAdding + 1);
+        avarageScore = (avarageScore * countAdding + prey.getScore()) / (countAdding + 1);
         countAdding++;
     }
 

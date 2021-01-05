@@ -1,20 +1,28 @@
-package Game;
+package Game.Organisms;
 
 import GUI.PredatorGui;
 
 import java.awt.*;
 
-class Predator extends Organism {
-    private PredatorLogicSimple predatorLogicSimple;
-    private PredatorGui predatorGui;
-    private double maxSpeed = 3;
-    private double acc = 0.2;
-    private double dec = 0.2;
-    private double turnSpeed = 0.15;
-    private boolean energyCost;
-    private boolean hiddenPlaces;
+//@Data
+public class Predator {
+    double x;
+    double y;
+    double energy;
+    boolean isAlive;
+    double speed;
+    double angle;
+    boolean up = false;
+    boolean down = false;
+    boolean left = false;
+    boolean right = false;
+    private final PredatorLogic predatorLogic;
+    private final PredatorGui predatorGui;
+    private final double maxSpeed = 10;
+    private final boolean energyCost;
+    private final boolean hiddenPlaces;
 
-    Predator(double xStartPos, double yStartPos, int updateFramerate, boolean hiddenPlaces, boolean energyCost) {
+    public Predator(double xStartPos, double yStartPos, boolean hiddenPlaces, boolean energyCost) {
         this.x = xStartPos;
         this.y = yStartPos;
         this.isAlive = true;
@@ -23,16 +31,16 @@ class Predator extends Organism {
         this.hiddenPlaces = hiddenPlaces;
         this.energyCost = energyCost;
         predatorGui = new PredatorGui();
-        predatorLogicSimple = new PredatorLogicSimple(updateFramerate);
+        predatorLogic = new PredatorLogic();
     }
 
-    void move(char[][] model) {
+    public void move(char[][] model) {
         thinking(model);
         setPosition();
         energyCost();
     }
 
-    void eat() {
+    public void eat() {
         if (energyCost) {
             energy += 25;
             double maxEnergy = 300;
@@ -43,7 +51,7 @@ class Predator extends Organism {
     }
 
     void thinking(char[][] model) {
-        predatorLogicSimple.thinking(model, this);
+        predatorLogic.thinking(model, this);
     }
 
     void energyCost() {
@@ -60,16 +68,11 @@ class Predator extends Organism {
         }
     }
 
-    void velocityLimits() {
-        if (speed > maxSpeed) {
-            down = true;
-        }
-        if (speed < -0.01) {
-            speed = 0.0;
-        }
-    }
+
 
     void steering() {
+        double acc = 0.8;
+        double dec = 0.2;
         if (up && speed < maxSpeed) {
             if (speed < 0) {
                 speed += dec;
@@ -91,6 +94,7 @@ class Predator extends Organism {
             }
         }
 
+        double turnSpeed = 0.15;
         if (right && speed != 0) {
             angle += turnSpeed * speed / maxSpeed;
         }
@@ -121,7 +125,7 @@ class Predator extends Organism {
         borderBouncing(leftBorder, rightBorder);
     }
 
-    void paint(Graphics2D g) {
+    public void paint(Graphics2D g) {
         if (isAlive) {
             predatorGui.paint(g, this.x, this.y, this.angle, this.energy);
         }
@@ -162,5 +166,31 @@ class Predator extends Organism {
 //                y = 30;
 //            }
         }
+    }
+
+    void velocityLimits() {
+        if (speed > maxSpeed) {
+            down = true;
+        }
+        if (speed < -0.01) {
+            speed = 0.0;
+        }
+    }
+
+    public double getX() {
+        return this.x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getEnergy() {
+        return energy;
+    }
+
+
+    public boolean isAlive() {
+        return isAlive;
     }
 }
