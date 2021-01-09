@@ -4,8 +4,11 @@ import GUI.PredatorGui;
 
 import java.awt.*;
 
-//@Data
 public class Predator {
+    private static final boolean HIDDEN_PLACES = true;
+    private static final boolean ENERGY_COST = true;
+    private static final double MAX_SPEED = 10;
+
     double x;
     double y;
     double energy;
@@ -18,18 +21,13 @@ public class Predator {
     boolean right = false;
     private final PredatorLogic predatorLogic;
     private final PredatorGui predatorGui;
-    private final double maxSpeed = 10;
-    private final boolean energyCost;
-    private final boolean hiddenPlaces;
 
-    public Predator(double xStartPos, double yStartPos, boolean hiddenPlaces, boolean energyCost) {
+    public Predator(double xStartPos, double yStartPos) {
         this.x = xStartPos;
         this.y = yStartPos;
         this.isAlive = true;
         this.energy = 130;
         this.speed = 1.0;
-        this.hiddenPlaces = hiddenPlaces;
-        this.energyCost = energyCost;
         predatorGui = new PredatorGui();
         predatorLogic = new PredatorLogic();
     }
@@ -41,7 +39,7 @@ public class Predator {
     }
 
     public void eat() {
-        if (energyCost) {
+        if (ENERGY_COST) {
             energy += 25;
             double maxEnergy = 300;
             if (energy > maxEnergy) {
@@ -55,7 +53,7 @@ public class Predator {
     }
 
     void energyCost() {
-        if (energyCost) {
+        if (ENERGY_COST) {
             energy -= 0.04;
             //FULL & TIRED:
             if (energy > 250) {
@@ -73,7 +71,7 @@ public class Predator {
     void steering() {
         double acc = 0.8;
         double dec = 0.2;
-        if (up && speed < maxSpeed) {
+        if (up && speed < MAX_SPEED) {
             if (speed < 0) {
                 speed += dec;
             } else {
@@ -96,17 +94,17 @@ public class Predator {
 
         double turnSpeed = 0.15;
         if (right && speed != 0) {
-            angle += turnSpeed * speed / maxSpeed;
+            angle += turnSpeed * speed / MAX_SPEED;
         }
         if (left && speed != 0) {
-            angle -= turnSpeed * speed / maxSpeed;
+            angle -= turnSpeed * speed / MAX_SPEED;
         }
 
         if (right) {
-            angle += turnSpeed * 6 / maxSpeed;
+            angle += turnSpeed * 6 / MAX_SPEED;
         }
         if (left) {
-            angle -= turnSpeed * 6 / maxSpeed;
+            angle -= turnSpeed * 6 / MAX_SPEED;
         }
     }
 
@@ -144,7 +142,7 @@ public class Predator {
         if ((y > 778)) {
             y -= 10;
         }
-        if (hiddenPlaces) {
+        if (HIDDEN_PLACES) {
             if (x > 380 && x < 430 && y > 275 && y < 555) {
                 x += 20;
             }
@@ -169,7 +167,7 @@ public class Predator {
     }
 
     void velocityLimits() {
-        if (speed > maxSpeed) {
+        if (speed > MAX_SPEED) {
             down = true;
         }
         if (speed < -0.01) {

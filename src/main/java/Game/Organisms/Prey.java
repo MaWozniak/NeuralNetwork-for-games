@@ -3,17 +3,23 @@ package Game.Organisms;
 import GUI.NeuralNetworkView;
 import GUI.PreyAiGui;
 import NeuralNetwork.Genome;
+import lombok.Data;
 
 import java.awt.*;
 
-//@Data
+@Data
 public class Prey {
+    private static final boolean ENERGY_COST = true;
+    private static final boolean AGING = true;
+    private static final boolean FORCE_TO_MOVE = false;
+    private boolean firstInGeneration;
     double x;
     double y;
     double energy;
     boolean isAlive;
     double speed;
     double angle;
+    double preyMaxAge;
     boolean up = false;
     boolean down = false;
     boolean left = false;
@@ -28,22 +34,18 @@ public class Prey {
     private double dec = 0.8;
     private double turnSpeed = 0.5;
     private double score = 0.0;
-    private boolean energyCost;
-    private boolean aging;
     private double age = 0.0;
-    private boolean firstInGeneration;
 
-    public Prey(double xStartPos, double yStartPos, Genome genome, boolean energyCost, boolean forcedMove, boolean aging, boolean firstInGeneration) {
+    public Prey(double xStartPos, double yStartPos, Genome genome, boolean firstInGeneration, double preyMaxAge) {
         this.x = xStartPos;
         this.y = yStartPos;
+        this.preyMaxAge = preyMaxAge;
+        this.firstInGeneration = firstInGeneration;
         this.isAlive = true;
         this.energy = 30;
         this.speed = 0;
         this.angle = 0;
-        ai = new PreyLogic(genome, forcedMove);
-        this.energyCost = energyCost;
-        this.aging = aging;
-        this.firstInGeneration = firstInGeneration;
+        ai = new PreyLogic(genome, FORCE_TO_MOVE);
         if (firstInGeneration) {
             this.networkView = new NeuralNetworkView();
         }
@@ -57,6 +59,14 @@ public class Prey {
 
     public double getX() {
         return this.x;
+    }
+
+    public double getPreyMaxAge() {
+        return preyMaxAge;
+    }
+
+    public void setFirstInGeneration(boolean firstInGeneration) {
+        this.firstInGeneration = firstInGeneration;
     }
 
     void thinking(char[][] model) {
@@ -168,12 +178,12 @@ public class Prey {
 
 
     void energyCost() {
-        if (energyCost) {
+        if (ENERGY_COST) {
             energy -= 0.1;
             energy -= Math.abs(0.2 * speed / maxSpeed);
         }
 
-        if (aging) {
+        if (AGING) {
             age += 0.01;
         }
 
@@ -218,10 +228,6 @@ public class Prey {
 
     public boolean isAlive() {
         return isAlive;
-    }
-
-    public void setFirstInGeneration(boolean firstInGeneration) {
-        this.firstInGeneration = firstInGeneration;
     }
 
     public double getStamina() {

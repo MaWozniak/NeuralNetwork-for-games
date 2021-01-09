@@ -24,10 +24,6 @@ public class Generations {
     private List<Prey> AI_prey;
     private int generationSize;
     private int count = 1;
-    private boolean preyAiEnergyCost;
-    private boolean preyForcedMove;
-    private boolean preyAging;
-    private boolean firstInGeneration;
     private double avarageScoreOfAllGenerations = 0.0;
     private List<Double> avarageScores = new ArrayList<>();
     private double bestScoreOfALLGenerations = 0.0;
@@ -40,19 +36,19 @@ public class Generations {
     private String idOfthirdBestScore = "";
     private double mutationRate;
     private int index = 0;
+    private double preyMaxAge;
+    private boolean firstInGeneration;
 
 
-    public Generations(List<Prey> AI_prey, int size, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging) {
+    public Generations(List<Prey> AI_prey, int size, double preyMaxAge) {
         this.generationSize = size;
         protoplast.setAllBiases(BIAS);
         this.generation = new Generation(1, generationSize, protoplast);
         this.AI_prey = AI_prey;
         this.generationsScoresList = new ArrayList<>();
         this.generationsAverageList = new ArrayList<>();
-        this.preyAiEnergyCost = preyAiEnergyCost;
-        this.preyForcedMove = preyForcedMove;
-        this.preyAging = preyAging;
         this.mutationRate = 1.1;
+        this.preyMaxAge = preyMaxAge;
     }
 
     public void addFirstGeneration() {
@@ -91,7 +87,7 @@ public class Generations {
                 firstInGeneration = true;
             }
 
-            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
+            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), firstInGeneration, preyMaxAge);
             AI_prey.add(newPrey);
             firstInGeneration = false;
         }
@@ -111,7 +107,7 @@ public class Generations {
                 firstInGeneration = true;
             }
 
-            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), preyAiEnergyCost, preyForcedMove, preyAging, firstInGeneration);
+            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), firstInGeneration, preyMaxAge);
             newPrey.setId(i, count);
             AI_prey.add(newPrey);
             firstInGeneration = false;

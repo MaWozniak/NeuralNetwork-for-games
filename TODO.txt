@@ -31,7 +31,7 @@ Maybe food can be placed in many small pieces on the board
 2) Activation Function don't work well? all scores is simillar to 0.5(?)
 more tests + check different activation function (none, exponens, sinul, relu etc.)
 
-3) write Genomes(arrays of weights and biases) of all preyAI to file (to save progress)
+3) write Genomes(arrays of weights and biases) of all prey to file (to save progress)
 
 -experiment with diffrents Activation Function for Neural Network ( ReLU - Rectified Linear Unit!)
 

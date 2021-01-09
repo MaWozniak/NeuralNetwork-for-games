@@ -30,16 +30,16 @@ public class GUI extends JFrame {
             renderPanel.setChartViewFlag();
         });
         JLabel label1 = new JLabel("Predators:");
-        JLabel label2 = new JLabel(Integer.toString(game.getPredatorsNumber()));
+        JLabel label2 = new JLabel(Integer.toString(game.getGameConfig().getNumberOfPredator()));
         JButton button4 = new JButton("-");
         button4.addActionListener(actionEvent1 -> {
-            game.removePredator();
-            label2.setText(Integer.toString(game.getPredatorsNumber()));
+            //game.removePredator();
+            label2.setText(Integer.toString(game.getGameConfig().getNumberOfPredator()));
         });
         JButton button5 = new JButton("+");
         button5.addActionListener(actionEvent2 -> {
-            game.addPredator();
-            label2.setText(Integer.toString(game.getPredatorsNumber()));
+            //game.addPredator();
+            label2.setText(Integer.toString(game.getGameConfig().getNumberOfPredator()));
         });
         JLabel label3 = new JLabel(game.getMutationRate());
         JButton button6 = new JButton("Get Mutation rate:");

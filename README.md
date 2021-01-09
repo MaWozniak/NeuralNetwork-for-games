@@ -42,8 +42,8 @@ Game (Simulation) start in TestMain.java and runs Biom, ModelView and Gui classe
 Simulation(){
 
         ModelView model = new ModelView(modelFrame);
-        Biom biom = new Biom(preyNum, predatorsNum, AIpreyNum, biomFramerate, fullspeed, model, organismFramerate);
-        GUI gui = new GUI(guiFramerate, biom);
+        Biom game = new Biom(preyNum, predatorsNum, AIpreyNum, biomFramerate, fullspeed, model, organismFramerate);
+        GUI gui = new GUI(guiFramerate, game);
     }
 ```
 Biom.java create Lists of Prey, Predators and PreyAI, and has its own Thread.
@@ -76,11 +76,11 @@ Concept of this class is to model what Organisms can see on the board. It's very
 Simulation has two different threads with different framerates:
 - one for Lifecycle of the Biom class
 ```
-Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, biom));
+Thread thread = new Thread(lifecycleThread = new LifecycleThread(framerate, fullspeed, game));
 ```
 - second for Gui thread
 ```
-GUI gui = new GUI(guiFramerate, biom);
+GUI gui = new GUI(guiFramerate, game);
 ```
 
 This concept is to separete graphics from model calculation.

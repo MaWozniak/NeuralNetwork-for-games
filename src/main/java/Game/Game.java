@@ -4,50 +4,44 @@ import Game.Food.Food;
 import Game.Organisms.Predator;
 import Game.Organisms.Prey;
 import Genetics.Generations;
-import lombok.Data;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class Game {
+    private final Configuration gameConfig;
+    private final ModelView modelView;
+
     private final Generations generations;
-    private final ModelView model;
+    private final GameLoop gameLoop;
+
     private final List<Prey> AI_prey = new ArrayList<>();
     private final List<Predator> predators = new ArrayList<>();
+
     private final List<Food> foodPoints = new ArrayList();
-    private int predatorsNumber;
-    private final GameLoop gameLoop;
-    private final boolean hiddenPlaces;
-    private final boolean preyAiEnergyCost;
-    private final boolean preyForcedMove;
-    private final boolean predatorsEnergyCost;
-    private final boolean preyAging;
-    private final double preyMaxAge;
     private final int food;
     private final int foodMin;
 
-    public Game(int numPredators, int numAIPrey, ModelView model,
-                boolean hiddenPlaces, boolean predatorsEnergyCost, boolean preyAiEnergyCost, boolean preyForcedMove, boolean preyAging,
-                double preyMaxAge, int food, int foodMin) {
-        this.model = model;
-        this.preyAiEnergyCost = preyAiEnergyCost;
-        this.preyAging = preyAging;
-        this.preyMaxAge = preyMaxAge;
-        this.preyForcedMove = preyForcedMove;
-        this.generations = new Generations(AI_prey, numAIPrey, preyAiEnergyCost, preyForcedMove, preyAging);
+    public Game(Configuration gameConfig, ModelView modelView, int food, int foodMin) {
+        this.modelView = modelView;
+        this.gameConfig = gameConfig;
+        addNewPredators(gameConfig.getNumberOfPredator());
+
+        this.generations = new Generations(AI_prey, gameConfig.getNumberOfPrey(), gameConfig.getPreyMaxAge());
         this.generations.addFirstGeneration();
-        this.hiddenPlaces = hiddenPlaces;
-        this.predatorsEnergyCost = predatorsEnergyCost;
-        this.predatorsNumber = numPredators;
-        this.addNewPredators(numPredators);
+
         this.food = food;
         this.foodMin = foodMin;
-        Thread thread = new Thread(gameLoop = new GameLoop(this));
-        thread.start();
 
+        gameLoop = new GameLoop(this);
+        startGameLoop();
+    }
+
+    private void startGameLoop() {
+        Thread thread = new Thread(gameLoop);
+        thread.start();
     }
 
     public int getFramerate() {
@@ -63,7 +57,7 @@ public class Game {
         organismsMoves();
         modelViewSet();
         scoreAi();
-        checkPredators(predatorsNumber);
+        checkPredators(gameConfig.getNumberOfPredator());
         checkGenerations();
         validate();
 
@@ -117,7 +111,7 @@ public class Game {
             }
             double xStartPos = 600 + 50 * Math.random();
             double yStartPos = yStartPosChange + 20 * Math.random();
-            Predator newPredator = new Predator(xStartPos, yStartPos, this.hiddenPlaces, this.predatorsEnergyCost);
+            Predator newPredator = new Predator(xStartPos, yStartPos);
             predators.add(newPredator);
         }
 
@@ -148,15 +142,15 @@ public class Game {
     private void organismsMoves() {
 
         for (Predator generatedPredator : predators) {
-            generatedPredator.move(model.getModel());
+            generatedPredator.move(modelView.getModel());
         }
 
         for (Prey generatedPrey : AI_prey) {
-            generatedPrey.move(model.getModel());
+            generatedPrey.move(modelView.getModel());
             if (generatedPrey.getEnergy() < 0.001) {
                 generations.deathPrey(generatedPrey);
             }
-            if (generatedPrey.getAge() > preyMaxAge) {
+            if (generatedPrey.getAge() > generatedPrey.getPreyMaxAge()) {
                 generations.deathPrey(generatedPrey);
             }
 
@@ -184,21 +178,21 @@ public class Game {
     }
 
     private void modelViewSet() {
-        model.clear();
+        modelView.clear();
 
         for (Predator generatedPredator : predators) {
-            model.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P', 40);
+            modelView.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P', 40);
         }
 
         for (Food food : foodPoints) {
-            model.set(food.getX(), food.getY(), 'F', 8);
+            modelView.set(food.getX(), food.getY(), 'F', 8);
         }
 
         for (Prey generatedPrey : AI_prey) {
-            model.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 12);
+            modelView.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 12);
         }
 
-        model.repaintGui();
+        modelView.repaintGui();
     }
 
     public void paint(Graphics2D g) {
@@ -251,22 +245,11 @@ public class Game {
         return this.generations.getGenerationsAverageList();
     }
 
-    public int getPredatorsNumber() {
-        return predatorsNumber;
-    }
-
-    public void addPredator() {
-        predatorsNumber += 1;
-    }
-
-    public void removePredator() {
-        if (predatorsNumber > 0) {
-            predatorsNumber -= 1;
-        }
-    }
-
     public String getMutationRate() {
         return generations.getMutationRate();
     }
 
+    public Configuration getGameConfig() {
+        return gameConfig;
+    }
 }
