@@ -68,7 +68,8 @@ public class Generations {
         if (count % RESET_GENERATION == 0) {
             randomGeneration();
         } else {
-            geneticsNewGeneration(generation.bestSelection(10));
+            int numOfBestSelection = (int) (generationSize / 10);
+            geneticsNewGeneration(generation.bestSelection(numOfBestSelection));
         }
 
         generationMemory.getSelectedGenomes().clear();

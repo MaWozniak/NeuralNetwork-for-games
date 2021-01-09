@@ -29,6 +29,8 @@ public class Generation {
     }
 
     public Generation(int number, int size, List<Genome> ancestors, String type, double mutationRate) {
+        int numOfParties = (int) (size / 10);
+        int numOfTheRest = size - 10 * numOfParties;
         this.number = number;
         double[] val = new double[8];
         int i;
@@ -50,7 +52,7 @@ public class Generation {
         NeuralNetwork neuralNetwork10;
 
         if (type.equals("top5simply")) {
-            for (i = 0; i < 5; ++i) {
+            for (i = 0; i < numOfParties; ++i) {
                 parentage1 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||-elite";
                 neuralNetwork1 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
                 this.genomes.add(new Genome(number, neuralNetwork1, parentage1));
@@ -95,8 +97,16 @@ public class Generation {
                 neuralNetwork10.mutation(0.4D, 1.0D);
                 this.genomes.add(new Genome(number, neuralNetwork10, parentage5));
             }
+            if (numOfTheRest > 0) {
+                for (int j = 0; j < numOfTheRest; j++) {
+                    String parentageRandom = "restOf-randomize";
+                    NeuralNetwork neuralNetworkForRest = ((Genome) ancestors.get(j)).getNeuralNetwork().copy();
+                    neuralNetworkForRest.mutation(0.5, 0.5);
+                    this.genomes.add(new Genome(number, neuralNetworkForRest, parentageRandom));
+                }
+            }
         } else if (type.equals("top5smallMutation")) {
-            for (i = 0; i < 5; ++i) {
+            for (i = 0; i < numOfParties; ++i) {
                 parentage1 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||-elite";
                 neuralNetwork1 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
                 this.genomes.add(new Genome(number, neuralNetwork1, parentage1));
@@ -140,8 +150,16 @@ public class Generation {
                 neuralNetwork8.mutation(0.1D, 1.0D);
                 this.genomes.add(new Genome(number, neuralNetwork8, parentage4));
             }
+            if (numOfTheRest > 0) {
+                for (int j = 0; j < numOfTheRest; j++) {
+                    String parentageRandom = "restOf-randomize";
+                    NeuralNetwork neuralNetworkForRest = ((Genome) ancestors.get(j)).getNeuralNetwork().copy();
+                    neuralNetworkForRest.mutation(0.5, 0.5);
+                    this.genomes.add(new Genome(number, neuralNetworkForRest, parentageRandom));
+                }
+            }
         } else if (type.equals("top5bigRandom")) {
-            for (i = 0; i < 5; ++i) {
+            for (i = 0; i < numOfParties; ++i) {
                 parentage1 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||-elite";
                 neuralNetwork1 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
                 this.genomes.add(new Genome(number, neuralNetwork1, parentage1));
@@ -185,6 +203,14 @@ public class Generation {
                 neuralNetwork10 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
                 neuralNetwork10.mutation(0.4D, 1.0D);
                 this.genomes.add(new Genome(number, neuralNetwork10, parentage5));
+            }
+            if (numOfTheRest > 0) {
+                for (int j = 0; j < numOfTheRest; j++) {
+                    String parentageRandom = "restOf-randomize";
+                    NeuralNetwork neuralNetworkForRest = ((Genome) ancestors.get(j)).getNeuralNetwork().copy();
+                    neuralNetworkForRest.mutation(0.5, 0.5);
+                    this.genomes.add(new Genome(number, neuralNetworkForRest, parentageRandom));
+                }
             }
         } else {
             if (type.equals("type1")) {
