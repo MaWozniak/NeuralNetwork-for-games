@@ -9,7 +9,7 @@ public class Application {
 
         ModelView model = new ModelView(false);
 
-        Configuration configuration = new Configuration(251, 4, 80);
+        Configuration configuration = new Configuration(200, 5, 60);
 
         //Scenario clasa - scenario ma Faze(klasa) (np 3)
         //Faze ma FoodMenagara z rozna konfiguracja foodMin -max -position etc

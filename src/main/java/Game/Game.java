@@ -75,8 +75,8 @@ public class Game {
                 int yStartPos = 400 + (int) (120 * Math.random());
 
                 //change in time
-                int firstFaze = 30; //200
-                int secondFaze = 1500; //600
+                int firstFaze = 1000; //200
+                int secondFaze = 2500; //600
                 if (this.generations.getCount() < firstFaze) {
                     xStartPos = 100 + (int) (1000 * Math.random());
                     yStartPos = 100 + (int) (600 * Math.random());
