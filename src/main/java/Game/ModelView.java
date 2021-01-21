@@ -1,11 +1,12 @@
 package Game;
 
 import GUI.ModelViewGui;
+import Game.Stage.Stage;
 
 public class ModelView {
 
-    private char[][] model = new char[1300][900];
-    private ModelViewGui modelView;
+    private final char[][] model = new char[1300][900];
+    private final ModelViewGui modelView;
 
     public ModelView(boolean visible) {
         modelView = new ModelViewGui(visible, model);
@@ -20,14 +21,13 @@ public class ModelView {
         modelView.revalidate();
     }
 
-    void clear() {
+    void clear(Stage stage) {
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
                 model[i][j] = '0';
             }
         }
-
-        this.paintSpecialPlaces();
+        this.paintSpecialPlaces(stage.isHidePlacesCenter(), stage.isHidePlacesBorder());
     }
 
     void set(int x, int y, char ch, int radius) {
@@ -40,12 +40,16 @@ public class ModelView {
         }
     }
 
-    private void paintSpecialPlaces() {
-        //Darker/Hide Places
-//        this.setRectengle(90, 400, 'M', 800, 180);
-//        this.setRectengle(1120, 400, 'M', 800, 180);
-        this.setRectengle(600, 420, 'M', 280, 400);
-
+    private void paintSpecialPlaces(boolean center, boolean borders) {
+        if (center) {
+            this.setRectengle(600, 420, 'M', 280, 400);
+        }
+        if (borders) {
+            this.setRectengle(600, 50, 'M', 80, 1300);
+            this.setRectengle(600, 780, 'M', 80, 1300);
+            this.setRectengle(60, 450, 'M', 900, 80);
+            this.setRectengle(1160, 450, 'M', 900, 80);
+        }
     }
 
     private void setRectengle(int x, int y, char ch, int height, int width) {

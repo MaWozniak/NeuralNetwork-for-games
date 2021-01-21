@@ -7,14 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ModelViewGui extends JFrame {
-    private char[][] model;
+    private final char[][] model;
 
     public ModelViewGui(boolean visible, char[][] model) {
         this.model = model;
         JPanel jPanel = new JPanel();
         this.add(jPanel);
         jPanel.setLocation(10, 10);
-        this.setSize(600, 390);
+        this.setSize(600, 400);
         this.setLocation(1250, 200);
         this.setVisible(visible);
         this.setResizable(false);

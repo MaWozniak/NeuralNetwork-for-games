@@ -24,6 +24,8 @@ public class RenderPanel extends JPanel {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        boardGui.setHidePlacesCenter(game.getStage().isHidePlacesCenter());
+        boardGui.setHidePlacesBorder(game.getStage().isHidePlacesBorder());
         boardGui.paint(g2d);
         game.paint(g2d);
         if (chartViewFlag) {

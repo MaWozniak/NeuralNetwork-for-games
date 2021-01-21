@@ -2,14 +2,13 @@ package Game.Organisms;
 
 import GUI.NeuralNetworkView;
 import GUI.PreyAiGui;
+import Game.Stage.Stage;
 import NeuralNetwork.Genome;
-import lombok.Data;
 
 import java.awt.*;
 
-@Data
 public class Prey {
-    private static final boolean ENERGY_COST = true;
+    private static final boolean ENERGY_COST = false;
     private static final boolean AGING = true;
     private static final boolean FORCE_TO_MOVE = false;
     private boolean firstInGeneration;
@@ -51,10 +50,10 @@ public class Prey {
         }
     }
 
-    public void move(char[][] model) {
+    public void move(char[][] model, Stage stage) {
         thinking(model);
         setPosition();
-        energyCost();
+        energyCost(stage);
     }
 
     public double getX() {
@@ -177,7 +176,7 @@ public class Prey {
     }
 
 
-    void energyCost() {
+    void energyCost(Stage stage) {
         if (ENERGY_COST) {
             energy -= 0.1;
             energy -= Math.abs(0.2 * speed / maxSpeed);
@@ -185,6 +184,13 @@ public class Prey {
 
         if (AGING) {
             age += 0.01;
+        }
+        if (stage.isHidePlacesPenalty()) {
+            if (x < 84 || y < 84 || x > 1036 || y > 647) {
+                age += 0.04;
+            } else if (x > 400 && x < 800 && y > 270 && y < 550) {
+                age += 0.4;
+            }
         }
 
         if (stamina > 0) {

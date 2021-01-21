@@ -1,23 +1,20 @@
 import GUI.GUI;
 import Game.Game;
-import Game.ModelView;
 import Game.Configuration;
+import Game.Stage.StageManager;
 
 public class Application {
 
     public static void main(String[] args) throws InterruptedException {
 
-        ModelView model = new ModelView(false);
+        Configuration configuration = new Configuration(100, 50);
 
-        Configuration configuration = new Configuration(200, 5, 60);
+        int[] strategy = {2, 3, 4, 5, 6};
+        StageManager stageManager = new StageManager(strategy);
 
-        //Scenario clasa - scenario ma Faze(klasa) (np 3)
-        //Faze ma FoodMenagara z rozna konfiguracja foodMin -max -position etc
-
-        //nazwy Scheduler + Stage(Stages)
-        //+klasa TestScenarios ze statycznym Scheduler z konkretnymi fazami :) tak jak TestBoards
-        Game game = new Game(configuration, model, 230, 145);
+        Game game = new Game(configuration, stageManager);
 
         new GUI(30, game);
+
     }
 }

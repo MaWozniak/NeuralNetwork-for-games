@@ -1,8 +1,11 @@
 package Game;
 
 import Game.Food.Food;
+import Game.Food.FoodManager;
 import Game.Organisms.Predator;
 import Game.Organisms.Prey;
+import Game.Stage.Stage;
+import Game.Stage.StageManager;
 import Genetics.Generations;
 
 import java.awt.*;
@@ -12,29 +15,22 @@ import java.util.List;
 
 public class Game {
     private final Configuration gameConfig;
-    private final ModelView modelView;
-
+    private final ModelView modelView = new ModelView(false);
     private final Generations generations;
     private final GameLoop gameLoop;
 
     private final List<Prey> AI_prey = new ArrayList<>();
     private final List<Predator> predators = new ArrayList<>();
 
-    private final List<Food> foodPoints = new ArrayList();
-    private final int food;
-    private final int foodMin;
+    private final StageManager stageManager;
+    private final FoodManager foodManager = new FoodManager();
 
-    public Game(Configuration gameConfig, ModelView modelView, int food, int foodMin) {
-        this.modelView = modelView;
+    public Game(Configuration gameConfig, StageManager stageManager) {
         this.gameConfig = gameConfig;
-        addNewPredators(gameConfig.getNumberOfPredator());
-
+        this.stageManager = stageManager;
+        addNewPredators(stageManager.getStage(0).getNumOfPredators());
         this.generations = new Generations(AI_prey, gameConfig.getNumberOfPrey(), gameConfig.getPreyMaxAge());
         this.generations.addFirstGeneration();
-
-        this.food = food;
-        this.foodMin = foodMin;
-
         gameLoop = new GameLoop(this);
         startGameLoop();
     }
@@ -44,62 +40,22 @@ public class Game {
         thread.start();
     }
 
-    public int getFramerate() {
+    public int getFrameRate() {
         return this.gameLoop.getFramerate();
     }
 
-    public void setFramerate(int framerate) {
-        this.gameLoop.setMillis(1000 / framerate);
+    public void setFrameRate(int frameRate) {
+        this.gameLoop.setMillis(1000 / frameRate);
     }
 
     void gameLoop() throws IOException {
-        this.generateFood();
+        foodManager.generateFood(this.getStage());
         organismsMoves();
         modelViewSet();
         scoreAi();
-        checkPredators(gameConfig.getNumberOfPredator());
+        checkPredators(this.getStage().getNumOfPredators());
         checkGenerations();
         validate();
-
-    }
-
-    private void generateFood() {
-        if (this.foodPoints.size() <= this.foodMin) {
-            for (int i = 0; i < this.food - this.foodMin; ++i) {
-                int xStartPosChange = 100;
-                int yStartPosChange = 100;
-                if (Math.random() > 0.5) {
-                    xStartPosChange = 1000;
-                }
-                int xStartPos = xStartPosChange + (int) (120 * Math.random());
-                int yStartPos = 400 + (int) (120 * Math.random());
-
-                //change in time
-                int firstFaze = 1000; //200
-                int secondFaze = 2500; //600
-                if (this.generations.getCount() < firstFaze) {
-                    xStartPos = 100 + (int) (1000 * Math.random());
-                    yStartPos = 100 + (int) (600 * Math.random());
-                }
-                if (this.generations.getCount() >= firstFaze && this.generations.getCount() < secondFaze) {
-                    if (Math.random() > 0.5) {
-                        xStartPosChange = 900;
-                    }
-                    if (Math.random() > 0.5) {
-                        yStartPosChange = 600;
-                    }
-                    xStartPos = xStartPosChange + (int) (150 * Math.random());
-                    yStartPos = yStartPosChange + (int) (150 * Math.random());
-                }
-//                if(this.generations.getCount() < 40 && this.generations.getCount() >= 20) {
-//                    xStartPos = 200 + (int) (500 * Math.random());
-//                    yStartPos = 200 + (int) (300 * Math.random());
-//                }
-
-                Food newFood = new Food(xStartPos, yStartPos);
-                this.foodPoints.add(newFood);
-            }
-        }
 
     }
 
@@ -118,11 +74,13 @@ public class Game {
     }
 
     private void checkPredators(int number) {
-        this.predators.removeIf((generatedPredator) -> !generatedPredator.isAlive());
-        if (this.predators.size() < number) {
-            this.addNewPredators(1);
+        predators.removeIf((generatedPredator) -> !generatedPredator.isAlive());
+        if (number == 0) {
+            predators.clear();
         }
-
+        if (predators.size() < number) {
+            addNewPredators(1);
+        }
     }
 
     private void checkGenerations() throws IOException {
@@ -142,11 +100,11 @@ public class Game {
     private void organismsMoves() {
 
         for (Predator generatedPredator : predators) {
-            generatedPredator.move(modelView.getModel());
+            generatedPredator.move(modelView.getModel(), this.getStage());
         }
 
         for (Prey generatedPrey : AI_prey) {
-            generatedPrey.move(modelView.getModel());
+            generatedPrey.move(modelView.getModel(), this.getStage());
             if (generatedPrey.getEnergy() < 0.001) {
                 generations.deathPrey(generatedPrey);
             }
@@ -154,7 +112,7 @@ public class Game {
                 generations.deathPrey(generatedPrey);
             }
 
-            for (Food food : foodPoints) {
+            for (Food food : foodManager.getFoodPoints()) {
                 if (Math.abs((double) food.getX() - generatedPrey.getX()) < 10 && Math.abs((double) food.getY() - generatedPrey.getY()) < 10
                         && generatedPrey.getEnergy() < 130) {
                     generatedPrey.feed();
@@ -173,18 +131,18 @@ public class Game {
             }
         }
 
-        this.foodPoints.removeIf(Food::isEaten);
+        foodManager.getFoodPoints().removeIf(Food::isEaten);
 
     }
 
     private void modelViewSet() {
-        modelView.clear();
+        modelView.clear(this.getStage());
 
         for (Predator generatedPredator : predators) {
             modelView.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P', 40);
         }
 
-        for (Food food : foodPoints) {
+        for (Food food : foodManager.getFoodPoints()) {
             modelView.set(food.getX(), food.getY(), 'F', 8);
         }
 
@@ -196,24 +154,14 @@ public class Game {
     }
 
     public void paint(Graphics2D g) {
-
         try {
-            for (Predator generatedPredator : predators) {
-                generatedPredator.paint(g);
-            }
+            predators.forEach(predator -> predator.paint(g));
+            foodManager.getFoodPoints().forEach(food -> {
+                if (!food.isEaten()) food.paint(g);
+            });
+            AI_prey.forEach(prey -> prey.paint(g));
+        } catch (java.util.ConcurrentModificationException ignored) {
 
-            for (Food food : foodPoints) {
-                if (!food.isEaten()) {
-                    food.paint(g);
-                }
-            }
-
-            for (Prey generatedPrey : AI_prey) {
-                generatedPrey.paint(g);
-            }
-
-        } catch (java.util.ConcurrentModificationException e) {
-            //System.out.println("error: java.util.ConcurrentModificationException");
         }
 
     }
@@ -251,5 +199,9 @@ public class Game {
 
     public Configuration getGameConfig() {
         return gameConfig;
+    }
+
+    public Stage getStage() {
+        return stageManager.getStage(generations.getCount() - 1);
     }
 }

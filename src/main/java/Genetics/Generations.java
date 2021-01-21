@@ -16,7 +16,7 @@ public class Generations {
 
     private Generation generation;
     // private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 7, 4);
-    private NeuralNetwork protoplast = new NeuralNetwork(25, 2, 16, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(25, 2, 10, 4);
     private double BIAS = 1.0;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;

@@ -1,11 +1,11 @@
 package Game.Organisms;
 
 import GUI.PredatorGui;
+import Game.Stage.Stage;
 
 import java.awt.*;
 
 public class Predator {
-    private static final boolean HIDDEN_PLACES = true;
     private static final boolean ENERGY_COST = true;
     private static final double MAX_SPEED = 10;
 
@@ -32,9 +32,9 @@ public class Predator {
         predatorLogic = new PredatorLogic();
     }
 
-    public void move(char[][] model) {
+    public void move(char[][] model, Stage stage) {
         thinking(model);
-        setPosition();
+        setPosition(stage);
         energyCost();
     }
 
@@ -108,19 +108,15 @@ public class Predator {
         }
     }
 
-    void setPosition() {
+    void setPosition(Stage stage) {
         velocityLimits();
         steering();
         x += Math.sin(angle) * speed;
         y -= Math.cos(angle) * speed;
         int leftBorder = 22;
         int rightBorder = 1178;
-//        if (hiddenPlaces) {
-//            leftBorder = 190;
-//            rightBorder = 1010;
-//        }
 
-        borderBouncing(leftBorder, rightBorder);
+        borderBouncing(leftBorder, rightBorder, stage);
     }
 
     public void paint(Graphics2D g) {
@@ -129,7 +125,7 @@ public class Predator {
         }
     }
 
-    void borderBouncing(int x1, int x2) {
+    void borderBouncing(int x1, int x2, Stage stage) {
         if ((x < x1)) {
             x += 10;
         }
@@ -142,7 +138,21 @@ public class Predator {
         if ((y > 778)) {
             y -= 10;
         }
-        if (HIDDEN_PLACES) {
+        if (stage.isHidePlacesBorder()) {
+            if ((x < 84)) {
+                x += 10;
+            }
+            if ((y < 84)) {
+                y += 10;
+            }
+            if ((x > 1036)) {
+                x -= 10;
+            }
+            if ((y > 647)) {
+                y -= 10;
+            }
+        }
+        if (stage.isHidePlacesCenter()) {
             if (x > 380 && x < 430 && y > 275 && y < 555) {
                 x += 20;
             }
