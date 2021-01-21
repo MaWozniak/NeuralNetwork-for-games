@@ -15,8 +15,8 @@ public class Generations {
     private static final int RESET_GENERATION = 50000000;
 
     private Generation generation;
-    // private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 7, 4);
-    private NeuralNetwork protoplast = new NeuralNetwork(25, 2, 10, 4);
+    private NeuralNetwork protoplast = new NeuralNetwork(25, 3, 7, 4);
+    //private NeuralNetwork protoplast = new NeuralNetwork(25, 2, 10, 4);
     private double BIAS = 1.0;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;

@@ -22,6 +22,7 @@ public class StageManager {
         Stage problem2 = new Stage();
         problem2.setHidePlacesCenter(true);
         problem2.setHidePlacesBorder(true);
+        problem2.setHidePlacesPenalty(true);
         problem2.setNumOfPredators(4);
         problem.add(problem2);
 
@@ -63,7 +64,8 @@ public class StageManager {
         if (result == null) {
             result = problem.get(strategy.length);
         }
-        result = problem.get(2);
+        //FORCED FOR TEST
+        //result = problem.get(1);
         return result;
     }
 }
