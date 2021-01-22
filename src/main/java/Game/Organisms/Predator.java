@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Predator {
     private static final boolean ENERGY_COST = true;
-    private static final double MAX_SPEED = 10;
+    private static final double MAX_SPEED = 12;
 
     double x;
     double y;
@@ -21,6 +21,7 @@ public class Predator {
     boolean right = false;
     private final PredatorLogic predatorLogic;
     private final PredatorGui predatorGui;
+    private boolean testingIfSee = false;
 
     public Predator(double xStartPos, double yStartPos) {
         this.x = xStartPos;
@@ -65,8 +66,6 @@ public class Predator {
             }
         }
     }
-
-
 
     void steering() {
         double acc = 0.8;
@@ -121,9 +120,14 @@ public class Predator {
 
     public void paint(Graphics2D g) {
         if (isAlive) {
-            predatorGui.paint(g, this.x, this.y, this.angle, this.energy);
+            Color color = Color.RED;
+//            if(testingIfSee) {
+//                color = Color.ORANGE;
+//            }
+            predatorGui.paint(g, this.x, this.y, this.angle, this.energy, color);
         }
     }
+
 
     void borderBouncing(int x1, int x2, Stage stage) {
         if ((x < x1)) {
@@ -169,10 +173,6 @@ public class Predator {
                 x = 30;
                 y = 30;
             }
-//            if(x > 380 && x < 800 && y > 275 && y < 555) {
-//                x = 30;
-//                y = 30;
-//            }
         }
     }
 
@@ -200,5 +200,13 @@ public class Predator {
 
     public boolean isAlive() {
         return isAlive;
+    }
+
+    public boolean isTestingIfSee() {
+        return testingIfSee;
+    }
+
+    public void setTestingIfSee(boolean testingIfSee) {
+        this.testingIfSee = testingIfSee;
     }
 }

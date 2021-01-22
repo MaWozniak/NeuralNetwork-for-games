@@ -7,7 +7,7 @@ public class Application {
 
     public static void main(String[] args) throws InterruptedException {
 
-        Configuration configuration = new Configuration(100, 50);
+        Configuration configuration = new Configuration(50, 30);
 
         int[] strategy = {2, 3, 4, 5, 6};
         StageManager stageManager = new StageManager(strategy);

@@ -101,6 +101,7 @@ public class Game {
 
         for (Predator generatedPredator : predators) {
             generatedPredator.move(modelView.getModel(), this.getStage());
+
         }
 
         for (Prey generatedPrey : AI_prey) {
@@ -122,10 +123,11 @@ public class Game {
 
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
-                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 10) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 10)) {
-                    if (generatedPredator.getEnergy() < 260) {
+                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 15) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 15)) {
+                    if (generatedPredator.getEnergy() < 1260) {
                         generations.deathPrey(generatedPrey);
                         generatedPredator.eat();
+                        // generatedPredator.slowDown();
                     }
                 }
             }

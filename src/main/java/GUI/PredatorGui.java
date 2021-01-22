@@ -7,8 +7,8 @@ public class PredatorGui {
     public PredatorGui() {
     }
 
-    public void paint(Graphics2D g, double x, double y, double angle, double energy) {
-        g.setColor(Color.RED);
+    public void paint(Graphics2D g, double x, double y, double angle, double energy, Color color) {
+        g.setColor(color);
         g.fillOval((int) x - 10, (int) y - 10, 20, 20);
         //direction point:
         g.setColor(Color.BLUE);

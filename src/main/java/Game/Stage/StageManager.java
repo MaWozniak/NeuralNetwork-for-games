@@ -65,7 +65,7 @@ public class StageManager {
             result = problem.get(strategy.length);
         }
         //FORCED FOR TEST
-        //result = problem.get(1);
+        result = problem.get(0);
         return result;
     }
 }

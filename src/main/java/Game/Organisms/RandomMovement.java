@@ -4,7 +4,7 @@ import Game.Game;
 
 public class RandomMovement extends Thread {
 
-    private static final int UPDATE_FRAME_RATE = 30;
+    private static final int UPDATE_FRAME_RATE = 5;
     private final int millis;
     private boolean up = false;
     private boolean down = false;
