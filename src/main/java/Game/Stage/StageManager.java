@@ -16,6 +16,7 @@ public class StageManager {
         problem1.setHidePlacesCenter(true);
         problem1.setHidePlacesBorder(true);
         problem1.setHidePlacesPenalty(true);
+        problem1.setPreyMaxAge(20);
         problem.add(problem1);
 
         //learning run from Predators to hidePlaces
@@ -45,6 +46,8 @@ public class StageManager {
 
         //testing problem
         Stage problem6 = new Stage();
+        problem6.setNumOfPreys(75);
+        problem6.setPreyMaxAge(60);
         problem6.setHidePlacesCenter(true);
         problem6.setHidePlacesPenalty(true);
         problem6.setNumOfPredators(3);

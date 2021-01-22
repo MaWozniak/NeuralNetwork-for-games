@@ -9,7 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GUI extends JFrame {
-    public GUI(int framerate, Game game) throws InterruptedException {
+    private static final int FRAME_RATE = 30;
+
+    public GUI(Game game) throws InterruptedException {
         RenderPanel renderPanel = new RenderPanel(game);
         JPanel buttonPanel = new JPanel();
         FrameRateCount framerateCount = new FrameRateCount();
@@ -64,7 +66,7 @@ public class GUI extends JFrame {
         this.setVisible(true);
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int millis = 1000 / framerate;
+        int millis = 1000 / FRAME_RATE;
 
         while (true) {
             renderPanel.revalidate();

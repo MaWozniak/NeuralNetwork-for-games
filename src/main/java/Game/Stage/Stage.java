@@ -1,6 +1,8 @@
 package Game.Stage;
 
 public class Stage {
+    private int numOfPreys = 50;
+    private int preyMaxAge = 50;
     private int numOfPredators = 0;
     private boolean isHidePlacesCenter = false;
     private boolean isHidePlacesBorder = false;
@@ -54,5 +56,21 @@ public class Stage {
 
     public void setFoodTypeStrategy(FoodStrategy foodTypeStrategy) {
         this.foodTypeStrategy = foodTypeStrategy;
+    }
+
+    public int getNumOfPreys() {
+        return numOfPreys;
+    }
+
+    public void setNumOfPreys(int numOfPreys) {
+        this.numOfPreys = numOfPreys;
+    }
+
+    public int getPreyMaxAge() {
+        return preyMaxAge;
+    }
+
+    public void setPreyMaxAge(int preyMaxAge) {
+        this.preyMaxAge = preyMaxAge;
     }
 }

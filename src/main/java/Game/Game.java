@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private final Configuration gameConfig;
     private final ModelView modelView = new ModelView(false);
     private final Generations generations;
     private final GameLoop gameLoop;
@@ -25,11 +24,11 @@ public class Game {
     private final StageManager stageManager;
     private final FoodManager foodManager = new FoodManager();
 
-    public Game(Configuration gameConfig, StageManager stageManager) {
-        this.gameConfig = gameConfig;
+    public Game(StageManager stageManager) {
         this.stageManager = stageManager;
-        addNewPredators(stageManager.getStage(0).getNumOfPredators());
-        this.generations = new Generations(AI_prey, gameConfig.getNumberOfPrey(), gameConfig.getPreyMaxAge());
+        Stage startStage = stageManager.getStage(0);
+        addNewPredators(startStage.getNumOfPredators());
+        this.generations = new Generations(AI_prey, startStage.getNumOfPreys(), startStage.getPreyMaxAge());
         this.generations.addFirstGeneration();
         gameLoop = new GameLoop(this);
         startGameLoop();
@@ -197,10 +196,6 @@ public class Game {
 
     public String getMutationRate() {
         return generations.getMutationRate();
-    }
-
-    public Configuration getGameConfig() {
-        return gameConfig;
     }
 
     public Stage getStage() {
