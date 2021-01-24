@@ -1,5 +1,7 @@
 package Game.Stage;
 
+import Game.Food.FoodStrategy;
+
 public class Stage {
     private int numOfPreys = 50;
     private int preyMaxAge = 50;

@@ -1,5 +1,7 @@
 package Game.Stage;
 
+import Game.Food.FoodStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class StageManager {
         problem1.setHidePlacesCenter(true);
         problem1.setHidePlacesBorder(true);
         problem1.setHidePlacesPenalty(true);
-        problem1.setPreyMaxAge(20);
+        //problem1.setPreyMaxAge(20);
         problem.add(problem1);
 
         //learning run from Predators to hidePlaces
@@ -29,7 +31,7 @@ public class StageManager {
 
         //learning only to run allover the board
         Stage problem3 = new Stage();
-        problem3.setNumOfPredators(5);
+        problem3.setNumOfPredators(3);
         problem.add(problem3);
 
         //learning to move and find the food

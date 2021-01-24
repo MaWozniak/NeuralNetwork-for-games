@@ -15,7 +15,7 @@ class PredatorLogic {
         predator.right = false;
         predator.setTestingIfSee(false);
 
-        if (predator.speed < 3.0) {
+        if (predator.speed < 2.5) {
             predator.up = true;
         }
         if (Math.random() > 0.6) {
@@ -55,6 +55,9 @@ class PredatorLogic {
                 }
             }
         }
+        if (seeHidePlace(model, predator)) {
+            predator.right = true;
+        }
 
         lowEnergyRush(predator);
     }
@@ -92,6 +95,19 @@ class PredatorLogic {
         }
 
         return result;
+    }
+
+    private boolean seeHidePlace(char[][] model, Predator predator) {
+        double frontDistance = 20.0;
+        double sideDistance = 0.0;
+        int x = ((int) predator.getX() - 5) + (int) (frontDistance * Math.sin(predator.angle) + (int) (sideDistance * Math.cos(predator.angle)));
+        int y = ((int) predator.getY() - 5) - (int) (frontDistance * Math.cos(predator.angle) + (int) (sideDistance * Math.sin(predator.angle)));
+
+        if (x > 0 && y > 0 && x < 1250 && y < 850) {
+            return model[x][y] == 'M';
+        } else {
+            return false;
+        }
     }
 
 }

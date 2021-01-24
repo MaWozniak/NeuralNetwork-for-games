@@ -101,8 +101,10 @@ public class Generations {
         //generation = new Generation(2, generationSize, ancestors, "top5smallMutation", newMutationRate);
 
         for (int i = 0; i < generationSize; i++) {
-            double xStartPos = 600 + 60 * (Math.random() - 0.5);
-            double yStartPos = 400 + 60 * (Math.random() - 0.5);
+            double dispersion = 60;
+            //dispersion = 600;
+            double xStartPos = 600 + dispersion * (Math.random() - 0.5);
+            double yStartPos = 400 + dispersion * (Math.random() - 0.5);
             if (i == 0) {
                 firstInGeneration = true;
             }

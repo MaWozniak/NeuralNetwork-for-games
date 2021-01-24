@@ -1,6 +1,5 @@
 package Game.Food;
 
-import Game.Stage.FoodStrategy;
 import Game.Stage.Stage;
 
 import java.util.ArrayList;

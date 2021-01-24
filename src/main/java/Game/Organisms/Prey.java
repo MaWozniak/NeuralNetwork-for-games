@@ -187,8 +187,10 @@ public class Prey {
         if (stage.isHidePlacesPenalty()) {
             if (x < 84 || y < 84 || x > 1036 || y > 647) {
                 age += 0.04;
+                energy -= 0.15;
             } else if (x > 400 && x < 800 && y > 270 && y < 550) {
                 age += 0.04;
+                energy -= 0.15;
             }
         }
 
