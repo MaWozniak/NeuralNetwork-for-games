@@ -1,5 +1,7 @@
 package NeuralNetwork;
 
+import Game.Stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -7,269 +9,166 @@ import java.util.List;
 public class Generation {
     List<Genome> genomes = new ArrayList();
     int number;
+    Stage stage;
+    int learningNetwork;
 
-    public Generation(int number, int size, NeuralNetwork protoplast) {
+    public Generation(int number, int size, NodalNetwork protoplast) {
         this.number = number;
-
         for (int i = 0; i < size; i++) {
-            genomes.add(new Genome(number, protoplast.copy(), "generic"));
+            genomes.add(new Genome(number, protoplast.copy(), "generic", learningNetwork));
         }
 
     }
 
     public Generation(int number, int size, List<Genome> ancestors) {
         this.number = number;
-
         for (int i = 0; i < size; i++) {
             int x = i % ancestors.size();
             String parentage = "1-parent-copy:" + ancestors.get(x).getId();
-            genomes.add(new Genome(number, ancestors.get(x).getNeuralNetwork().copy(), parentage));
+            genomes.add(new Genome(number, ancestors.get(x).getNodalNetwork().copy(), parentage, learningNetwork));
         }
 
     }
 
-    public Generation(int number, int size, List<Genome> ancestors, String type, double mutationRate) {
-        int numOfParties = (int) (size / 10);
+    public Generation(int number, int size, List<Genome> ancestors, String type, Stage stage, double mutationRate) {
+        int numOfParties = size / 10;
         int numOfTheRest = size - 10 * numOfParties;
+        this.stage = stage;
+        this.learningNetwork = stage.getLearningNetwork();
+        //log
+        System.out.println("----------------Generation constructor: this.learningNetwork = stage.getLearningNetwork(); " + stage.getLearningNetwork());
         this.number = number;
         double[] val = new double[8];
         int i;
-        String parentage;
-        String parentage1;
-        String parentage3;
-        String parentage4;
-        String parentage5;
-
-        NeuralNetwork neuralNetwork;
-        NeuralNetwork neuralNetwork1;
-        NeuralNetwork neuralNetwork3;
-        NeuralNetwork neuralNetwork4;
-        NeuralNetwork neuralNetwork5;
-        NeuralNetwork neuralNetwork6;
-        NeuralNetwork neuralNetwork7;
-        NeuralNetwork neuralNetwork8;
-        NeuralNetwork neuralNetwork9;
-        NeuralNetwork neuralNetwork10;
-
-        if (type.equals("top5simply")) {
-            for (i = 0; i < numOfParties; ++i) {
-                parentage1 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||-elite";
-                neuralNetwork1 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                this.genomes.add(new Genome(number, neuralNetwork1, parentage1));
-
-                parentage = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationSmSm(0.05-0.05)";
-                neuralNetwork = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork, parentage));
-
-                neuralNetwork3 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork3.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork3, parentage));
-
-                neuralNetwork4 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork4.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork4, parentage));
-
-                parentage3 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationBgSm(0.6-0.03)";
-                neuralNetwork5 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork5.mutation(0.6D, 0.03D);
-                this.genomes.add(new Genome(number, neuralNetwork5, parentage3));
-
-                neuralNetwork6 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork6.mutation(0.6D, 0.03D);
-                this.genomes.add(new Genome(number, neuralNetwork6, parentage3));
-
-                neuralNetwork7 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork7.mutation(0.6D, 0.03D);
-                this.genomes.add(new Genome(number, neuralNetwork7, parentage3));
-
-                parentage4 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationSmBg(0.05-1.0)";
-                neuralNetwork8 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork8.mutation(0.1D, 1.0D);
-                this.genomes.add(new Genome(number, neuralNetwork8, parentage4));
-
-                neuralNetwork9 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork9.mutation(0.1D, 1.0D);
-                this.genomes.add(new Genome(number, neuralNetwork9, parentage4));
-
-                parentage5 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationMeBg(0.4-1.0)";
-                neuralNetwork10 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork10.mutation(0.4D, 1.0D);
-                this.genomes.add(new Genome(number, neuralNetwork10, parentage5));
-            }
-            if (numOfTheRest > 0) {
-                for (int j = 0; j < numOfTheRest; j++) {
-                    String parentageRandom = "restOf-randomize";
-                    NeuralNetwork neuralNetworkForRest = ((Genome) ancestors.get(j)).getNeuralNetwork().copy();
-                    neuralNetworkForRest.mutation(0.5, 0.5);
-                    this.genomes.add(new Genome(number, neuralNetworkForRest, parentageRandom));
+        switch (type) {
+            case "top5simply":
+                for (i = 0; i < numOfParties; ++i) {
+                    createGenome(ancestors.get(i), "elite");
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.6, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.6, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.6, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
+                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
+                    createMutatedGenome(ancestors.get(i), "mutationMeBg(0.4-1.0)", 0.4, 1.0);
                 }
-            }
-        } else if (type.equals("top5smallMutation")) {
-            for (i = 0; i < numOfParties; ++i) {
-                parentage1 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||-elite";
-                neuralNetwork1 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                this.genomes.add(new Genome(number, neuralNetwork1, parentage1));
-
-                parentage = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationSmSm(0.05-0.05)";
-                neuralNetwork = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork, parentage));
-
-                neuralNetwork3 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork3.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork3, parentage));
-
-                neuralNetwork4 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork4.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork4, parentage));
-
-                neuralNetwork10 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork10.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork10, parentage));
-
-                parentage3 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationBgSm(0.5-0.03)";
-                neuralNetwork6 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork6.mutation(0.5D, 0.03D);
-                this.genomes.add(new Genome(number, neuralNetwork6, parentage3));
-
-                neuralNetwork7 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork7.mutation(0.5D, 0.03D);
-                this.genomes.add(new Genome(number, neuralNetwork7, parentage3));
-
-                neuralNetwork7 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork7.mutation(0.5D, 0.03D);
-                this.genomes.add(new Genome(number, neuralNetwork7, parentage3));
-
-                neuralNetwork8 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork8.mutation(0.5D, 0.03D);
-                this.genomes.add(new Genome(number, neuralNetwork8, parentage3));
-
-                parentage4 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationSmBg(0.05-1.0)";
-                neuralNetwork8 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork8.mutation(0.1D, 1.0D);
-                this.genomes.add(new Genome(number, neuralNetwork8, parentage4));
-            }
-            if (numOfTheRest > 0) {
-                for (int j = 0; j < numOfTheRest; j++) {
-                    String parentageRandom = "restOf-randomize";
-                    NeuralNetwork neuralNetworkForRest = ((Genome) ancestors.get(j)).getNeuralNetwork().copy();
-                    neuralNetworkForRest.mutation(0.5, 0.5);
-                    this.genomes.add(new Genome(number, neuralNetworkForRest, parentageRandom));
-                }
-            }
-        } else if (type.equals("top5bigRandom")) {
-            for (i = 0; i < numOfParties; ++i) {
-                parentage1 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||-elite";
-                neuralNetwork1 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                this.genomes.add(new Genome(number, neuralNetwork1, parentage1));
-
-                parentage = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationSmSmRandom";
-                neuralNetwork = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork.mutation(0.05D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork, parentage));
-
-                neuralNetwork3 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork3.mutation(0.1D, 0.05D);
-                this.genomes.add(new Genome(number, neuralNetwork3, parentage));
-
-                neuralNetwork4 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork4.mutation(0.05D, 0.1D);
-                this.genomes.add(new Genome(number, neuralNetwork4, parentage));
-
-                parentage3 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationBgRandom";
-                neuralNetwork5 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork5.mutation(0.6D, 0.1D);
-                this.genomes.add(new Genome(number, neuralNetwork5, parentage3));
-
-                neuralNetwork6 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork6.mutation(0.6D, 0.2D);
-                this.genomes.add(new Genome(number, neuralNetwork6, parentage3));
-
-                neuralNetwork7 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork7.mutation(0.6D, 0.3D);
-                this.genomes.add(new Genome(number, neuralNetwork7, parentage3));
-
-                parentage4 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationSmBg(0.1/0.2-1.0)";
-                neuralNetwork8 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork8.mutation(0.1D, 1.0D);
-                this.genomes.add(new Genome(number, neuralNetwork8, parentage4));
-
-                neuralNetwork9 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork9.mutation(0.2D, 1.0D);
-                this.genomes.add(new Genome(number, neuralNetwork9, parentage4));
-
-                parentage5 = "1-parent-||" + ((Genome) ancestors.get(i)).getId() + "||+mutationMeBg(0.4-1.0)";
-                neuralNetwork10 = ((Genome) ancestors.get(i)).getNeuralNetwork().copy();
-                neuralNetwork10.mutation(0.4D, 1.0D);
-                this.genomes.add(new Genome(number, neuralNetwork10, parentage5));
-            }
-            if (numOfTheRest > 0) {
-                for (int j = 0; j < numOfTheRest; j++) {
-                    String parentageRandom = "restOf-randomize";
-                    NeuralNetwork neuralNetworkForRest = ((Genome) ancestors.get(j)).getNeuralNetwork().copy();
-                    neuralNetworkForRest.mutation(0.5, 0.5);
-                    this.genomes.add(new Genome(number, neuralNetworkForRest, parentageRandom));
-                }
-            }
-        } else {
-            if (type.equals("type1")) {
-                val = new double[]{0.5D, 0.1D, 0.2D, 0.05D, 0.6D, 0.2D, 0.2D, 0.1D};
-            }
-
-            if (type.equals("type2")) {
-                val = new double[]{0.6D, 0.4D, 0.5D, 0.1D, 0.8D, 0.4D, 0.3D, 0.15D};
-            }
-
-            if (type.equals("type3")) {
-                val = new double[]{0.1D, 0.03D, 0.1D, 0.05D, 0.3D, 0.05D, 0.1D, mutationRate / 2.0D};
-            }
-
-            for (i = 0; i < size; ++i) {
-                int x;
-
-                if (i % 4 == 0) {
-                    x = i % (ancestors.size() / 4);
-                    parentage = "1-parent-||" + ((Genome) ancestors.get(x)).getId() + "||+mutation()";
-                    neuralNetwork = ((Genome) ancestors.get(x)).getNeuralNetwork().copy();
-                    neuralNetwork.mutation(val[0], val[1]);
-                    this.genomes.add(new Genome(number, neuralNetwork, parentage));
-                }
-
-                int x2;
-                if (i % 4 == 1) {
-                    x = i % (ancestors.size() / 3);
-                    x2 = (i - 1) % (ancestors.size() / 3);
-                    parentage = "crossover-||" + ((Genome) ancestors.get(x)).getId() + "/" + ((Genome) ancestors.get(x2)).getId() + "||+mutation()";
-                    neuralNetwork = new NeuralNetwork(((Genome) ancestors.get(x)).getNeuralNetwork().copy(), ((Genome) ancestors.get(x2)).getNeuralNetwork().copy());
-                    neuralNetwork.mutation(val[2], val[3]);
-                    this.genomes.add(new Genome(number, neuralNetwork, parentage));
-                }
-
-                if (i % 4 == 2) {
-                    x = i % (ancestors.size() / 2);
-                    x2 = (i - 2) % (ancestors.size() / 2);
-                    parentage = "crossover-||" + ((Genome) ancestors.get(x)).getId() + "/" + ((Genome) ancestors.get(x2)).getId() + "||+mutation()";
-                    neuralNetwork = new NeuralNetwork(((Genome) ancestors.get(x)).getNeuralNetwork().copy(), ((Genome) ancestors.get(x2)).getNeuralNetwork().copy());
-                    neuralNetwork.mutation(val[4], val[5]);
-                    this.genomes.add(new Genome(number, neuralNetwork, parentage));
-                }
-
-                if (i % 4 == 3) {
-                    x = i % 3;
-                    parentage = "1-parent-||" + ((Genome) ancestors.get(x)).getId() + "||+mutation()";
-                    neuralNetwork = ((Genome) ancestors.get(x)).getNeuralNetwork().copy();
-                    neuralNetwork.mutation(val[6], val[7]);
-                    if (Math.random() < 0.1D) {
-                        neuralNetwork.mutation(0.15D, 1.0D);
+                if (numOfTheRest > 0) {
+                    for (int j = 0; j < numOfTheRest; j++) {
+                        createMutatedGenome(ancestors.get(j), "rest-of-randomize", 0.5, 0.5);
                     }
-
-                    this.genomes.add(new Genome(number, neuralNetwork, parentage));
                 }
-            }
+                break;
+            case "top5smallMutation":
+                for (i = 0; i < numOfParties; ++i) {
+                    createGenome(ancestors.get(i), "elite");
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
+                }
+                if (numOfTheRest > 0) {
+                    for (int j = 0; j < numOfTheRest; j++) {
+                        createMutatedGenome(ancestors.get(j), "rest-of-randomize", 0.5, 0.5);
+                    }
+                }
+                break;
+            case "top5bigRandom":
+                for (i = 0; i < numOfParties; ++i) {
+                    createGenome(ancestors.get(i), "elite");
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationBgRandom", 0.6, 0.1);
+                    createMutatedGenome(ancestors.get(i), "mutationBgRandom", 0.6, 0.2);
+                    createMutatedGenome(ancestors.get(i), "mutationBgRandom", 0.6, 0.3);
+                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
+                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.2, 1.0);
+                    createMutatedGenome(ancestors.get(i), "mutationMeBg(0.4-1.0)", 0.4, 1.0);
+                }
+                if (numOfTheRest > 0) {
+                    for (int j = 0; j < numOfTheRest; j++) {
+                        createMutatedGenome(ancestors.get(j), "rest-of-randomize", 0.5, 0.5);
+                    }
+                }
+                break;
+            default:
+                if (type.equals("type1")) {
+                    val = new double[]{0.5D, 0.1D, 0.2D, 0.05D, 0.6D, 0.2D, 0.2D, 0.1D};
+                }
+
+                if (type.equals("type2")) {
+                    val = new double[]{0.6D, 0.4D, 0.5D, 0.1D, 0.8D, 0.4D, 0.3D, 0.15D};
+                }
+
+                if (type.equals("type3")) {
+                    val = new double[]{0.1D, 0.03D, 0.1D, 0.05D, 0.3D, 0.05D, 0.1D, mutationRate / 2.0D};
+                }
+                for (i = 0; i < size; ++i) {
+                    int x, x2;
+                    if (i % 4 == 0) {
+                        x = i % (ancestors.size() / 4);
+                        createMutatedGenome(ancestors.get(x), "mutation()", val[0], val[1]);
+                    }
+                    if (i % 4 == 1) {
+                        x = i % (ancestors.size() / 3);
+                        x2 = (i - 1) % (ancestors.size() / 3);
+                        createCrossoverGenome(ancestors.get(x), ancestors.get(x2), "+mutation()", val[2], val[3]);
+                    }
+                    if (i % 4 == 2) {
+                        x = i % (ancestors.size() / 2);
+                        x2 = (i - 2) % (ancestors.size() / 2);
+                        createCrossoverGenome(ancestors.get(x), ancestors.get(x2), "+mutation()", val[4], val[5]);
+                    }
+                    if (i % 4 == 3) {
+                        x = i % 3;
+                        createMutatedGenome(ancestors.get(x), "mutation()", val[6], val[7]);
+                    }
+                }
+                break;
         }
 
     }
+
+    private void createGenome(Genome ancestor, String parentMessage) {
+        String parentage = "1-parent-||" + ancestor.getId() + "||-" + parentMessage;
+        NodalNetwork nodalNetwork = ancestor.getNodalNetwork().copy();
+        this.genomes.add(new Genome(number, nodalNetwork, parentage, learningNetwork));
+    }
+
+    private void createMutatedGenome(Genome ancestor,
+                                     String parentMessage,
+                                     double mutationAmount,
+                                     double mutationPercent) {
+        String parentage = "1-parent-||" + ancestor.getId() + "||-" + parentMessage;
+        NodalNetwork nodalNetwork = ancestor.getNodalNetwork().copy();
+        nodalNetwork.getNetwork(this.stage.getLearningNetwork()).mutation(mutationAmount, mutationPercent);
+        this.genomes.add(new Genome(number, nodalNetwork, parentage, learningNetwork));
+    }
+
+    private void createCrossoverGenome(Genome ancestor1,
+                                       Genome ancestor2,
+                                       String parentMessage,
+                                       double mutationAmount,
+                                       double mutationPercent) {
+        String parentage = "crossover-||" + ancestor1.getId() + "/" + ancestor2.getId() + "||-" + parentMessage;
+        NodalNetwork nodalNetwork = ancestor1.getNodalNetwork().copy();
+        NeuralNetwork newNeuralNetwork = new NeuralNetwork(
+                ancestor1.getNodalNetwork().getNetwork(this.stage.getLearningNetwork()).copy(),
+                ancestor2.getNodalNetwork().getNetwork(this.stage.getLearningNetwork()).copy());
+
+        nodalNetwork.getNetwork(this.stage.getLearningNetwork()).mutation(mutationAmount, mutationPercent);
+        newNeuralNetwork.mutation(mutationAmount, mutationPercent);
+        nodalNetwork.setNetwork(newNeuralNetwork, this.stage.getLearningNetwork());
+        this.genomes.add(new Genome(number, nodalNetwork, parentage, learningNetwork));
+    }
+
     public List<Genome> getGenomes() {
         return genomes;
     }
@@ -283,7 +182,9 @@ public class Generation {
 
     public void randomize() {
         for (Genome genome : this.genomes) {
-            genome.getNeuralNetwork().fillRandomWeights();
+            for (int i = 0; i < genome.getNodalNetwork().getNumOfNetworks(); i++) {
+                genome.getNodalNetwork().getNetwork(i).fillRandomWeights();
+            }
         }
     }
 

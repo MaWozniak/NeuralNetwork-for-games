@@ -5,7 +5,10 @@ import Game.Stage.StageManager;
 public class Application {
 
     public static void main(String[] args) throws InterruptedException {
-        int[] strategy = {2, 3, 4, 5, 6};
+
+        //strategy - array of generation number when starts next stage
+        int factor = 25;
+        int[] strategy = {1 * factor, 6 * factor, 10 * factor, 14 * factor, 18 * factor};
         StageManager stageManager = new StageManager(strategy);
 
         Game game = new Game(stageManager);

@@ -3,14 +3,20 @@ package Game.Stage;
 import Game.Food.FoodStrategy;
 
 public class Stage {
+    private String name = "STAGE-NN";
+    private int learningNetwork = 0;
     private int numOfPreys = 50;
-    private int preyMaxAge = 50;
+    private int preyMaxAge = 100;
     private int numOfPredators = 0;
     private boolean isHidePlacesCenter = false;
     private boolean isHidePlacesBorder = false;
     private boolean hidePlacesPenalty = false;
     private boolean isPreyMustEat = false;
     private FoodStrategy foodTypeStrategy = FoodStrategy.NONE;
+
+    public Stage(String name) {
+        this.name = name;
+    }
 
     public int getNumOfPredators() {
         return numOfPredators;
@@ -74,5 +80,21 @@ public class Stage {
 
     public void setPreyMaxAge(int preyMaxAge) {
         this.preyMaxAge = preyMaxAge;
+    }
+
+    public int getLearningNetwork() {
+        return learningNetwork;
+    }
+
+    public void setLearningNetwork(int learningNetwork) {
+        this.learningNetwork = learningNetwork;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

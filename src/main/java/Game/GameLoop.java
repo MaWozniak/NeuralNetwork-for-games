@@ -5,7 +5,7 @@ import java.io.IOException;
 public class GameLoop implements Runnable {
 
     private static final boolean FULL_SPEED = false;
-    private static final int FPS = 30;
+    private static final int FPS = 1000; //30-60
 
     private final Game game;
     private int millis;

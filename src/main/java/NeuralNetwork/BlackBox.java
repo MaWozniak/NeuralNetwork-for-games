@@ -185,7 +185,8 @@ public class BlackBox {
                 predatorLeft, predatorFront, predatorRight, predatorNear, predatorCenter, predatorLeftBack, predatorBack, predatorRightBack,
                 hidePlaceFront, hidePlaceInPoint, speed, 10 * energy / 150, stamina / 2, age / 100, simpleBias};
 
-        this.output = this.getGenome().getNeuralNetwork().run(this.input);
+        int workingNetwork = this.getGenome().getLearningNetwork();
+        this.output = this.getGenome().getNodalNetwork().run(this.input, workingNetwork);
 
         //interpretation
         boolean[] outputBool = new boolean[4];

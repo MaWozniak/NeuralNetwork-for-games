@@ -62,6 +62,16 @@ class Layer {
         return output;
     }
 
+    double[] runNoActivationFunc(double[] input) {
+        double[] output = new double[perceptronNum];
+
+        for (int i = 0; i < perceptronNum; i++) {
+            output[i] = perceptron.get(i).calculateNoActFun(input);
+        }
+
+        return output;
+    }
+
     Perceptron getPerceptron(int i) {
         return perceptron.get(i);
     }

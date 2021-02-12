@@ -8,8 +8,8 @@ import java.util.List;
 public class FoodManager {
 
     private final List<Food> foodPoints = new ArrayList();
-    private final int food = 200;
-    private final int foodMin = 150;
+    private final int food = 100;
+    private final int foodMin = 15;
 
     public void generateFood(Stage stage) {
         if (stage.getFoodTypeStrategy() == FoodStrategy.NONE) {

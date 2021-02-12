@@ -1,21 +1,21 @@
 package Game.Organisms;
 
-class PredatorLogic {
+class SimplePredatorLogic {
     private final RandomMovement randomMovement;
 
-    PredatorLogic() {
+    SimplePredatorLogic() {
         randomMovement = new RandomMovement();
         randomMovement.start();
     }
 
-    void thinking(char[][] model, Predator predator) {
+    void thinking(char[][] model, SimplePredator predator) {
         predator.left = false;
         predator.down = false;
         predator.up = false;
         predator.right = false;
         predator.setTestingIfSee(false);
 
-        if (predator.speed < 2.5) {
+        if (predator.speed < predator.getMaxSpeed() / 4) {
             predator.up = true;
         }
         if (Math.random() > 0.6) {
@@ -62,18 +62,18 @@ class PredatorLogic {
         lowEnergyRush(predator);
     }
 
-    private void randomMovement(Predator predator) {
+    private void randomMovement(SimplePredator predator) {
         predator.left = randomMovement.isLeft();
         predator.right = randomMovement.isRight();
     }
 
-    private void lowEnergyRush(Predator predator) {
+    private void lowEnergyRush(SimplePredator predator) {
         if (predator.energy < 45) {
             predator.up = true;
         }
     }
 
-    private boolean seePreyIn(double frontDistance, double sideDistance, char[][] model, Predator predator) {
+    private boolean seePreyIn(double frontDistance, double sideDistance, char[][] model, SimplePredator predator) {
         int x = ((int) predator.getX() - 5) + (int) (frontDistance * Math.sin(predator.angle) + (int) (sideDistance * Math.cos(predator.angle)));
         int y = ((int) predator.getY() - 5) - (int) (frontDistance * Math.cos(predator.angle) + (int) (sideDistance * Math.sin(predator.angle)));
 
@@ -84,7 +84,7 @@ class PredatorLogic {
         }
     }
 
-    private boolean seeBorder(Predator predator) {
+    private boolean seeBorder(SimplePredator predator) {
         double frontDistance = 185.0;
         double sideDistance = 0.0;
         int x = ((int) predator.getX() - 5) + (int) (frontDistance * Math.sin(predator.angle) + (int) (sideDistance * Math.cos(predator.angle)));
@@ -97,7 +97,7 @@ class PredatorLogic {
         return result;
     }
 
-    private boolean seeHidePlace(char[][] model, Predator predator) {
+    private boolean seeHidePlace(char[][] model, SimplePredator predator) {
         double frontDistance = 20.0;
         double sideDistance = 0.0;
         int x = ((int) predator.getX() - 5) + (int) (frontDistance * Math.sin(predator.angle) + (int) (sideDistance * Math.cos(predator.angle)));

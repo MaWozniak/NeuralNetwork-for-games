@@ -8,7 +8,7 @@ public class Test_3_generations {
 
     public static void main(String[] args) {
 
-        NeuralNetwork protoplast = new NeuralNetwork(2, 1, 3, 1);
+  /*      NeuralNetwork protoplast = new NeuralNetwork(2, 1, 3, 1);
         Generation generation1 = new Generation(1, 10, protoplast);
         generation1.show(false);
 
@@ -26,6 +26,8 @@ public class Test_3_generations {
 
         Generation generation3 = new Generation(3, 20, generation2.bestSelection(5), "type1", 1.0);
         generation3.show(true);
+
+   */
     }
 
 }

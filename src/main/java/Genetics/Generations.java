@@ -1,9 +1,11 @@
 package Genetics;
 
 import Game.Organisms.Prey;
+import Game.Stage.StageManager;
 import NeuralNetwork.Generation;
 import NeuralNetwork.Genome;
 import NeuralNetwork.NeuralNetwork;
+import NeuralNetwork.NodalNetwork;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -15,7 +17,10 @@ public class Generations {
     private static final int RESET_GENERATION = 50000000;
 
     private Generation generation;
-    private final NeuralNetwork protoplast = new NeuralNetwork(25, 2, 12, 4);
+    private StageManager stageManager;
+    private final NeuralNetwork protoplast = new NeuralNetwork(25, 2, 20, 4);
+    private final NeuralNetwork bridge = new NeuralNetwork(25, 3, 15, 3);
+    private final NodalNetwork nodalNetworkProtoplast = new NodalNetwork(bridge, protoplast, 3);
     private double BIAS = 1.0;
     private List<Double> generationsScoresList;
     private List<Double> generationsAverageList;
@@ -39,10 +44,11 @@ public class Generations {
     private boolean firstInGeneration;
 
 
-    public Generations(List<Prey> AI_prey, int size, double preyMaxAge) {
+    public Generations(List<Prey> AI_prey, int size, double preyMaxAge, StageManager stageManager) {
         this.generationSize = size;
+        this.stageManager = stageManager;
         protoplast.setAllBiases(BIAS);
-        this.generation = new Generation(1, generationSize, protoplast);
+        this.generation = new Generation(1, generationSize, nodalNetworkProtoplast);
         this.AI_prey = AI_prey;
         this.generationsScoresList = new ArrayList<>();
         this.generationsAverageList = new ArrayList<>();
@@ -97,12 +103,10 @@ public class Generations {
     private void geneticsNewGeneration(List<Genome> ancestors) {
         double newMutationRate = (bestScore - avarageScoreOfAllGenerations) / bestScore;
         setMutationRate(newMutationRate);
-        generation = new Generation(2, generationSize, ancestors, getGeneticsType(), newMutationRate);
-        //generation = new Generation(2, generationSize, ancestors, "top5smallMutation", newMutationRate);
-
+        generation = new Generation(count, generationSize, ancestors, getGeneticsType(), stageManager.getStage(count - 1), newMutationRate);
         for (int i = 0; i < generationSize; i++) {
-            double dispersion = 60;
-            //dispersion = 600;
+            double dispersion = 200;
+            //double dispersion = 600;
             double xStartPos = 600 + dispersion * (Math.random() - 0.5);
             double yStartPos = 400 + dispersion * (Math.random() - 0.5);
             if (i == 0) {
@@ -166,7 +170,8 @@ public class Generations {
         } else {
             //avarageScoreOfAllGenerations = (avarageScoreOfAllGenerations * (count - 1) + generationMemory.getAvarageScore()) / (count);
 
-            int precise = RESET_GENERATION / 3;
+            int precise = 20;
+            //int precise = RESET_GENERATION / 3;
 //            int precise = 40;
 //            if (count > 500) {
 //                precise = 100;
@@ -175,7 +180,8 @@ public class Generations {
 //                precise = 200;
 //            }
 
-            int startPoint = (int) (Math.floor(count / (double) RESET_GENERATION)) * RESET_GENERATION;
+            int startPoint = (int) (Math.floor(count / (double) 50)) * 50;
+            //   int startPoint = (int) (Math.floor(count / (double) RESET_GENERATION)) * RESET_GENERATION;
             avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(precise, startPoint);
         }
 
@@ -210,6 +216,8 @@ public class Generations {
         if (step.equals("start")) {
             System.out.println("\n------------------------");
             System.out.println("------GENRATION " + count + "------");
+            System.out.println("------------------------");
+            System.out.println("------Stage " + stageManager.getStage(count - 1).getName() + "------");
             System.out.println("------------------------");
         }
 

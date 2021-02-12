@@ -40,7 +40,7 @@ public class Prey {
         this.preyMaxAge = preyMaxAge;
         this.firstInGeneration = firstInGeneration;
         this.isAlive = true;
-        this.energy = 30;
+        this.energy = 70;
         this.speed = 0;
         this.angle = 0;
         ai = new PreyLogic(genome, FORCE_TO_MOVE);
@@ -178,7 +178,7 @@ public class Prey {
     void energyCost(Stage stage) {
         if (stage.isPreyMustEat()) {
             energy -= 0.1;
-            energy -= Math.abs(0.2 * speed / maxSpeed);
+            energy -= Math.abs(0.1 * Math.pow(speed / maxSpeed, 2.0));
         }
 
         if (AGING) {
@@ -199,14 +199,14 @@ public class Prey {
         }
 
         if (speed < 2.5 && stamina < 10) {
-            stamina += 0.02;
+            stamina += 0.03;
         }
 
     }
 
     public void feed() {
-        energy += 80;
-        double maxEnergy = 150;
+        energy += 50;
+        double maxEnergy = 300;
         if (energy > maxEnergy) {
             energy = maxEnergy;
         }

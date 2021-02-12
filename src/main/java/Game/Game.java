@@ -2,7 +2,9 @@ package Game;
 
 import Game.Food.Food;
 import Game.Food.FoodManager;
+import Game.Organisms.GenericPredator;
 import Game.Organisms.Predator;
+import Game.Organisms.SimplePredator;
 import Game.Organisms.Prey;
 import Game.Stage.Stage;
 import Game.Stage.StageManager;
@@ -28,7 +30,7 @@ public class Game {
         this.stageManager = stageManager;
         Stage startStage = stageManager.getStage(0);
         addNewPredators(startStage.getNumOfPredators());
-        this.generations = new Generations(AI_prey, startStage.getNumOfPreys(), startStage.getPreyMaxAge());
+        this.generations = new Generations(AI_prey, startStage.getNumOfPreys(), startStage.getPreyMaxAge(), stageManager);
         this.generations.addFirstGeneration();
         gameLoop = new GameLoop(this);
         startGameLoop();
@@ -64,9 +66,10 @@ public class Game {
             if (Math.random() > 0.5) {
                 yStartPosChange = 700;
             }
-            double xStartPos = 600 + 50 * Math.random();
+            double xStartPos = 100 + 950 * Math.random();
             double yStartPos = yStartPosChange + 20 * Math.random();
-            Predator newPredator = new Predator(xStartPos, yStartPos);
+            // Predator newPredator = new SimplePredator(xStartPos, yStartPos);
+            Predator newPredator = new GenericPredator(xStartPos, yStartPos);
             predators.add(newPredator);
         }
 
@@ -122,7 +125,10 @@ public class Game {
 
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
-                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < 15) && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < 15)) {
+                //int radius = 15;
+                int radius = 12;
+                if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < radius)
+                        && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < radius)) {
                     if (generatedPredator.getEnergy() < 1260) {
                         generations.deathPrey(generatedPrey);
                         generatedPredator.eat();

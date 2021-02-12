@@ -6,13 +6,15 @@ import java.util.Random;
 
 public class Genome {
     private static DecimalFormat df2 = new DecimalFormat("#.##");
-    private NeuralNetwork neuralNetwork;
+    private NodalNetwork nodalNetwork;
     private String id;
     private double score;
     private String parentage;
+    private int learningNetwork;
 
-    public Genome(int generationNumber, NeuralNetwork protoplast, String parantage) {
-        this.neuralNetwork = protoplast.copy();
+    public Genome(int generationNumber, NodalNetwork protoplast, String parantage, int learningNetwork) {
+        this.nodalNetwork = protoplast.copy();
+        this.learningNetwork = learningNetwork;
         this.id = "gen-" + generationNumber + "/" + generateId();
         this.parentage = parantage;
         this.score = 0.0;
@@ -23,7 +25,7 @@ public class Genome {
                 + "parentage: " + this.parentage + "\n"
                 + "SCORE" + this.score);
         if (showNetwork) {
-            this.neuralNetwork.show();
+            this.nodalNetwork.show();
         }
 
         System.out.println("\n");
@@ -33,11 +35,11 @@ public class Genome {
         return "GENOME id: " + this.id + "\n"
                 + "parentage: " + this.parentage + "\n"
                 + "SCORE" + this.score + "\n"
-                + this.neuralNetwork.showString();
+                + this.nodalNetwork.showString();
     }
 
-    public NeuralNetwork getNeuralNetwork() {
-        return neuralNetwork;
+    public NodalNetwork getNodalNetwork() {
+        return nodalNetwork;
     }
 
     public void setId(String id) {
@@ -79,5 +81,13 @@ public class Genome {
 
     public String saveToMemory() {
         return this.show();
+    }
+
+    public int getLearningNetwork() {
+        return learningNetwork;
+    }
+
+    public void setLearningNetwork(int learningNetwork) {
+        this.learningNetwork = learningNetwork;
     }
 }

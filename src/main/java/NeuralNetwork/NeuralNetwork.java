@@ -38,6 +38,14 @@ public class NeuralNetwork {
         return inputs;
     }
 
+    double[] runNoActivationFunc(double[] inputs) {
+        for (Layer layer : layers) {
+            inputs = layer.runNoActivationFunc(inputs);
+        }
+
+        return inputs;
+    }
+
     void fillRandomWeights() {
         for (Layer layer : layers) {
 
