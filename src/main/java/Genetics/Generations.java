@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Generations {
-    private static final DecimalFormat DF_2 = new DecimalFormat("#.##");
+    private static final DecimalFormat DF_2 = new DecimalFormat("#.#");
     private static final int RESET_GENERATION = 50000000;
 
     private Generation generation;
@@ -68,8 +68,8 @@ public class Generations {
         updateBestIndividualScores();
         log("summary");
         writeFileLog();
-        System.out.println("public void addNewGeneration() -> generation.showScores()");
-        generation.showScores();
+//        System.out.println("public void addNewGeneration() -> generation.showScores()");
+//        generation.showScores();
         if (count % RESET_GENERATION == 0) {
             randomGeneration();
         } else {
@@ -103,10 +103,17 @@ public class Generations {
     private void geneticsNewGeneration(List<Genome> ancestors) {
         double newMutationRate = (bestScore - avarageScoreOfAllGenerations) / bestScore;
         setMutationRate(newMutationRate);
-        generation = new Generation(count, generationSize, ancestors, getGeneticsType(), stageManager.getStage(count - 1), newMutationRate);
+        generation = new Generation(
+                count,
+                generationSize,
+                ancestors,
+                getGeneticsType(),
+                stageManager.getStage(count - 1),
+                newMutationRate);
+
         for (int i = 0; i < generationSize; i++) {
-            double dispersion = 200;
-            //double dispersion = 600;
+            //double dispersion = 200;
+            double dispersion = 500;
             double xStartPos = 600 + dispersion * (Math.random() - 0.5);
             double yStartPos = 400 + dispersion * (Math.random() - 0.5);
             if (i == 0) {
@@ -129,13 +136,16 @@ public class Generations {
         if (index > array.length - 1) {
             index = 0;
         }
+        System.out.println("-----------------USES GENETICS TYPE: ..." + array[index]
+                + "...---------------------");
         return array[index];
     }
 
     public void deathPrey(Prey prey) {
         if (prey.isAlive()) {
             prey.getGenome().setScore(prey.getScore());
-            System.out.println(prey.getGenome().getId() + "sc:" + prey.getGenome().getScore());
+            //System.out.println(prey.getGenome().getId() + "sc:" + prey.getGenome().getScore());
+            System.out.print(DF_2.format(prey.getGenome().getScore()) + "|");
             generationMemory.add(prey);
             prey.isDead();
             prey.setFirstInGeneration(false);
@@ -227,9 +237,9 @@ public class Generations {
             System.out.println("\n-----------------------");
             System.out.println("PAST genes to next gen: \ngenerationMemory.getSelectedGenomes().size(): " + generationMemory.getSelectedGenomes().size());
 
-            for (int i = 0; i < generationMemory.getSelectedGenomes().size(); i++) {
-                System.out.println(i + " - " + generationMemory.get(i).getId());
-            }
+//            for (int i = 0; i < generationMemory.getSelectedGenomes().size(); i++) {
+//                System.out.println(i + " - " + generationMemory.get(i).getId());
+//            }
 
             System.out.println("\n-----------------------\n");
             System.out.println("AVARAGE score of THIS GENERATION: " + generationMemory.getAvarageScore());
@@ -244,7 +254,7 @@ public class Generations {
             generationsAverageList.add(this.avarageScoreOfAllGenerations);
 
             for (int i = 0; i < generationsScoresList.size(); i++) {
-                System.out.print("\t\t--" + (i + 1) + "--\t\t" + DF_2.format(this.generationsScoresList.get(i)) + "\t\t( " + DF_2.format(this.generationsAverageList.get(i)) + " )\t\t");
+                System.out.print("--" + (i + 1) + "--\t" + DF_2.format(this.generationsScoresList.get(i)) + "\t( " + DF_2.format(this.generationsAverageList.get(i)) + " )\t\t");
                 if ((i + 1) % 3 == 0) {
                     System.out.println();
                 }

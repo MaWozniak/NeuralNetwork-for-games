@@ -48,11 +48,15 @@ public class Generation {
                     createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
                     createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
                     createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.6, 0.03);
-                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.6, 0.03);
-                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.6, 0.03);
-                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
-                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
-                    createMutatedGenome(ancestors.get(i), "mutationMeBg(0.4-1.0)", 0.4, 1.0);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.7-0.02)", 0.7, 0.02);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.8-0.01)", 0.8, 0.01);
+                    //tests:
+//                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
+//                    createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
+//                    createMutatedGenome(ancestors.get(i), "mutationMeBg(0.4-1.0)", 0.4, 1.0);
+                    createMutatedGenome(ancestors.get(i), "mutationNewMeMe(0.1-0.3)", 0.1, 0.3);
+                    createMutatedGenome(ancestors.get(i), "mutationNewMeSm(0.1-0.01)", 0.1, 0.01);
+                    createMutatedGenome(ancestors.get(i), "mutationNewSmBg(0.05-1.0)", 0.05, 1.0);
                 }
                 if (numOfTheRest > 0) {
                     for (int j = 0; j < numOfTheRest; j++) {
