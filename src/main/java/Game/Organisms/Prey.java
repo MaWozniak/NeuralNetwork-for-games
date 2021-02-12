@@ -217,7 +217,6 @@ public class Prey {
         if (this.isAlive) {
             this.energy = 0.0;
             this.isAlive = false;
-          //  System.out.println("death: " + this.getId() + " score: " + this.getScore());
         }
     }
 

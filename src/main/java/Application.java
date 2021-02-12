@@ -6,9 +6,13 @@ public class Application {
 
     public static void main(String[] args) throws InterruptedException {
 
-        //strategy - array of generation number when starts next stage
-        int factor = 25;
-        int[] strategy = {1 * factor, 6 * factor, 10 * factor, 14 * factor, 18 * factor};
+        /*
+            strategy - array of generation number ordering start of next stage
+                      
+        */
+
+        int multiplier = 25;
+        int[] strategy = {2 * multiplier, 6 * multiplier, 10 * multiplier, 14 * multiplier, 18 * multiplier};
         StageManager stageManager = new StageManager(strategy);
 
         Game game = new Game(stageManager);

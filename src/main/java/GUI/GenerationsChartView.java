@@ -74,7 +74,6 @@ public class GenerationsChartView {
         generationsScoresList.clear();
         generationsAverageList.clear();
         int size = 900;
-        //size = (int)(2500*Math.random());
 
         for (int i = 0; i < size; i++) {
             generationsScoresList.add(40 * Math.random());

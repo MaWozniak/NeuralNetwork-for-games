@@ -4,7 +4,6 @@ import Game.Food.Food;
 import Game.Food.FoodManager;
 import Game.Organisms.GenericPredator;
 import Game.Organisms.Predator;
-import Game.Organisms.SimplePredator;
 import Game.Organisms.Prey;
 import Game.Stage.Stage;
 import Game.Stage.StageManager;
@@ -68,7 +67,6 @@ public class Game {
             }
             double xStartPos = 100 + 950 * Math.random();
             double yStartPos = yStartPosChange + 20 * Math.random();
-            // Predator newPredator = new SimplePredator(xStartPos, yStartPos);
             Predator newPredator = new GenericPredator(xStartPos, yStartPos);
             predators.add(newPredator);
         }
@@ -125,7 +123,6 @@ public class Game {
 
             //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
-                //int radius = 15;
                 int radius = 12;
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < radius)
                         && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < radius)) {

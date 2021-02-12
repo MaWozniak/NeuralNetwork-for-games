@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class SimplePredator implements Predator {
     private static final boolean ENERGY_COST = true;
-    //private static final double MAX_SPEED = 10;
     private static final double MAX_SPEED = 5;
 
     double x;
@@ -69,8 +68,6 @@ public class SimplePredator implements Predator {
     }
 
     void steering() {
-//        double acc = 0.8;
-//        double dec = 0.2;
         double acc = 0.3;
         double dec = 0.1;
         if (up && speed < MAX_SPEED) {
@@ -124,9 +121,6 @@ public class SimplePredator implements Predator {
     public void paint(Graphics2D g) {
         if (isAlive) {
             Color color = Color.RED;
-//            if(testingIfSee) {
-//                color = Color.ORANGE;
-//            }
             predatorGui.paint(g, this.x, this.y, this.angle, this.energy, color);
         }
     }

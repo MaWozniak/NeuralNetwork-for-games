@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class GenericPredator implements Predator {
     private static final boolean ENERGY_COST = true;
-    //private static final double MAX_SPEED = 10;
     private static final double MAX_SPEED = 16;
 
     double x;
@@ -69,8 +68,6 @@ public class GenericPredator implements Predator {
     }
 
     void steering() {
-//        double acc = 0.8;
-//        double dec = 0.2;
         double acc = 0.3;
         double dec = 0.1;
         if (up && speed < MAX_SPEED) {
@@ -124,9 +121,6 @@ public class GenericPredator implements Predator {
     public void paint(Graphics2D g) {
         if (isAlive) {
             Color color = Color.RED;
-//            if(testingIfSee) {
-//                color = Color.ORANGE;
-//            }
             predatorGui.paint(g, this.x, this.y, this.angle, this.energy, color);
         }
     }
@@ -203,14 +197,6 @@ public class GenericPredator implements Predator {
 
     public boolean isAlive() {
         return isAlive;
-    }
-
-    public boolean isTestingIfSee() {
-        return testingIfSee;
-    }
-
-    public void setTestingIfSee(boolean testingIfSee) {
-        this.testingIfSee = testingIfSee;
     }
 
     public double getMaxSpeed() {

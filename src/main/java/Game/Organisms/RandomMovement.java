@@ -1,7 +1,5 @@
 package Game.Organisms;
 
-import Game.Game;
-
 public class RandomMovement extends Thread {
 
     private static final int UPDATE_FRAME_RATE = 5;

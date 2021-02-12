@@ -68,8 +68,6 @@ public class Generations {
         updateBestIndividualScores();
         log("summary");
         writeFileLog();
-//        System.out.println("public void addNewGeneration() -> generation.showScores()");
-//        generation.showScores();
         if (count % RESET_GENERATION == 0) {
             randomGeneration();
         } else {
@@ -112,7 +110,6 @@ public class Generations {
                 newMutationRate);
 
         for (int i = 0; i < generationSize; i++) {
-            //double dispersion = 200;
             double dispersion = 500;
             double xStartPos = 600 + dispersion * (Math.random() - 0.5);
             double yStartPos = 400 + dispersion * (Math.random() - 0.5);
@@ -144,7 +141,6 @@ public class Generations {
     public void deathPrey(Prey prey) {
         if (prey.isAlive()) {
             prey.getGenome().setScore(prey.getScore());
-            //System.out.println(prey.getGenome().getId() + "sc:" + prey.getGenome().getScore());
             System.out.print(DF_2.format(prey.getGenome().getScore()) + "|");
             generationMemory.add(prey);
             prey.isDead();
@@ -159,12 +155,6 @@ public class Generations {
         int startPoint = start;
         int divider = lenght - start;
 
-//        if (numOfGen < lenght) {
-//            //startPoint = lenght - numOfGen;
-//            startPoint = start;
-//            divider = numOfGen;
-//        }
-
         for (int i = startPoint; i < lenght; i++) {
             result += avarageScores.get(i);
         }
@@ -178,20 +168,8 @@ public class Generations {
         if (avarageScoreOfAllGenerations == 0) {
             avarageScoreOfAllGenerations = generationMemory.getAvarageScore();
         } else {
-            //avarageScoreOfAllGenerations = (avarageScoreOfAllGenerations * (count - 1) + generationMemory.getAvarageScore()) / (count);
-
             int precise = 20;
-            //int precise = RESET_GENERATION / 3;
-//            int precise = 40;
-//            if (count > 500) {
-//                precise = 100;
-//            }
-//            if (count > 1000) {
-//                precise = 200;
-//            }
-
             int startPoint = (int) (Math.floor(count / (double) 50)) * 50;
-            //   int startPoint = (int) (Math.floor(count / (double) RESET_GENERATION)) * RESET_GENERATION;
             avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(precise, startPoint);
         }
 
@@ -236,11 +214,6 @@ public class Generations {
             System.out.println("\nBest prey: " + generationMemory.get(0).getId() + " score: " + generationMemory.get(0).getScore());
             System.out.println("\n-----------------------");
             System.out.println("PAST genes to next gen: \ngenerationMemory.getSelectedGenomes().size(): " + generationMemory.getSelectedGenomes().size());
-
-//            for (int i = 0; i < generationMemory.getSelectedGenomes().size(); i++) {
-//                System.out.println(i + " - " + generationMemory.get(i).getId());
-//            }
-
             System.out.println("\n-----------------------\n");
             System.out.println("AVARAGE score of THIS GENERATION: " + generationMemory.getAvarageScore());
             System.out.println("AVARAGE score of ALL GENERATION: " + this.avarageScoreOfAllGenerations);
@@ -266,7 +239,7 @@ public class Generations {
 
     }
 
-    private void writeFileLog() throws IOException {
+    private void writeFileLog() {
         StringBuffer fileContent = new StringBuffer();
         fileContent.append("GENERATION ").append(count - 1).append("\n");
         fileContent.append("\nAVARAGE score of THIS GENERATION: ").append(generationMemory.getAvarageScore());
@@ -283,11 +256,6 @@ public class Generations {
             fileContent.append(generationMemory.get(i).saveToMemory());
             fileContent.append("\n");
         }
-
-//        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lastshadow/Documents/neuralNetworkTests/logs/generation_" + (count - 1) + ".txt"));
-//        writer.write(String.valueOf(fileContent));
-//        writer.close();
-//        fileContent.setLength(0);
     }
 
     public List<Double> getGenerationsScoresList() {

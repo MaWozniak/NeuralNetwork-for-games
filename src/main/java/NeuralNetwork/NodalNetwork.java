@@ -26,10 +26,6 @@ public class NodalNetwork {
     }
 
     double[] run(double[] inputs, int workingNetwork) {
-        //smart comment-log
-//        if(Math.random()<0.001) {
-//            System.out.println("--------------------NodalNetwork.run wokingNetwork: " + workingNetwork + "-----------------");
-//        }
         if (workingNetwork == -1) {
             double[] bridgeOutput = bridge.runNoActivationFunc(inputs);
             int selectedNetwork = pointMaxInput(bridgeOutput);

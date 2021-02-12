@@ -8,11 +8,6 @@ class PreyLogic {
     private BlackBox blackBox;
     private boolean forceMove;
 
-    PreyLogic(boolean forceMove) {
-        blackBox = new BlackBox();
-        this.forceMove = forceMove;
-    }
-
     PreyLogic(Genome genome, boolean forceMove) {
         blackBox = new BlackBox(genome);
         this.forceMove = forceMove;

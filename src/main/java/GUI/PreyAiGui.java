@@ -44,66 +44,6 @@ public class PreyAiGui {
         paintViewPoint(g, 80.0, 90.0, 12, 5, x, y, angle);
         paintViewPoint(g, 80.0, -90.0, 12, 5, x, y, angle);
 
-//        //food 4 inputs
-//        g.setColor(Color.BLUE);
-//        paintRectangleView(
-//                g, true, 0, 3, 20, 20, 280, 200,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.BLACK);
-//        paintRectangleView(
-//                g, true, 0, 3, 20, 20, 280, -200,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.green);
-//        paintRectangleView(
-//                g, false, 1, 0, 20, 3, 280, 30,
-//                12, 5, x, y, angle);
-//        paintRectangleView(
-//                g, false, 1, 0, 20, 3, 280, -30,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.red);
-//        paintRectangleView(
-//                g, false, -2, 0, 3, 2, 12, 12,
-//                12, 5, x, y, angle);
-//        paintRectangleView(
-//                g, false, -2, 0, 3, 2, 12, -12,
-//                12, 5, x, y, angle);
-//
-//        //predator 4 inputs
-//        g.setColor(Color.red);
-//        paintRectangleView(
-//                g, false, 0, 0, 20, 20, 270, 200,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.blue);
-//        paintRectangleView(
-//                g, false, 0, 0, 20, 20, 270, -200,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.green);
-//        paintRectangleView(
-//                g, false, 0, 0, 8, 8, -70, 80,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.black);
-//        paintRectangleView(
-//                g, false, 0, 0, 8, 8, -70, -80,
-//                12, 5, x, y, angle);
-//
-//        //another prey 3 inputs
-//        g.setColor(Color.BLUE);
-//        paintRectangleView(
-//                g, true, 0, 2, 15, 15, 220, 180,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.BLACK);
-//        paintRectangleView(
-//                g, true, 0, 2, 15, 15, 220, -180,
-//                12, 5, x, y, angle);
-//        g.setColor(Color.green);
-//        paintRectangleView(
-//                g, false, 1, 0, 15, 3, 200, 30,
-//                12, 5, x, y, angle);
-//        paintRectangleView(
-//                g, false, 1, 0, 15, 3, 200, -30,
-//                12, 5, x, y, angle);
-
-
         g.setColor(Color.DARK_GRAY);
         if (energy < 60) {
             g.setColor(Color.GRAY);

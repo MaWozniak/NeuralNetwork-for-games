@@ -60,12 +60,4 @@ public class FoodManager {
     public List<Food> getFoodPoints() {
         return foodPoints;
     }
-
-    public int getFood() {
-        return food;
-    }
-
-    public int getFoodMin() {
-        return foodMin;
-    }
 }

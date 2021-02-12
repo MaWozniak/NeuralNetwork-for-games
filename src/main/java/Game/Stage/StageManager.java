@@ -41,9 +41,9 @@ public class StageManager {
         Stage problem4 = new Stage("problem 4");
         problem4.setLearningNetwork(2);
         problem4.setPreyMustEat(true);
-        //next only testing:
+        //FORCED FOR TEST
         problem4.setNumOfPredators(4);
-        //end
+        //FORCED FOR TEST END
         problem4.setFoodTypeStrategy(FoodStrategy.SIMPLE);
         problem.add(problem4);
 
