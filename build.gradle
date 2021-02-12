@@ -10,7 +10,7 @@ task neuralNetwork(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'neuralNetwork',
                 'Implementation-Version': version,
-                'Main-Class': 'Game.TestMain'
+                'Main-Class': 'Application'
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
