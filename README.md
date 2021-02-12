@@ -3,7 +3,7 @@ Neural Network for games
 
 #### Goal: ####
 
-Create [Neural Network](https://en.wikipedia.org/wiki/Artificial_neural_network) from scratch in Java to use it with [Genetic Algorithms](https://en.wikipedia.org/wiki/Genetic_algorithm) and to create
+Creation of [Neural Network](https://en.wikipedia.org/wiki/Artificial_neural_network) from scratch in Java to use it with [Genetic Algorithms](https://en.wikipedia.org/wiki/Genetic_algorithm) and to create
 self-teaching AI-agents for games.
 
 For this purpose I created simple game enviroment which imitate natural enviroment - biotop.
