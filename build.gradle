@@ -19,9 +19,15 @@ task neuralNetwork(type: Jar) {
 }
 
 shadowJar {
+    manifest {
+        attributes 'Implementation-Title': 'neuralNetwork',
+                'Implementation-Version': version,
+                'Main-Class': 'Application'
+    }
     archiveClassifier.set('')
     archiveVersion.set('')
 }
+
 
 task buildFatJar {
     dependsOn shadowJar
