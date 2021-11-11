@@ -8,6 +8,7 @@ import java.util.List;
 
 public class GenerationsChartView {
     private final static boolean TEST = false;
+    private final static int HEIGHT_OF_CHART_PLOTS = 80;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
     private List<Double> generationsScoresList = new ArrayList<>();
     private List<Double> generationsAverageList = new ArrayList<>();
@@ -42,7 +43,7 @@ public class GenerationsChartView {
 
         g.setColor(Color.BLUE);
         for (int i = 0; i < generationsAverageList.size(); i += step) {
-            verticalFactor = (int) (40 * generationsAverageList.get(i));
+            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * generationsAverageList.get(i));
             g.fillOval(100 + i / step * delta, (int) (500 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
                 g.drawString(df2.format(generationsAverageList.get(i)), 100 + i / step * delta, 540);
@@ -53,7 +54,7 @@ public class GenerationsChartView {
         g.setColor(Color.YELLOW);
 
         for (int i = 0; i < generationsScoresList.size(); i += step) {
-            verticalFactor = (int) (40 * generationsScoresList.get(i));
+            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * generationsScoresList.get(i));
             g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
                 g.drawString(df2.format(generationsScoresList.get(i)), 100 + i / step * delta, 550);
@@ -61,7 +62,8 @@ public class GenerationsChartView {
 
         }
 
-        g.drawString("num of generations: " + df2.format(generationsScoresList.size()), 540, 580);
+        String text = "num of generations: " + df2.format(generationsScoresList.size());
+        g.drawString(text, 540, 580);
 
     }
 

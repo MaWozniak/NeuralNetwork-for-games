@@ -44,13 +44,13 @@ public class GenerationScore {
             StageManager stageManager,
             GenerationMemory generationMemory
     ) {
-        this.updateAvaregeScores(count, generationMemory);
+        this.updateAverageScores(count, generationMemory);
         this.updateBestIndividualScores(generationMemory);
         this.log("summary", count, stageManager, generationMemory);
         this.writeFileLog(count, generationMemory);
     }
 
-    void updateAvaregeScores(int count, GenerationMemory generationMemory) {
+    void updateAverageScores(int count, GenerationMemory generationMemory) {
         avarageScores.add(generationMemory.getAvarageScore());
 
         if (avarageScoreOfAllGenerations == 0) {

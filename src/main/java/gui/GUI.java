@@ -26,15 +26,19 @@ public class GUI extends JFrame {
             game.setFrameRate(framerateCount.next());
             label.setText(framerateCount.getSelectedInString());
         });
-        JButton button3 = new JButton("Progres Chart");
+        JLabel label3 = new JLabel(game.getMutationRate());
+        JLabel label4 = new JLabel("BRANCH NUM: " + game.getBranchNumber());
+        JButton button3 = new JButton("Progress Chart");
         button3.addActionListener(actionEvent3 -> {
             renderPanel.getGenerationMemory(game.getGenerationsScores(), game.getGenerationsAverageScores());
             renderPanel.setChartViewFlag();
+            label4.setText("BRANCH NUM: " + game.getBranchNumber());
         });
-        JLabel label3 = new JLabel(game.getMutationRate());
         JButton button6 = new JButton("Get Mutation rate:");
         button6.addActionListener(actionEvent2 -> {
             label3.setText(game.getMutationRate());
+            label4.setText("BRANCH NUM: " + game.getBranchNumber());
+
         });
         buttonPanel.setSize(100, 30);
         buttonPanel.add(button1);
@@ -43,6 +47,7 @@ public class GUI extends JFrame {
         buttonPanel.add(button3);
         buttonPanel.add(button6);
         buttonPanel.add(label3);
+        buttonPanel.add(label4);
         this.setLayout(new BorderLayout());
         this.add(renderPanel);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -58,4 +63,5 @@ public class GUI extends JFrame {
             Thread.sleep(millis);
         }
     }
+
 }
