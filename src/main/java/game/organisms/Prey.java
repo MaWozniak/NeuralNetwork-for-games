@@ -27,6 +27,7 @@ public class Prey {
     private PreyAiGui preyAiGui = new PreyAiGui();
     private NeuralNetworkView networkView;
     private String id;
+    private static final double RESTING_ENERGY_COST = 0.1;
     private double stamina = 10;
     private double acc = 0.8;
     private double dec = 0.8;
@@ -125,7 +126,7 @@ public class Prey {
 
     void velocityLimits() {
         if (speed > maxSpeed) {
-            leftFrontTail = true;
+            speed -= 3 * acc;
         }
         if (speed < -0.1) {
             speed = 0.0;
@@ -135,11 +136,37 @@ public class Prey {
     void steering() {
         maxSpeed = 3 * stamina;
 
+        if(rightFrontTail) {
+            energy -= 0.01;
+            speed -= acc;
+            angle += turnSpeed * speed / maxSpeed;
+        }
+
+        if(leftFrontTail) {
+            energy -= 0.01;
+            speed -= acc;
+            angle -= turnSpeed * speed / maxSpeed;
+        }
+
+        if(rightBackTail) {
+            energy -= 0.01;
+            speed += acc;
+            angle += turnSpeed * speed / maxSpeed;
+        }
+
+        if(leftBackTail) {
+            energy -= 0.01;
+            speed += acc;
+            angle -= turnSpeed * speed / maxSpeed;
+        }
+
         if(rightFrontTail & leftFrontTail) {
+            energy -= 0.05;
             speed -= acc;
         }
 
         if(rightBackTail & leftBackTail) {
+            energy -= 0.05;
             if (speed < 0) {
                 speed += dec;
             } else {
@@ -148,31 +175,42 @@ public class Prey {
         }
 
         if(rightBackTail & rightFrontTail && speed != 0) {
+            energy -= 0.05;
             angle += turnSpeed * speed / maxSpeed;
         }
 
         if(leftBackTail & leftFrontTail && speed != 0) {
+            energy -= 0.05;
             angle -= turnSpeed * speed / maxSpeed;
         }
 
-        if(rightFrontTail) {
-            speed -= acc;
-            angle += turnSpeed * speed / maxSpeed;
-        }
-
-        if(leftFrontTail) {
-            speed -= acc;
-            angle -= turnSpeed * speed / maxSpeed;
-        }
-
-        if(rightBackTail) {
+        if(rightBackTail & rightFrontTail && leftBackTail) {
+            energy -= 0.1;
             speed += acc;
             angle += turnSpeed * speed / maxSpeed;
         }
 
-        if(leftBackTail) {
+        if(leftBackTail & leftFrontTail && rightBackTail) {
+            energy -= 0.1;
             speed += acc;
             angle -= turnSpeed * speed / maxSpeed;
+        }
+
+        if(rightBackTail & rightFrontTail && leftFrontTail) {
+            energy -= 0.1;
+            speed -= acc;
+            angle += turnSpeed * speed / maxSpeed;
+        }
+
+        if(leftBackTail & leftFrontTail && rightFrontTail) {
+            energy -= 0.1;
+            speed -= acc;
+            angle -= turnSpeed * speed / maxSpeed;
+        }
+
+        if(rightBackTail & rightFrontTail && leftBackTail & leftFrontTail) {
+            energy -= 0.2;
+            speed -= acc;
         }
 
     }
@@ -180,7 +218,7 @@ public class Prey {
 
     void energyCost(Stage stage) {
         if (stage.isPreyMustEat()) {
-            energy -= 0.05;
+            energy -= RESTING_ENERGY_COST;
             energy -= Math.abs(0.1 * Math.pow(speed / maxSpeed, 2.0));
         }
 
