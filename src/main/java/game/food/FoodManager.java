@@ -12,6 +12,7 @@ public class FoodManager {
     private static final int FOOD_MIN = 25;
 
     public void generateFood(Stage stage) {
+        foodPointsLifeSpan();
 
         switch (stage.getFoodTypeStrategy()) {
             case NONE:
@@ -26,6 +27,15 @@ public class FoodManager {
                 changingPlaceStrategy();
             case CHANGING_AREA:
                 changingAreaStrategy();
+        }
+    }
+
+    private void foodPointsLifeSpan() {
+        foodPoints.forEach(x->x.lifeSpan--);
+        for (Food foodPoint : foodPoints) {
+            if (foodPoint.lifeSpan == 0) {
+                foodPoint.eated();
+            }
         }
     }
 

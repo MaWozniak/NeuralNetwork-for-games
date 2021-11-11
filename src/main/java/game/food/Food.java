@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 public class Food {
     int x;
     int y;
+    int lifeSpanExpectancy = 1000;
+    int lifeSpan = (int) (lifeSpanExpectancy /4 + (Math.random()* lifeSpanExpectancy));
     boolean eaten = false;
     FoodGui foodGui = new FoodGui();
 
