@@ -1,35 +1,18 @@
 package genetics;
 
-import game.organisms.Prey;
 import game.stage.StageManager;
-import neuralnetwork.Generation;
-import neuralnetwork.Genome;
-import neuralnetwork.NeuralNetwork;
-import neuralnetwork.NodalNetwork;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Generations {
+public class GenerationScore {
     private static final DecimalFormat DF_2 = new DecimalFormat("#.#");
-    private static final int RESET_GENERATION = 50000000;
 
-    private Generation generation;
-    private StageManager stageManager;
-    private final NeuralNetwork protoplast = new NeuralNetwork(25, 2, 20, 4);
-    private final NeuralNetwork bridge = new NeuralNetwork(25, 3, 15, 3);
-    private final NodalNetwork nodalNetworkProtoplast = new NodalNetwork(bridge, protoplast, 3);
-    private double BIAS = 1.0;
-    private List<Double> generationsScoresList;
-    private List<Double> generationsAverageList;
-    private GenerationMemory generationMemory;
-    private List<Prey> AI_prey;
-    private int generationSize;
-    private int count = 1;
+    private final List<Double> generationsScoresList;
+    private final List<Double> generationsAverageList;
     private double avarageScoreOfAllGenerations = 0.0;
-    private List<Double> avarageScores = new ArrayList<>();
+    private final List<Double> avarageScores = new ArrayList<>();
     private double bestScoreOfALLGenerations = 0.0;
     private int indexOfBestGeneration = 0;
     private double bestScore = 0.0;
@@ -38,139 +21,43 @@ public class Generations {
     private String idOfSecondBestScore = "";
     private double thirdBestScore = 0.0;
     private String idOfthirdBestScore = "";
-    private double mutationRate;
-    private int index = 0;
-    private double preyMaxAge;
-    private boolean firstInGeneration;
 
-
-    public Generations(List<Prey> AI_prey, int size, double preyMaxAge, StageManager stageManager) {
-        this.generationSize = size;
-        this.stageManager = stageManager;
-        protoplast.setAllBiases(BIAS);
-        this.generation = new Generation(1, generationSize, nodalNetworkProtoplast);
-        this.AI_prey = AI_prey;
+    GenerationScore() {
         this.generationsScoresList = new ArrayList<>();
         this.generationsAverageList = new ArrayList<>();
-        this.mutationRate = 1.1;
-        this.preyMaxAge = preyMaxAge;
     }
 
-    public void addFirstGeneration() {
-        log("start");
-        randomGeneration();
-        generationMemory = new GenerationMemory(count, 10);
-        count++;
-    }
-
-    public void addNewGeneration() throws IOException {
-        updateAvaregeScores();
-        updateBestIndividualScores();
-        log("summary");
-        writeFileLog();
-        if (count % RESET_GENERATION == 0) {
-            randomGeneration();
-        } else {
-            int numOfBestSelection = (int) (generationSize / 10);
-            geneticsNewGeneration(generation.bestSelection(numOfBestSelection));
-        }
-
-        generationMemory.getSelectedGenomes().clear();
-        generationMemory = new GenerationMemory(count, 10);
-        log("start");
-        count++;
-    }
-
-    private void randomGeneration() {
-        generation.randomize();
-
-        for (int i = 0; i < generationSize; i++) {
-            double xStartPos = 600 + 600 * (Math.random() - 0.5);
-            double yStartPos = 400 + 600 * (Math.random() - 0.5);
-            if (i == 0) {
-                firstInGeneration = true;
-            }
-
-            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), firstInGeneration, preyMaxAge);
-            AI_prey.add(newPrey);
-            firstInGeneration = false;
-        }
-
-    }
-
-    private void geneticsNewGeneration(List<Genome> ancestors) {
-        double newMutationRate = (bestScore - avarageScoreOfAllGenerations) / bestScore;
-        setMutationRate(newMutationRate);
-        generation = new Generation(
-                count,
-                generationSize,
-                ancestors,
-                getGeneticsType(),
-                stageManager.getStage(count - 1),
-                newMutationRate);
-
-        for (int i = 0; i < generationSize; i++) {
-            double dispersion = 500;
-            double xStartPos = 600 + dispersion * (Math.random() - 0.5);
-            double yStartPos = 400 + dispersion * (Math.random() - 0.5);
-            if (i == 0) {
-                firstInGeneration = true;
-            }
-
-            Prey newPrey = new Prey(xStartPos, yStartPos, generation.getGenomes().get(i), firstInGeneration, preyMaxAge);
-            newPrey.setId(i, count);
-            AI_prey.add(newPrey);
-            firstInGeneration = false;
-        }
-
-    }
-
-    public String getGeneticsType() {
-        String[] array = {"top5simply", "top5smallMutation", "top5bigRandom", "type3"};
-        if (count % RESET_GENERATION == 0) {
-            ++index;
-        }
-        if (index > array.length - 1) {
-            index = 0;
-        }
-        System.out.println("-----------------USES GENETICS TYPE: ..." + array[index]
-                + "...---------------------");
-        return array[index];
-    }
-
-    public void deathPrey(Prey prey) {
-        if (prey.isAlive()) {
-            prey.getGenome().setScore(prey.getScore());
-            System.out.print(DF_2.format(prey.getGenome().getScore()) + "|");
-            generationMemory.add(prey);
-            prey.isDead();
-            prey.setFirstInGeneration(false);
-        }
-
-    }
-
-    private Double calculateAvarageScoreFromXlastGenerations(int numOfGen, int start) {
+    Double calculateAvarageScoreFromXlastGenerations(int start) {
         Double result = 0.0;
         int lenght = avarageScores.size();
-        int startPoint = start;
         int divider = lenght - start;
 
-        for (int i = startPoint; i < lenght; i++) {
+        for (int i = start; i < lenght; i++) {
             result += avarageScores.get(i);
         }
 
         return result / divider;
     }
 
-    private void updateAvaregeScores() {
+    void addNewGeneration(
+            int count,
+            StageManager stageManager,
+            GenerationMemory generationMemory
+    ) {
+        this.updateAvaregeScores(count, generationMemory);
+        this.updateBestIndividualScores(generationMemory);
+        this.log("summary", count, stageManager, generationMemory);
+        this.writeFileLog(count, generationMemory);
+    }
+
+    void updateAvaregeScores(int count, GenerationMemory generationMemory) {
         avarageScores.add(generationMemory.getAvarageScore());
 
         if (avarageScoreOfAllGenerations == 0) {
             avarageScoreOfAllGenerations = generationMemory.getAvarageScore();
         } else {
-            int precise = 20;
             int startPoint = (int) (Math.floor(count / (double) 50)) * 50;
-            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(precise, startPoint);
+            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(startPoint);
         }
 
         if (generationMemory.getAvarageScore() > this.bestScoreOfALLGenerations) {
@@ -180,7 +67,7 @@ public class Generations {
 
     }
 
-    private void updateBestIndividualScores() {
+    void updateBestIndividualScores(GenerationMemory generationMemory) {
         if (generationMemory.get(0).getScore() >= bestScore) {
             thirdBestScore = secondBestScore;
             idOfthirdBestScore = idOfSecondBestScore;
@@ -200,7 +87,12 @@ public class Generations {
 
     }
 
-    private void log(String step) {
+    void log(
+            String step,
+            int count,
+            StageManager stageManager,
+            GenerationMemory generationMemory
+    ) {
         if (step.equals("start")) {
             System.out.println("\n------------------------");
             System.out.println("------GENRATION " + count + "------");
@@ -239,8 +131,8 @@ public class Generations {
 
     }
 
-    private void writeFileLog() {
-        StringBuffer fileContent = new StringBuffer();
+    void writeFileLog(int count, GenerationMemory generationMemory) {
+        StringBuilder fileContent = new StringBuilder();
         fileContent.append("GENERATION ").append(count - 1).append("\n");
         fileContent.append("\nAVARAGE score of THIS GENERATION: ").append(generationMemory.getAvarageScore());
         fileContent.append("\nAVARAGE score of ALL GENERATION: ").append(this.avarageScoreOfAllGenerations);
@@ -266,15 +158,7 @@ public class Generations {
         return generationsAverageList;
     }
 
-    public String getMutationRate() {
-        return DF_2.format(mutationRate);
-    }
-
-    public void setMutationRate(double mutationRate) {
-        this.mutationRate = mutationRate;
-    }
-
-    public int getCount() {
-        return count;
+    public double getNewMutationRate() {
+        return (bestScore - avarageScoreOfAllGenerations) / bestScore;
     }
 }

@@ -7,7 +7,7 @@ import game.organisms.PredatorFactory;
 import game.organisms.Prey;
 import game.stage.Stage;
 import game.stage.StageManager;
-import genetics.Generations;
+import genetics.GenerationManager;
 
 import java.awt.*;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Game {
     private final ModelView modelView = new ModelView(false);
-    private final Generations generations;
+    private final GenerationManager generationManager;
     private final GameLoop gameLoop;
 
     private final List<Prey> AI_prey = new ArrayList<>();
@@ -29,8 +29,8 @@ public class Game {
     public Game(StageManager stageManager) {
         this.stageManager = stageManager;
         Stage startStage = stageManager.getStage(0);
-        this.generations = new Generations(AI_prey, startStage.getNumOfPreys(), startStage.getPreyMaxAge(), stageManager);
-        this.generations.addFirstGeneration();
+        this.generationManager = new GenerationManager(AI_prey, startStage.getNumOfPreys(), startStage.getPreyMaxAge(), stageManager);
+        this.generationManager.addFirstGeneration();
         addNewPredators(startStage.getNumOfPredators());
         gameLoop = new GameLoop(this);
         startGameLoop();
@@ -69,7 +69,7 @@ public class Game {
             double xStartPos = 100 + 950 * Math.random();
             double yStartPos = yStartPosChange + 20 * Math.random();
             //Predator newPredator = new GenericPredator(xStartPos, yStartPos);
-            int numOfGeneration = generations.getCount() - 1;
+            int numOfGeneration = generationManager.getCount() - 1;
             Predator newPredator = predatorFactory.createPredator(numOfGeneration, xStartPos, yStartPos);
             predators.add(newPredator);
         }
@@ -86,9 +86,9 @@ public class Game {
         }
     }
 
-    private void checkGenerations() throws IOException {
+    private void checkGenerations() {
         if (AI_prey.size() == 0) {
-            generations.addNewGeneration();
+            generationManager.addNewGeneration();
         }
 
     }
@@ -110,10 +110,10 @@ public class Game {
         for (Prey generatedPrey : AI_prey) {
             generatedPrey.move(modelView.getModel(), this.getStage());
             if (generatedPrey.getEnergy() < 0.001) {
-                generations.deathPrey(generatedPrey);
+                generationManager.deathPrey(generatedPrey);
             }
             if (generatedPrey.getAge() > generatedPrey.getPreyMaxAge()) {
-                generations.deathPrey(generatedPrey);
+                generationManager.deathPrey(generatedPrey);
             }
 
             for (Food food : foodManager.getFoodPoints()) {
@@ -124,13 +124,13 @@ public class Game {
                 }
             }
 
-            //simple kill - right now main.Predator see all board and all main.Prey, doesn't has a FIELD OF VIEW
+            //simple kill - right now main.Predator see all board and all main.Prey, doesn't have a FIELD OF VIEW
             for (Predator generatedPredator : predators) {
                 int radius = 12;
                 if ((Math.abs((int) (generatedPredator.getX() - generatedPrey.getX())) < radius)
                         && (Math.abs((int) (generatedPredator.getY() - generatedPrey.getY())) < radius)) {
                     if (generatedPredator.getEnergy() < 1260) {
-                        generations.deathPrey(generatedPrey);
+                        generationManager.deathPrey(generatedPrey);
                         generatedPredator.eat();
                         // generatedPredator.slowDown();
                     }
@@ -193,18 +193,18 @@ public class Game {
     }
 
     public List<Double> getGenerationsScores() {
-        return this.generations.getGenerationsScoresList();
+        return this.generationManager.getGenerationsScoresList();
     }
 
     public List<Double> getGenerationsAverageScores() {
-        return this.generations.getGenerationsAverageList();
+        return this.generationManager.getGenerationsAverageList();
     }
 
     public String getMutationRate() {
-        return generations.getMutationRate();
+        return generationManager.getMutationRate();
     }
 
     public Stage getStage() {
-        return stageManager.getStage(generations.getCount() - 1);
+        return stageManager.getStage(generationManager.getCount() - 1);
     }
 }

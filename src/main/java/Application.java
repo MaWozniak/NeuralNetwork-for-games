@@ -13,4 +13,16 @@ public class Application {
 
         new GUI(game);
     }
+
+    /*
+
+    przerabiac na kotlin
+
+    sprawdzic czy mozna szybko puscic trzy symulacje na raz i na zmiane pokazywac "grę" w gui
+
+    GenerationManager w Game->Generations ??
+
+    czy mozna sledzic ich postep oddzielnie i czy mozna dorzucic dodatkowa wieksza mutacje
+
+     */
 }
