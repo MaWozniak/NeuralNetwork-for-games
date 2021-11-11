@@ -16,15 +16,15 @@ class PreyLogic {
     void thinking(char[][] model, Prey prey) {
         OutputMove move = this.blackBox.move(model, prey.getX(), prey.getY(), prey.getAngle(), prey.getSpeed(), prey.getEnergy(), prey.getStamina(), prey.getAge());
         if (forceMove) {
-            prey.up = true;
-            prey.down = false;
+            prey.rightFrontTail = true;
+            prey.leftFrontTail = false;
         } else {
-            prey.up = move.isUp();
-            prey.down = move.isDown();
+            prey.rightFrontTail = move.isKey1();
+            prey.leftFrontTail = move.isKey2();
         }
 
-        prey.right = move.isRight();
-        prey.left = move.isLeft();
+        prey.leftBackTail = move.isKey4();
+        prey.rightBackTail = move.isKey3();
 
     }
 

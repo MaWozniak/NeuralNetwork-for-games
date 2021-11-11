@@ -1,47 +1,47 @@
 package neuralnetwork;
 
 public class OutputMove {
-    private boolean up;
-    private boolean down;
-    private boolean left;
-    private boolean right;
+    private boolean key1;
+    private boolean key2;
+    private boolean key3;
+    private boolean key4;
 
-    OutputMove(boolean up, boolean down, boolean right, boolean left) {
-        this.up = up;
-        this.down = down;
-        this.right = right;
-        this.left = left;
+    OutputMove(boolean key1, boolean key2, boolean key4, boolean key3) {
+        this.key1 = key1;
+        this.key2 = key2;
+        this.key4 = key4;
+        this.key3 = key3;
     }
 
-    public boolean isUp() {
-        return up;
+    public boolean isKey1() {
+        return key1;
     }
 
-    public void setUp(boolean up) {
-        this.up = up;
+    public void setKey1(boolean key1) {
+        this.key1 = key1;
     }
 
-    public boolean isDown() {
-        return down;
+    public boolean isKey2() {
+        return key2;
     }
 
-    public void setDown(boolean down) {
-        this.down = down;
+    public void setKey2(boolean key2) {
+        this.key2 = key2;
     }
 
-    public boolean isLeft() {
-        return left;
+    public boolean isKey3() {
+        return key3;
     }
 
-    public void setLeft(boolean left) {
-        this.left = left;
+    public void setKey3(boolean key3) {
+        this.key3 = key3;
     }
 
-    public boolean isRight() {
-        return right;
+    public boolean isKey4() {
+        return key4;
     }
 
-    public void setRight(boolean right) {
-        this.right = right;
+    public void setKey4(boolean key4) {
+        this.key4 = key4;
     }
 }

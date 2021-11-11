@@ -7,11 +7,10 @@ import java.util.List;
 
 public class BaseStageManager implements StageManager {
     public static List<Stage> problem = new ArrayList<>();
+    private final int multiplier;
 
-    private static final int MULTIPLIER = 25;
-    private static final int[] STRATEGY = {2 * MULTIPLIER, 6 * MULTIPLIER, 10 * MULTIPLIER, 14 * MULTIPLIER, 18 * MULTIPLIER};
-
-    public BaseStageManager() {
+    public BaseStageManager(int multiplier) {
+        this.multiplier = multiplier;
 
         //learning move from hidden place to rest of the board
         Stage problem1 = new Stage("problem 1");
@@ -19,6 +18,7 @@ public class BaseStageManager implements StageManager {
         problem1.setHidePlacesCenter(true);
         problem1.setHidePlacesBorder(true);
         problem1.setHidePlacesPenalty(true);
+        problem1.setFoodTypeStrategy(FoodStrategy.SIMPLE);
         //problem1.setPreyMaxAge(20);
         problem.add(problem1);
 
@@ -66,6 +66,7 @@ public class BaseStageManager implements StageManager {
 
     @Override
     public Stage getStage(int numOfGeneration) {
+        int[] STRATEGY = {2 * multiplier, 6 * multiplier, 10 * multiplier, 14 * multiplier, 18 * multiplier};
         Stage result = null;
         for (int i = 0; i < STRATEGY.length; i++) {
             if (numOfGeneration < STRATEGY[i]) {
