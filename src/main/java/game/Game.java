@@ -197,12 +197,12 @@ public class Game {
         }
     }
 
-    public List<Double> getGenerationsScores() {
-        return branchGenerationManager.get().getGenerationsScoresList();
+    public List<List<Double>> getGenerationsScores() {
+        return branchGenerationManager.getAllGenerationsScoresList();
     }
 
-    public List<Double> getGenerationsAverageScores() {
-        return branchGenerationManager.get().getGenerationsAverageList();
+    public List<List<Double>> getGenerationsAverageScores() {
+        return branchGenerationManager.getAllGenerationsAverageList();
     }
 
     public String getMutationRate() {

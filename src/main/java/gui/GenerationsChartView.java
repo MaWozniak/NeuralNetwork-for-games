@@ -9,9 +9,9 @@ import java.util.List;
 public class GenerationsChartView {
     private final static boolean TEST = false;
     private final static int HEIGHT_OF_CHART_PLOTS = 80;
-    private static DecimalFormat df2 = new DecimalFormat("#.##");
-    private List<Double> generationsScoresList = new ArrayList<>();
-    private List<Double> generationsAverageList = new ArrayList<>();
+    private static final DecimalFormat df2 = new DecimalFormat("#.##");
+    private List<List<Double>> generationsScoresList = new ArrayList<>();
+    private List<List<Double>> generationsAverageList = new ArrayList<>();
 
     public GenerationsChartView() {
     }
@@ -27,47 +27,85 @@ public class GenerationsChartView {
             g.fillOval(delta * 10, 600 + (int) (50 * Math.random()), 6, 6);
         }
 
-        delta = 1050 / (generationsScoresList.size() + 1);
+        delta = 1050 / (generationsScoresList.get(0).size() + 1);
         int step = 1;
-        if (generationsScoresList.size() > 900) {
+        if (generationsScoresList.get(0).size() > 900) {
             delta = 1;
-            step = 1 + generationsScoresList.size() / 1000;
+            step = 1 + generationsScoresList.get(0).size() / 1000;
         }
 
         int valueStep = 1;
-        if (generationsScoresList.size() > 20) {
-            valueStep = generationsScoresList.size() / 10;
+        if (generationsScoresList.get(0).size() > 20) {
+            valueStep = generationsScoresList.get(0).size() / 10;
         }
 
         int verticalFactor;
 
         g.setColor(Color.BLUE);
-        for (int i = 0; i < generationsAverageList.size(); i += step) {
-            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * generationsAverageList.get(i));
+        for (int i = 0; i < generationsAverageList.get(0).size(); i += step) {
+            double mixedValue = (generationsAverageList.get(0).get(i) + generationsScoresList.get(0).get(i))/2;
+            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
             g.fillOval(100 + i / step * delta, (int) (500 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
-                g.drawString(df2.format(generationsAverageList.get(i)), 100 + i / step * delta, 540);
+                g.drawString(df2.format(generationsAverageList.get(0).get(i)), 100 + i / step * delta, 540);
             }
 
         }
 
         g.setColor(Color.YELLOW);
 
-        for (int i = 0; i < generationsScoresList.size(); i += step) {
-            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * generationsScoresList.get(i));
+        for (int i = 0; i < generationsScoresList.get(1).size(); i += step) {
+            double mixedValue = (generationsAverageList.get(1).get(i) + generationsScoresList.get(1).get(i))/2;
+            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
             g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
-                g.drawString(df2.format(generationsScoresList.get(i)), 100 + i / step * delta, 550);
+                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 552);
             }
 
         }
 
-        String text = "num of generations: " + df2.format(generationsScoresList.size());
-        g.drawString(text, 540, 580);
+        g.setColor(Color.GREEN);
+
+        for (int i = 0; i < generationsScoresList.get(2).size(); i += step) {
+            double mixedValue = (generationsAverageList.get(2).get(i) + generationsScoresList.get(2).get(i))/2;
+            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
+            g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
+           if (i % valueStep == 0) {
+                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 564);
+            }
+
+        }
+
+        g.setColor(Color.MAGENTA);
+
+        for (int i = 0; i < generationsScoresList.get(3).size(); i += step) {
+            double mixedValue = (generationsAverageList.get(3).get(i) + generationsScoresList.get(3).get(i))/2;
+            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
+            g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
+            if (i % valueStep == 0) {
+                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 576);
+            }
+
+        }
+
+        g.setColor(Color.BLACK);
+
+        for (int i = 0; i < generationsScoresList.get(4).size(); i += step) {
+            double mixedValue = (generationsAverageList.get(4).get(i) + generationsScoresList.get(4).get(i))/2;
+            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
+            g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
+            if (i % valueStep == 0) {
+                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 588);
+            }
+
+        }
+
+        String text = "num of generations: " + df2.format(generationsScoresList.get(0).size());
+        g.drawString(text, 540, 595);
 
     }
 
-    public void getData(List<Double> generationsScoresList, List<Double> generationsAverageList) {
+    public void getData(List<List<Double>> generationsScoresList, List<List<Double>> generationsAverageList) {
         this.generationsScoresList = generationsScoresList;
         this.generationsAverageList = generationsAverageList;
     }
@@ -78,8 +116,8 @@ public class GenerationsChartView {
         int size = 900;
 
         for (int i = 0; i < size; i++) {
-            generationsScoresList.add(40 * Math.random());
-            generationsAverageList.add(i / 10 + Math.random());
+            generationsScoresList.get(0).add(40 * Math.random());
+            generationsAverageList.get(0).add(i / 10 + Math.random());
         }
 
     }

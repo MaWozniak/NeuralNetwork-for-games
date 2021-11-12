@@ -37,7 +37,7 @@ public class RenderPanel extends JPanel {
         chartViewFlag = !chartViewFlag;
     }
 
-    public void getGenerationMemory(List<Double> generationsScoresList, List<Double> generationsAverageList) {
+    public void getGenerationMemory(List<List<Double>> generationsScoresList, List<List<Double>> generationsAverageList) {
         chartView.getData(generationsScoresList, generationsAverageList);
     }
 

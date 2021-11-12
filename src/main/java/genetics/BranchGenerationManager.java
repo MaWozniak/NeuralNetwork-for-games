@@ -55,4 +55,16 @@ public class BranchGenerationManager {
         int actualNumberOfBranch = actuateCounter % NUMBER_OF_BRANCHES + 1;
         return String.valueOf(actualNumberOfBranch);
     }
+
+    public List<List<Double>> getAllGenerationsScoresList() {
+        List<List<Double>> result = new ArrayList<>();
+        branches.forEach(x -> result.add(x.getGenerationsScoresList()));
+        return result;
+    }
+
+    public List<List<Double>> getAllGenerationsAverageList() {
+        List<List<Double>> result = new ArrayList<>();
+        branches.forEach(x -> result.add(x.getGenerationsAverageList()));
+        return result;
+    }
 }
