@@ -3,7 +3,7 @@ package genetics;
 import game.stage.StageManager;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GenerationScore {
@@ -12,7 +12,7 @@ public class GenerationScore {
     private final List<Double> generationsScoresList;
     private final List<Double> generationsAverageList;
     private double avarageScoreOfAllGenerations = 0.0;
-    private final List<Double> avarageScores = new ArrayList<>();
+    private final List<Double> avarageScores = new LinkedList<>();
     private double bestScoreOfALLGenerations = 0.0;
     private int indexOfBestGeneration = 0;
     private double bestScore = 0.0;
@@ -23,8 +23,8 @@ public class GenerationScore {
     private String idOfthirdBestScore = "";
 
     GenerationScore() {
-        this.generationsScoresList = new ArrayList<>();
-        this.generationsAverageList = new ArrayList<>();
+        this.generationsScoresList = new LinkedList<>();
+        this.generationsAverageList = new LinkedList<>();
     }
 
     Double calculateAvarageScoreFromXlastGenerations(int start) {

@@ -5,9 +5,6 @@ public class BlackBox {
     double[] input;
     double[] output;
 
-    public BlackBox() {
-    }
-
     public BlackBox(Genome genome) {
         this.genome = genome;
     }

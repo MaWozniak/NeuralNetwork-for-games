@@ -1,10 +1,10 @@
 package neuralnetwork;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class NodalNetwork {
-    private List<NeuralNetwork> networks = new ArrayList();
+    private List<NeuralNetwork> networks = new LinkedList<>();
     private NeuralNetwork bridge;
     private NeuralNetwork node;
 
@@ -48,7 +48,7 @@ public class NodalNetwork {
     }
 
     NodalNetwork copy() {
-        List<NeuralNetwork> newNodalNetworkNodes = new ArrayList<>();
+        List<NeuralNetwork> newNodalNetworkNodes = new LinkedList<>();
         for (NeuralNetwork network : this.networks) {
             newNodalNetworkNodes.add(network.copy());
         }

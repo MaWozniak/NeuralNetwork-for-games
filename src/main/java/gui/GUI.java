@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GUI extends JFrame {
-    private static final int FRAME_RATE = 30;
+    private static final int FRAME_RATE = 60;
 
     public GUI(Game game) throws InterruptedException {
         RenderPanel renderPanel = new RenderPanel(game);

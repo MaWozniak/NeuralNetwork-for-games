@@ -1,6 +1,6 @@
 package neuralnetwork;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 class Layer {
@@ -10,7 +10,7 @@ class Layer {
 
     Layer(int inputsNum, int perceptronNum) {
         this.perceptronNum = perceptronNum;
-        this.perceptron = new ArrayList<>();
+        this.perceptron = new LinkedList<>();
         this.inputsNum = inputsNum;
 
         for (int i = 0; i < perceptronNum; i++) {
@@ -21,7 +21,7 @@ class Layer {
 
     Layer(Layer layer1, Layer layer2) {
         this.perceptronNum = layer1.perceptronNum;
-        this.perceptron = new ArrayList<>();
+        this.perceptron = new LinkedList<>();
         this.inputsNum = layer1.inputsNum;
 
         for (int i = 0; i < perceptronNum; ++i) {
@@ -39,7 +39,7 @@ class Layer {
 
     Layer(Layer layer1) {
         this.perceptronNum = layer1.perceptronNum;
-        this.perceptron = new ArrayList<Perceptron>();
+        this.perceptron = new LinkedList<>();
         this.inputsNum = layer1.inputsNum;
 
         for (int i = 0; i < perceptronNum; i++) {

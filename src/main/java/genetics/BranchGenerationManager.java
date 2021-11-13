@@ -3,7 +3,7 @@ package genetics;
 import game.organisms.Prey;
 import game.stage.StageManager;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BranchGenerationManager {
@@ -19,7 +19,7 @@ public class BranchGenerationManager {
             double preyMaxAge,
             StageManager stageManager
     ) {
-        branches = new ArrayList<>();
+        branches = new LinkedList<>();
         for (int i = 0; i < NUMBER_OF_BRANCHES; i++) {
             branches.add(new GenerationManager(AI_prey, size, preyMaxAge, stageManager));
         }
@@ -57,13 +57,13 @@ public class BranchGenerationManager {
     }
 
     public List<List<Double>> getAllGenerationsScoresList() {
-        List<List<Double>> result = new ArrayList<>();
+        List<List<Double>> result = new LinkedList<>();
         branches.forEach(x -> result.add(x.getGenerationsScoresList()));
         return result;
     }
 
     public List<List<Double>> getAllGenerationsAverageList() {
-        List<List<Double>> result = new ArrayList<>();
+        List<List<Double>> result = new LinkedList<>();
         branches.forEach(x -> result.add(x.getGenerationsAverageList()));
         return result;
     }

@@ -1,6 +1,6 @@
 package neuralnetwork;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class NeuralNetwork {
@@ -10,7 +10,7 @@ public class NeuralNetwork {
     }
 
     public NeuralNetwork(int inputs, int hiddenLayers, int perceptrons, int outputs) {
-        layers = new ArrayList<>();
+        layers = new LinkedList<>();
         layers.add(new Layer(inputs, perceptrons));
 
         for (int i = 0; i < hiddenLayers - 1; i++) {
@@ -21,7 +21,7 @@ public class NeuralNetwork {
     }
 
     NeuralNetwork(NeuralNetwork neuralNetwork1, NeuralNetwork neuralNetwork2) {
-        layers = new ArrayList<>();
+        layers = new LinkedList<>();
 
         for (int i = 0; i < neuralNetwork1.layers.size(); i++) {
             Layer layer = new Layer(neuralNetwork1.getLayer(i), neuralNetwork2.getLayer(i));
@@ -117,7 +117,7 @@ public class NeuralNetwork {
 
     NeuralNetwork copy() {
         NeuralNetwork newNeuralNetwork = new NeuralNetwork();
-        newNeuralNetwork.layers = new ArrayList<>();
+        newNeuralNetwork.layers = new LinkedList<>();
 
         for (int i = 0; i < this.layers.size(); i++) {
             newNeuralNetwork.layers.add(new Layer(this.layers.get(i)));

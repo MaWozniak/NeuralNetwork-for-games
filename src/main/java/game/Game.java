@@ -11,7 +11,7 @@ import genetics.BranchGenerationManager;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
@@ -19,8 +19,8 @@ public class Game {
     private final BranchGenerationManager branchGenerationManager;
     private final GameLoop gameLoop;
 
-    private final List<Prey> AI_prey = new ArrayList<>();
-    private final List<Predator> predators = new ArrayList<>();
+    private final List<Prey> AI_prey = new LinkedList<>();
+    private final List<Predator> predators = new LinkedList<>();
     private final PredatorFactory predatorFactory = new PredatorFactory();
 
     private final StageManager stageManager;

@@ -3,12 +3,12 @@ package genetics;
 import game.organisms.Prey;
 import neuralnetwork.Genome;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 class GenerationMemory {
-    private List<Genome> genomes = new ArrayList();
+    private List<Genome> genomes = new LinkedList<>();
     private int size;
     private int id;
     private double avarageScore;

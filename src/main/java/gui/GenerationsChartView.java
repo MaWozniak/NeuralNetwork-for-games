@@ -3,15 +3,15 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GenerationsChartView {
     private final static boolean TEST = false;
     private final static int HEIGHT_OF_CHART_PLOTS = 80;
     private static final DecimalFormat df2 = new DecimalFormat("#.##");
-    private List<List<Double>> generationsScoresList = new ArrayList<>();
-    private List<List<Double>> generationsAverageList = new ArrayList<>();
+    private List<List<Double>> generationsScoresList = new LinkedList<>();
+    private List<List<Double>> generationsAverageList = new LinkedList<>();
 
     public GenerationsChartView() {
     }
@@ -101,7 +101,7 @@ public class GenerationsChartView {
         }
 
         String text = "num of generations: " + df2.format(generationsScoresList.get(0).size());
-        g.drawString(text, 540, 595);
+        g.drawString(text, 540, 600);
 
     }
 

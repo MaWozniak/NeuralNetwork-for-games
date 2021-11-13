@@ -2,12 +2,12 @@ package neuralnetwork;
 
 import game.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Generation {
-    List<Genome> genomes = new ArrayList();
+    List<Genome> genomes = new LinkedList<>();
     int number;
     Stage stage;
     int learningNetwork;
@@ -216,7 +216,7 @@ public class Generation {
 
     public List<Genome> bestSelection(int bestNumber) {
 
-        List<Genome> bestSelection = new ArrayList<>();
+        List<Genome> bestSelection = new LinkedList<>();
         this.sort();
         this.updateScoreToId();
 

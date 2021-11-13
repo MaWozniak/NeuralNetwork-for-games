@@ -2,11 +2,11 @@ package game.stage;
 
 import game.food.FoodStrategy;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FoodLearningStageManager implements StageManager {
-    public static List<Stage> problem = new ArrayList<>();
+    public static List<Stage> problem = new LinkedList<>();
 
     private static final int MULTIPLIER = 100;
     private static final int[] STRATEGY = {2 * MULTIPLIER, 4 * MULTIPLIER, 8 * MULTIPLIER};

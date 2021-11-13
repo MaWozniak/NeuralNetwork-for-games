@@ -2,12 +2,12 @@ package game.food;
 
 import game.stage.Stage;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FoodManager {
 
-    private final List<Food> foodPoints = new ArrayList();
+    private final List<Food> foodPoints = new LinkedList<>();
     private static final int FOOD_SIZE = 120;
     private static final int FOOD_MIN = 1;
 
