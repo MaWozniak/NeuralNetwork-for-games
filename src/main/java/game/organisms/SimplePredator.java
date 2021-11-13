@@ -63,6 +63,7 @@ public class SimplePredator implements Predator {
             //DEAD:
             if (energy <= 0) {
                 isAlive = false;
+                predatorLogic.killThread();
             }
         }
     }

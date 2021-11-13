@@ -43,7 +43,7 @@ public class GenerationsChartView {
 
         g.setColor(Color.BLUE);
         for (int i = 0; i < generationsAverageList.get(0).size(); i += step) {
-            double mixedValue = (generationsAverageList.get(0).get(i) + generationsScoresList.get(0).get(i))/2;
+            double mixedValue = mixedValue(generationsScoresList.get(0).get(i), generationsAverageList.get(0).get(i));
             verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
             g.fillOval(100 + i / step * delta, (int) (500 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
@@ -55,7 +55,7 @@ public class GenerationsChartView {
         g.setColor(Color.YELLOW);
 
         for (int i = 0; i < generationsScoresList.get(1).size(); i += step) {
-            double mixedValue = (generationsAverageList.get(1).get(i) + generationsScoresList.get(1).get(i))/2;
+            double mixedValue = mixedValue(generationsScoresList.get(1).get(i), generationsAverageList.get(1).get(i));
             verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
             g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
@@ -67,7 +67,7 @@ public class GenerationsChartView {
         g.setColor(Color.GREEN);
 
         for (int i = 0; i < generationsScoresList.get(2).size(); i += step) {
-            double mixedValue = (generationsAverageList.get(2).get(i) + generationsScoresList.get(2).get(i))/2;
+            double mixedValue = mixedValue(generationsScoresList.get(2).get(i), generationsAverageList.get(2).get(i));
             verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
             g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
            if (i % valueStep == 0) {
@@ -79,7 +79,7 @@ public class GenerationsChartView {
         g.setColor(Color.MAGENTA);
 
         for (int i = 0; i < generationsScoresList.get(3).size(); i += step) {
-            double mixedValue = (generationsAverageList.get(3).get(i) + generationsScoresList.get(3).get(i))/2;
+            double mixedValue = mixedValue(generationsScoresList.get(3).get(i), generationsAverageList.get(3).get(i));
             verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
             g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
@@ -91,7 +91,7 @@ public class GenerationsChartView {
         g.setColor(Color.BLACK);
 
         for (int i = 0; i < generationsScoresList.get(4).size(); i += step) {
-            double mixedValue = (generationsAverageList.get(4).get(i) + generationsScoresList.get(4).get(i))/2;
+            double mixedValue = mixedValue(generationsScoresList.get(4).get(i), generationsAverageList.get(4).get(i));
             verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
             g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
             if (i % valueStep == 0) {
@@ -120,6 +120,12 @@ public class GenerationsChartView {
             generationsAverageList.get(0).add(i / 10 + Math.random());
         }
 
+    }
+
+    private Double mixedValue(Double one, Double two) {
+        int scaleOne = 1;
+        int scaleTwo = 4;
+        return (one * scaleOne + two * scaleTwo) / (scaleOne + scaleTwo);
     }
 
 }
