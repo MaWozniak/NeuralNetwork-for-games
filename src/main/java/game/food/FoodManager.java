@@ -8,8 +8,8 @@ import java.util.List;
 public class FoodManager {
 
     private final List<Food> foodPoints = new LinkedList<>();
-    private static final int FOOD_SIZE = 120;
-    private static final int FOOD_MIN = 1;
+    private static final int FOOD_SIZE = 160;
+    private static final int FOOD_MIN = 20;
 
     public void generateFood(Stage stage) {
         foodPointsLifeSpan();

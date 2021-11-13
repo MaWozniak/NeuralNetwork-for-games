@@ -41,67 +41,24 @@ public class GenerationsChartView {
 
         int verticalFactor;
 
-        g.setColor(Color.BLUE);
-        for (int i = 0; i < generationsAverageList.get(0).size(); i += step) {
-            double mixedValue = mixedValue(generationsScoresList.get(0).get(i), generationsAverageList.get(0).get(i));
-            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
-            g.fillOval(100 + i / step * delta, (int) (500 - verticalFactor), 4, 4);
-            if (i % valueStep == 0) {
-                g.drawString(df2.format(generationsAverageList.get(0).get(i)), 100 + i / step * delta, 540);
-            }
+        List<Color> colors = fillColors();
 
+        for(int j = 0; j < generationsAverageList.size(); j++) {
+            g.setColor(colors.get(j));
+            for (int i = 0; i < generationsAverageList.get(j).size(); i += step) {
+                double mixedValue = mixedValue(generationsScoresList.get(j).get(i), generationsAverageList.get(j).get(i));
+                verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
+                g.fillOval(100 + i / step * delta, (int) (500 + j*2 - verticalFactor), 4, 4);
+                if (i % valueStep == 0) {
+                    g.drawString(df2.format(generationsAverageList.get(j).get(i)), 100 + i / step * delta, 540 + j*11);
+                }
+
+            }
         }
 
         g.setColor(Color.YELLOW);
-
-        for (int i = 0; i < generationsScoresList.get(1).size(); i += step) {
-            double mixedValue = mixedValue(generationsScoresList.get(1).get(i), generationsAverageList.get(1).get(i));
-            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
-            g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
-            if (i % valueStep == 0) {
-                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 552);
-            }
-
-        }
-
-        g.setColor(Color.GREEN);
-
-        for (int i = 0; i < generationsScoresList.get(2).size(); i += step) {
-            double mixedValue = mixedValue(generationsScoresList.get(2).get(i), generationsAverageList.get(2).get(i));
-            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
-            g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
-           if (i % valueStep == 0) {
-                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 564);
-            }
-
-        }
-
-        g.setColor(Color.MAGENTA);
-
-        for (int i = 0; i < generationsScoresList.get(3).size(); i += step) {
-            double mixedValue = mixedValue(generationsScoresList.get(3).get(i), generationsAverageList.get(3).get(i));
-            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
-            g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
-            if (i % valueStep == 0) {
-                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 576);
-            }
-
-        }
-
-        g.setColor(Color.BLACK);
-
-        for (int i = 0; i < generationsScoresList.get(4).size(); i += step) {
-            double mixedValue = mixedValue(generationsScoresList.get(4).get(i), generationsAverageList.get(4).get(i));
-            verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);
-            g.fillOval(100 + i / step * delta, (int) (502 - verticalFactor), 4, 4);
-            if (i % valueStep == 0) {
-                g.drawString(df2.format(mixedValue), 100 + i / step * delta, 588);
-            }
-
-        }
-
         String text = "num of generations: " + df2.format(generationsScoresList.get(0).size());
-        g.drawString(text, 540, 600);
+        g.drawString(text, 540, 670);
 
     }
 
@@ -126,6 +83,21 @@ public class GenerationsChartView {
         int scaleOne = 1;
         int scaleTwo = 4;
         return (one * scaleOne + two * scaleTwo) / (scaleOne + scaleTwo);
+    }
+
+    private List<Color> fillColors() {
+        List<Color> colors = new LinkedList<>();
+        colors.add(Color.BLUE);
+        colors.add(Color.YELLOW);
+        colors.add(Color.GREEN);
+        colors.add(Color.MAGENTA);
+        colors.add(Color.ORANGE);
+        colors.add(Color.BLACK);
+        colors.add(Color.WHITE);
+        colors.add(Color.CYAN);
+        colors.add(Color.PINK);
+        colors.add(Color.RED);
+        return colors;
     }
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BranchGenerationManager {
 
-    private static final int NUMBER_OF_BRANCHES = 5;
+    private static final int NUMBER_OF_BRANCHES = 10;
 
     private final List<GenerationManager> branches;
     private int actuateCounter = 0;

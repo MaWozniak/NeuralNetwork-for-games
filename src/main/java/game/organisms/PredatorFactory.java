@@ -3,6 +3,7 @@ package game.organisms;
 public class PredatorFactory {
 
     public Predator createPredator(int generationNum, double xPos, double yPos) {
+        //Comment out for app speed test
 //        if (generationNum < 300) {
 //            return new GenericPredator(xPos, yPos);
 //        } else if (generationNum < 600) {
