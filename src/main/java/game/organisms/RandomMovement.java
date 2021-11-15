@@ -3,6 +3,7 @@ package game.organisms;
 public class RandomMovement extends Thread {
 
     private static final int UPDATE_FRAME_RATE = 5;
+    private volatile boolean isAlive = true;
     private final int millis;
     private boolean up = false;
     private boolean down = false;
@@ -14,7 +15,7 @@ public class RandomMovement extends Thread {
     }
 
     public void run() {
-        while (true) {
+        while (isAlive) {
             up = Math.random() > 0.5;
             down = Math.random() > 0.5;
             right = Math.random() > 0.5;
@@ -22,8 +23,7 @@ public class RandomMovement extends Thread {
 
             try {
                 Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ignored) {
             }
         }
     }
@@ -42,5 +42,10 @@ public class RandomMovement extends Thread {
 
     public boolean isRight() {
         return right;
+    }
+
+    public void kill() {
+        isAlive = false;
+        this.interrupt();
     }
 }

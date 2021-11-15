@@ -111,6 +111,6 @@ class SimplePredatorLogic {
     }
 
     public void killThread() {
-        randomMovement.interrupt();
+        randomMovement.kill();
     }
 }
