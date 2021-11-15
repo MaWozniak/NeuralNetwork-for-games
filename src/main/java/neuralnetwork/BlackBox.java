@@ -5,8 +5,11 @@ public class BlackBox {
     double[] input;
     double[] output;
 
-    private final int HORIZONTAL_VIEW_POINTS = 30;
-    private final int VERTICAL_VIEW_POINTS = 25;
+    /*
+    The biggest speed factor of the App: for 1*5 and 2*3 it's really fast; optimal is: 5*5, 8*3
+     */
+    private final int HORIZONTAL_VIEW_POINTS = 4 * 5; // it must be multiple of 5
+    private final int VERTICAL_VIEW_POINTS = 5 * 3; // it must be multiple of 3
 
     public BlackBox(Genome genome) {
         this.genome = genome;
@@ -50,60 +53,108 @@ public class BlackBox {
 
         byte[][] viewTable = getViewBytesTable(model, xPos, yPos, angle);
         /*
-        tu taj rozne warunki
-        for (int i = 0; i < viewTable.length; ++i) {
-            for (int j = 0; j < viewTable[i].length; ++j) {
-                if(i <15 & j >10) {
-                    if(viewTable[i][j] == 'P') {
-                        prefdatorLeft = 1.0;
-                    }
-                    if(viewTable[i][j] == 'F') {
-                        foodLeft = 1.0;
-                    }
-                }
-            }
-        }
 
-        etc.
-         */
-
-        /*
         bytes:
-        0 - nothing
-        1 - hide places
-        2 - food
-        3 - prey
-        4 - predator
+        0 - nothing     1 - hide places     2 - food        3 - prey        4 - predator
+
          */
         for (int i = 0; i < HORIZONTAL_VIEW_POINTS; ++i) {
             for (int j = 0; j < VERTICAL_VIEW_POINTS; ++j) {
-                if (viewTable[i][j] == 4) {
-                    predatorCenter = 1.0;
-                    predatorFront = 1.0;
-                }
-                if (viewTable[i][j] == 2) {
-                    foodFront = 1.0;
-                }
-                if (i > HORIZONTAL_VIEW_POINTS / 4
-                        & i < 3 * HORIZONTAL_VIEW_POINTS / 4
-                        & j > VERTICAL_VIEW_POINTS / 4
-                        & j < 3 * VERTICAL_VIEW_POINTS / 4
-                ) {
-                    if (viewTable[i][j] == 'P') {
-                        predatorNear = 1.0;
-                        predatorLeftBack = 1.0;
-                        predatorRightBack = 1.0;
-                        predatorBack = 1.0;
+                // LEFT
+                if(i > -1 & i < 2*HORIZONTAL_VIEW_POINTS/5) { // 0 - 10
+                    // BACK
+                    if(j > -1 & j <= VERTICAL_VIEW_POINTS/3) { // 0 - 8
+                        if (viewTable[i][j] == 4) {
+                            predatorLeftBack = 1.0;
+                        }
                     }
-                    if (viewTable[i][j] == 'F') {
-                        foodCenter = 1.0;
-                        foodInPoint = 1.0;
+                    // FRONT
+                    if(j > VERTICAL_VIEW_POINTS/3 & j < VERTICAL_VIEW_POINTS) { // 8 - 24
+                        if (viewTable[i][j] == 4) {
+                            predatorLeft = 1.0;
+                        }
+                        if (viewTable[i][j] == 2) {
+                            foodLeft = 1.0;
+                        }
+                        if (viewTable[i][j] == 3) {
+                            anotherPreyLeft = 1.0;
+                        }
+                        if (viewTable[i][j] == 1) {
+                            hidePlaceFront = 1.0;
+                        }
+                    }
+                }
+                // HORIZONTAL CENTER
+                if(i >= 2*HORIZONTAL_VIEW_POINTS/5 & i <= 3*HORIZONTAL_VIEW_POINTS/5) { // 10 - 15
+                    // BACK
+                    if(j > -1 & j <= VERTICAL_VIEW_POINTS/3) { // 0 - 8
+                        if (viewTable[i][j] == 4) {
+                            predatorBack = 1.0;
+                        }
+                    }
+                    // FRONT
+                    if(j > VERTICAL_VIEW_POINTS/3 & j < VERTICAL_VIEW_POINTS) { // 8 - 24
+                        if (viewTable[i][j] == 4) {
+                            predatorCenter = 1.0;
+                        }
+                        if (viewTable[i][j] == 2) {
+                            foodFront = 1.0;
+                        }
+                        if (viewTable[i][j] == 3) {
+                            anotherPreyFront = 1.0;
+                        }
+                    }
+                }
+                // RIGHT
+                if(i > 3*HORIZONTAL_VIEW_POINTS/5 & i < HORIZONTAL_VIEW_POINTS) { // 15 - 25
+                    // BACK
+                    if(j > -1 & j <= VERTICAL_VIEW_POINTS/3) { // 0 - 8
+                        if (viewTable[i][j] == 4) {
+                            predatorRightBack = 1.0;
+                        }
+                    }
+                    // FRONT
+                    if(j > VERTICAL_VIEW_POINTS/3 & j < VERTICAL_VIEW_POINTS) { // 8 - 24
+                        if (viewTable[i][j] == 4) {
+                            predatorRight = 1.0;
+                        }
+                        if (viewTable[i][j] == 2) {
+                            foodRight = 1.0;
+                        }
+                        if (viewTable[i][j] == 3) {
+                            anotherPreyRight = 1.0;
+                        }
+                    }
+                }
+                // CENTER
+                if(i >= 2*HORIZONTAL_VIEW_POINTS/5 & i <= 3*HORIZONTAL_VIEW_POINTS/5) { // 10 - 15
+
+                    if(j >= VERTICAL_VIEW_POINTS/6 & j <= 3*VERTICAL_VIEW_POINTS/6) { // 4 - 12
+                        if (viewTable[i][j] == 4) {
+                            predatorNear = 1.0;
+                        }
+                        if (viewTable[i][j] == 2) {
+                            foodCenter = 1.0;
+                        }
+                    }
+                }
+                // NEAR CENTER & IN POINT
+                if(i >= 11*HORIZONTAL_VIEW_POINTS/25 & i <= 13*HORIZONTAL_VIEW_POINTS/25) { // 11 - 13
+
+                    if(j >= 6*VERTICAL_VIEW_POINTS/24 & j <= 10*VERTICAL_VIEW_POINTS/24) { // 6 - 10
+                        if (viewTable[i][j] == 2) {
+                            foodInPoint = 1.0;
+                        }
+                        if (viewTable[i][j] == 1) {
+                            hidePlaceInPoint = 1.0;
+                        }
+
                     }
                 }
             }
         }
 
-        // to jest źle, musze uwzglednic angle
+        // TODO to jest źle, musze uwzglednic angle
         if (xPos < 50.0D || xPos > 1200.0D || yPos < 50.0D || yPos > 800.0D) {
             borderFront = 1.0D;
         }
@@ -159,8 +210,8 @@ public class BlackBox {
             double y,
             double angle
     ) {
-        double frontalTransposition = 300.0;
-        double sideTransposition = 250.0;
+        double frontalTransposition = 150.0;
+        double sideTransposition = 150.0;
 
         byte[][] viewTable = new byte[HORIZONTAL_VIEW_POINTS][VERTICAL_VIEW_POINTS];
 
@@ -171,7 +222,7 @@ public class BlackBox {
 
             tempSideTransposition += (2 * sideTransposition) / HORIZONTAL_VIEW_POINTS;
 
-            double tempFrontalTransposition = -frontalTransposition/3; //from -1/3 to 1+2/3
+            double tempFrontalTransposition = -frontalTransposition/2; //from -1/2 to 1 1/2
 
             for (int j = 0; j < VERTICAL_VIEW_POINTS; ++j) {
 
@@ -213,192 +264,7 @@ public class BlackBox {
         return model[x][y];
     }
 
-
-//    double checkRectangleModelView(char checked, char[][] model, int yStartPoint, int xStartPoint, int yNumPoints, int xNumPoints, double FRONT_TRANSALTE, double SIDE_TRANSALTE, double x, double y, double angle) {
-//        double result = 0.0D;
-//
-//        for (int i = yStartPoint; i < yNumPoints; ++i) {
-//            for (int j = xStartPoint; j < xNumPoints; ++j) {
-//                if (this.checkModelView(model, x, y, angle, checked, (double) i * (FRONT_TRANSALTE / (double) yNumPoints), (double) j * (SIDE_TRANSALTE / (double) xNumPoints)) == 1.0D) {
-//                    result = 1;
-//                }
-//            }
-//        }
-//
-//        return result;
-
-//    }
-//    double checkModelView(char[][] model, double xPos, double yPos, double angle, char checked, double FRONT, double SIDE) {
-//        int x = (int) xPos - 6 - (int) (SIDE * Math.cos(angle) - (double) ((int) (FRONT * Math.sin(angle))));
-//        int y = (int) yPos - 6 - (int) (SIDE * Math.sin(angle) + (double) ((int) (FRONT * Math.cos(angle))));
-//        if (x < 0) {
-//            x = 0;
-//        }
-//
-//        if (x > 1250) {
-//            x = 1250;
-//        }
-//
-//        if (y < 0) {
-//            y = 0;
-//        }
-//
-//        if (y > 850) {
-//            y = 850;
-//        }
-//
-//        return this.convCharToDbl(model[x][y], checked);
-
-//    }
-
-//    private double convCharToDbl(char ch, char strike) {
-//        double converted = 0;
-//        if (ch == strike) {
-//            converted = 1;
-//        }
-//
-//        return converted;
-//    }
-
     public Genome getGenome() {
         return this.genome;
     }
 }
-
-
-//        if (this.checkRectangleModelView('F', model, true, 0, 3,
-//                10, 10, 280.0D, -200.0D, xPos, yPos, angle) == 1.0D) {
-//            foodLeft = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('F', model, false, 1, 0,
-//                10, 3, 280.0D, -30.0D, xPos, yPos, angle) == 1.0D) {
-//            foodFront = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('F', model, false, 1, 0,
-//                10, 3, 280.0D, 30.0D, xPos, yPos, angle) == 1.0D) {
-//            foodFront = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('F', model, true, 0, 3,
-//                10, 10, 280.0D, 200.0D, xPos, yPos, angle) == 1.0D) {
-//            foodRight = 1.0D;
-//        }
-//        if (this.checkRectangleModelView('F', model, false, -2, 0,
-//                3, 2, 12.0D, -12.0D, xPos, yPos, angle) == 1.0D) {
-//            foodCenter = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('F', model, false, -2, 0,
-//                3, 2, 12.0D, 12.0D, xPos, yPos, angle) == 1.0D) {
-//            foodCenter = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('F', model, false, -2, 0,
-//                5, 5, 12.0D, -12.0D, xPos, yPos, angle) == 1.0D) {
-//            foodInPoint = 1.0D;
-//        }
-//        if (this.checkRectangleModelView('F', model, false, -2, 0,
-//                5, 5, 12.0D, 12.0D, xPos, yPos, angle) == 1.0D) {
-//            foodInPoint = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('X', model, true, 0, 2,
-//                10, 10, 220.0D, -180.0D, xPos, yPos, angle) == 1.0D) {
-//            anotherPreyLeft = 1.0D;
-//        }
-//
-//
-//        if (this.checkRectangleModelView('X', model, false, 1, 0,
-//                10, 3, 200.0D, -30.0D, xPos, yPos, angle) == 1.0D) {
-//            anotherPreyFront = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('X', model, false, 1, 0,
-//                10, 3, 200.0D, 30.0D, xPos, yPos, angle) == 1.0D) {
-//            anotherPreyFront = 1.0D;
-//        }
-//
-//
-//        if (this.checkRectangleModelView('X', model, true, 0, 2,
-//                10, 10, 220.0D, 180.0D, xPos, yPos, angle) == 1.0D) {
-//            anotherPreyRight = 1.0D;
-//        }
-//
-//        hidePlaceFront = this.checkModelView(model, xPos, yPos, angle, 'M', 160.0D, 0.0D);
-
-
-//        if (this.checkRectangleModelView('P', model, false, 0, 2,
-//                15, 15, 270.0D, -200.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorLeft = 1.0D;
-//        }
-//
-//
-//        if (this.checkRectangleModelView('P', model, false, 1, 0,
-//                16, 5, 290.0D, -30.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorFront = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('P', model, false, 1, 0,
-//                16, 5, 290.0D, 30.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorFront = 1.0D;
-//        }
-//
-//
-//        if (this.checkRectangleModelView('P', model, false, 0, 2,
-//                15, 15, 270.0D, 200.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorRight = 1.0D;
-//        }
-//
-//
-//        if (this.checkRectangleModelView('P', model, false, -4, 0,
-//                8, 8, 24.0D, -24.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorNear = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('P', model, false, -4, 0,
-//                8, 8, 24.0D, 24.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorNear = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('P', model, false, -2, 0,
-//                5, 5, 12.0D, -12.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorCenter = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('P', model, false, -2, 0,
-//                5, 5, 12.0D, 12.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorCenter = 1.0D;
-//        }
-//        if (this.checkRectangleModelView('P', model, false, 0, 2,
-//                8, 8, -70.0D, -80.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorLeftBack = 1.0D;
-//        }
-//
-//
-//        if (this.checkRectangleModelView('P', model, false, 0, 0,
-//                8, 4, -80.0D, -30.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorBack = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('P', model, false, 0, 0,
-//                8, 4, -80.0D, 30.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorBack = 1.0D;
-//        }
-//
-//        if (this.checkRectangleModelView('P', model, false, 0, 2,
-//                8, 8, -70.0D, 80.0D, xPos, yPos, angle) == 1.0D) {
-//            predatorRightBack = 1.0D;
-//        }
-//
-//
-//        if (this.checkRectangleModelView('M', model, false, -2, 0,
-//                5, 5, 12.0D, -12.0D, xPos, yPos, angle) == 1.0D) {
-//            hidePlaceInPoint = 1.0D;
-//        }
-//        if (this.checkRectangleModelView('M', model, false, -2, 0,
-//                5, 5, 12.0D, 12.0D, xPos, yPos, angle) == 1.0D) {
-//            hidePlaceInPoint = 1.0D;
-//        }
-//
