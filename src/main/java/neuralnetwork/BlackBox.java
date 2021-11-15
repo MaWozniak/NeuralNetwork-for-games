@@ -8,8 +8,8 @@ public class BlackBox {
     /*
     The biggest speed factor of the App: for 1*5 and 2*3 it's really fast; optimal is: 5*5, 8*3
      */
-    private final int HORIZONTAL_VIEW_POINTS = 4 * 5; // it must be multiple of 5
-    private final int VERTICAL_VIEW_POINTS = 5 * 3; // it must be multiple of 3
+    private final int HORIZONTAL_VIEW_POINTS = 5 * 5; // it must be multiple of 5
+    private final int VERTICAL_VIEW_POINTS = 8 * 3; // it must be multiple of 3
 
     public BlackBox(Genome genome) {
         this.genome = genome;

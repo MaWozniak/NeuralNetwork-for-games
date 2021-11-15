@@ -26,19 +26,24 @@ public class GenerationScore {
         this.generationsAverageList = new LinkedList<>();
     }
 
-    double calculateAverageScoreFrom_N_lastGenerations(int count) {
-        double resetGen = 50;
-        int start = (int) ((Math.floor(count / resetGen)) * resetGen);
-        double result = 0.0;
-
+    double calculateAverageScoreFrom_N_lastGenerations() {
+        int resetGen = 50;
         int length = averageScores.size();
-        int divider = length - start;
 
-        for (int i = start; i < length; i++) {
-            result += averageScores.get(i);
+        List<Double> last_N_scoresArray = new LinkedList<>();
+
+        if (length <= resetGen) {
+            last_N_scoresArray.addAll(averageScores);
+            double sumOfAll = last_N_scoresArray.stream().mapToDouble(Double::doubleValue).sum();
+            return sumOfAll / length;
+        } else {
+            for (int i = length - resetGen; i < length ; i++) {
+                last_N_scoresArray.add(averageScores.get(i));
+            }
+            double sumOfLastN = last_N_scoresArray.stream().mapToDouble(Double::doubleValue).sum();
+            return sumOfLastN / resetGen;
         }
 
-        return result / divider;
     }
 
     void addNewGeneration(
@@ -46,19 +51,19 @@ public class GenerationScore {
             StageManager stageManager,
             GenerationMemory generationMemory
     ) {
-        this.updateAverageScores(count, generationMemory);
+        this.updateAverageScores(generationMemory);
         this.updateBestIndividualScores(generationMemory);
         this.log("summary", count, stageManager, generationMemory);
         this.writeFileLog(count, generationMemory);
     }
 
-    void updateAverageScores(int count, GenerationMemory generationMemory) {
+    void updateAverageScores(GenerationMemory generationMemory) {
         averageScores.add(generationMemory.getAverageScore());
 
         if (averageScoreOfAllGenerations == 0) {
             averageScoreOfAllGenerations = generationMemory.getAverageScore();
         } else {
-            averageScoreOfAllGenerations = calculateAverageScoreFrom_N_lastGenerations(count);
+            averageScoreOfAllGenerations = calculateAverageScoreFrom_N_lastGenerations();
         }
 
         if (generationMemory.getAverageScore() > this.bestScoreOfALLGenerations) {
@@ -120,15 +125,15 @@ public class GenerationScore {
             generationsAverageList.add(this.averageScoreOfAllGenerations);
 
             boolean showListOfEveryScore = false;
-            if(showListOfEveryScore) {
+            if (showListOfEveryScore) {
                 for (int i = 0; i < generationsScoresList.size(); i++) {
                     System.out.print(
                             "--" + (i + 1)
-                            + "--\t"
-                            + DF_2.format(this.generationsScoresList.get(i))
-                            + "\t( "
-                            + DF_2.format(this.generationsAverageList.get(i))
-                            + " )\t\t"
+                                    + "--\t"
+                                    + DF_2.format(this.generationsScoresList.get(i))
+                                    + "\t( "
+                                    + DF_2.format(this.generationsAverageList.get(i))
+                                    + " )\t\t"
                     );
                     if ((i + 1) % 3 == 0) {
                         System.out.println();
