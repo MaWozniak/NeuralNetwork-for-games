@@ -1,4 +1,4 @@
-package genetics;
+package manager;
 
 import game.organisms.Prey;
 import game.stage.StageManager;
@@ -30,13 +30,13 @@ public class GenerationManager {
     public GenerationManager(List<Prey> AI_prey, int size, double preyMaxAge, StageManager stageManager) {
         this.generationSize = size;
         this.stageManager = stageManager;
-        NeuralNetwork protoplast = new NeuralNetwork(25, 3, 30, 4);
+        NeuralNetwork progenitor = new NeuralNetwork(25, 3, 30, 4);
         double BIAS = 1.0;
-        protoplast.setAllBiases(BIAS);
+        progenitor.setAllBiases(BIAS);
         NeuralNetwork bridge = new NeuralNetwork(25, 3, 25, 3);
-        NodalNetwork nodalNetworkProtoplast = new NodalNetwork(bridge, protoplast, 3);
+        NodalNetwork nodalNetworkProgenitor = new NodalNetwork(bridge, progenitor, 3);
 
-        this.generation = new Generation(1, generationSize, nodalNetworkProtoplast);
+        this.generation = new Generation(1, generationSize, nodalNetworkProgenitor);
         this.AI_prey = AI_prey;
         this.mutationRate = 1.1;
         this.preyMaxAge = preyMaxAge;

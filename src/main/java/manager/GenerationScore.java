@@ -1,4 +1,4 @@
-package genetics;
+package manager;
 
 import game.stage.StageManager;
 
@@ -8,11 +8,10 @@ import java.util.List;
 
 public class GenerationScore {
     private static final DecimalFormat DF_2 = new DecimalFormat("#.#");
-
     private final List<Double> generationsScoresList;
     private final List<Double> generationsAverageList;
-    private double avarageScoreOfAllGenerations = 0.0;
-    private final List<Double> avarageScores = new LinkedList<>();
+    private double averageScoreOfAllGenerations = 0.0;
+    private final List<Double> averageScores = new LinkedList<>();
     private double bestScoreOfALLGenerations = 0.0;
     private int indexOfBestGeneration = 0;
     private double bestScore = 0.0;
@@ -20,20 +19,23 @@ public class GenerationScore {
     private double secondBestScore = 0.0;
     private String idOfSecondBestScore = "";
     private double thirdBestScore = 0.0;
-    private String idOfthirdBestScore = "";
+    private String idOfThirdBestScore = "";
 
     GenerationScore() {
         this.generationsScoresList = new LinkedList<>();
         this.generationsAverageList = new LinkedList<>();
     }
 
-    Double calculateAvarageScoreFromXlastGenerations(int start) {
-        Double result = 0.0;
-        int lenght = avarageScores.size();
-        int divider = lenght - start;
+    double calculateAverageScoreFrom_N_lastGenerations(int count) {
+        double resetGen = 50;
+        int start = (int) ((Math.floor(count / resetGen)) * resetGen);
+        double result = 0.0;
 
-        for (int i = start; i < lenght; i++) {
-            result += avarageScores.get(i);
+        int length = averageScores.size();
+        int divider = length - start;
+
+        for (int i = start; i < length; i++) {
+            result += averageScores.get(i);
         }
 
         return result / divider;
@@ -51,17 +53,16 @@ public class GenerationScore {
     }
 
     void updateAverageScores(int count, GenerationMemory generationMemory) {
-        avarageScores.add(generationMemory.getAvarageScore());
+        averageScores.add(generationMemory.getAverageScore());
 
-        if (avarageScoreOfAllGenerations == 0) {
-            avarageScoreOfAllGenerations = generationMemory.getAvarageScore();
+        if (averageScoreOfAllGenerations == 0) {
+            averageScoreOfAllGenerations = generationMemory.getAverageScore();
         } else {
-            int startPoint = (int) (Math.floor(count / (double) 50)) * 50;
-            avarageScoreOfAllGenerations = calculateAvarageScoreFromXlastGenerations(startPoint);
+            averageScoreOfAllGenerations = calculateAverageScoreFrom_N_lastGenerations(count);
         }
 
-        if (generationMemory.getAvarageScore() > this.bestScoreOfALLGenerations) {
-            bestScoreOfALLGenerations = generationMemory.getAvarageScore();
+        if (generationMemory.getAverageScore() > this.bestScoreOfALLGenerations) {
+            bestScoreOfALLGenerations = generationMemory.getAverageScore();
             indexOfBestGeneration = generationMemory.getId();
         }
 
@@ -70,19 +71,19 @@ public class GenerationScore {
     void updateBestIndividualScores(GenerationMemory generationMemory) {
         if (generationMemory.get(0).getScore() >= bestScore) {
             thirdBestScore = secondBestScore;
-            idOfthirdBestScore = idOfSecondBestScore;
+            idOfThirdBestScore = idOfSecondBestScore;
             secondBestScore = bestScore;
             idOfSecondBestScore = idOfBestScore;
             bestScore = generationMemory.get(0).getScore();
             idOfBestScore = generationMemory.get(0).getId();
         } else if (generationMemory.get(0).getScore() >= secondBestScore) {
             thirdBestScore = secondBestScore;
-            idOfthirdBestScore = idOfSecondBestScore;
+            idOfThirdBestScore = idOfSecondBestScore;
             secondBestScore = generationMemory.get(0).getScore();
             idOfSecondBestScore = generationMemory.get(0).getId();
         } else if (generationMemory.get(0).getScore() >= thirdBestScore) {
             thirdBestScore = generationMemory.get(0).getScore();
-            idOfthirdBestScore = generationMemory.get(0).getId();
+            idOfThirdBestScore = generationMemory.get(0).getId();
         }
 
     }
@@ -107,24 +108,35 @@ public class GenerationScore {
             System.out.println("\n-----------------------");
             System.out.println("PAST genes to next gen: \ngenerationMemory.getSelectedGenomes().size(): " + generationMemory.getSelectedGenomes().size());
             System.out.println("\n-----------------------\n");
-            System.out.println("AVARAGE score of THIS GENERATION: " + generationMemory.getAvarageScore());
-            System.out.println("AVARAGE score of ALL GENERATION: " + this.avarageScoreOfAllGenerations);
+            System.out.println("AVARAGE score of THIS GENERATION: " + generationMemory.getAverageScore());
+            System.out.println("AVARAGE score of ALL GENERATION: " + this.averageScoreOfAllGenerations);
             System.out.println("AVARAGE score of BEST GENERATION: " + this.bestScoreOfALLGenerations + " ( " + this.indexOfBestGeneration + " generation )");
             System.out.println("-----------------------");
             System.out.println("1st prey of ALL GENERATION: " + idOfBestScore + " score: " + bestScore);
             System.out.println("2nd prey of ALL GENERATION: " + idOfSecondBestScore + " score: " + secondBestScore);
-            System.out.println("3rd prey of ALL GENERATION: " + idOfthirdBestScore + " score: " + thirdBestScore);
+            System.out.println("3rd prey of ALL GENERATION: " + idOfThirdBestScore + " score: " + thirdBestScore);
             System.out.println("\n\nlist of all:");
-            generationsScoresList.add(generationMemory.getAvarageScore());
-            generationsAverageList.add(this.avarageScoreOfAllGenerations);
+            generationsScoresList.add(generationMemory.getAverageScore());
+            generationsAverageList.add(this.averageScoreOfAllGenerations);
 
-//            for (int i = 0; i < generationsScoresList.size(); i++) {
-//                System.out.print("--" + (i + 1) + "--\t" + DF_2.format(this.generationsScoresList.get(i)) + "\t( " + DF_2.format(this.generationsAverageList.get(i)) + " )\t\t");
-//                if ((i + 1) % 3 == 0) {
-//                    System.out.println();
-//                }
-//
-//            }
+            boolean showListOfEveryScore = false;
+            if(showListOfEveryScore) {
+                for (int i = 0; i < generationsScoresList.size(); i++) {
+                    System.out.print(
+                            "--" + (i + 1)
+                            + "--\t"
+                            + DF_2.format(this.generationsScoresList.get(i))
+                            + "\t( "
+                            + DF_2.format(this.generationsAverageList.get(i))
+                            + " )\t\t"
+                    );
+                    if ((i + 1) % 3 == 0) {
+                        System.out.println();
+                    }
+
+                }
+            }
+
             System.out.println("\n-------------------------\n");
             System.out.println("\n...START NEW GENERATION...\n");
         }
@@ -134,13 +146,13 @@ public class GenerationScore {
     void writeFileLog(int count, GenerationMemory generationMemory) {
         StringBuilder fileContent = new StringBuilder();
         fileContent.append("GENERATION ").append(count - 1).append("\n");
-        fileContent.append("\nAVARAGE score of THIS GENERATION: ").append(generationMemory.getAvarageScore());
-        fileContent.append("\nAVARAGE score of ALL GENERATION: ").append(this.avarageScoreOfAllGenerations);
+        fileContent.append("\nAVARAGE score of THIS GENERATION: ").append(generationMemory.getAverageScore());
+        fileContent.append("\nAVARAGE score of ALL GENERATION: ").append(this.averageScoreOfAllGenerations);
         fileContent.append("\nAVARAGE score of BEST GENERATION: ").append(this.bestScoreOfALLGenerations).append(" ( ").append(this.indexOfBestGeneration).append(" generation )");
         fileContent.append("\n--------------------------------------");
         fileContent.append("\n\n1st prey of ALL GENERATION: ").append(idOfBestScore).append(" score: ").append(bestScore);
         fileContent.append("\n2nd prey of ALL GENERATION: ").append(idOfSecondBestScore).append(" score: ").append(secondBestScore);
-        fileContent.append("\n3rd prey of ALL GENERATION: ").append(idOfthirdBestScore).append(" score: ").append(thirdBestScore);
+        fileContent.append("\n3rd prey of ALL GENERATION: ").append(idOfThirdBestScore).append(" score: ").append(thirdBestScore);
         fileContent.append("\n--------------------------------------");
 
         for (int i = 0; i < generationMemory.getSize(); i++) {
@@ -159,6 +171,6 @@ public class GenerationScore {
     }
 
     public double getNewMutationRate() {
-        return (bestScore - avarageScoreOfAllGenerations) / bestScore;
+        return (bestScore - averageScoreOfAllGenerations) / bestScore;
     }
 }

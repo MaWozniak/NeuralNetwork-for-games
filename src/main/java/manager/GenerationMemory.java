@@ -1,4 +1,4 @@
-package genetics;
+package manager;
 
 import game.organisms.Prey;
 import neuralnetwork.Genome;
@@ -8,16 +8,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 class GenerationMemory {
-    private List<Genome> genomes = new LinkedList<>();
-    private int size;
-    private int id;
-    private double avarageScore;
+    private final List<Genome> genomes = new LinkedList<>();
+    private final int size;
+    private final int id;
+    private double averageScore;
     private int countAdding;
 
     GenerationMemory(int id, int numRememberedPreys) {
         this.size = numRememberedPreys;
         this.id = id;
-        this.avarageScore = 0.0;
+        this.averageScore = 0.0;
         this.countAdding = 1;
     }
 
@@ -37,7 +37,7 @@ class GenerationMemory {
 
         }
 
-        avarageScore = (avarageScore * countAdding + prey.getScore()) / (countAdding + 1);
+        averageScore = (averageScore * countAdding + prey.getScore()) / (countAdding + 1);
         countAdding++;
     }
 
@@ -49,8 +49,8 @@ class GenerationMemory {
         return genomes.get(i);
     }
 
-    public double getAvarageScore() {
-        return avarageScore;
+    public double getAverageScore() {
+        return averageScore;
     }
 
     int getId() {

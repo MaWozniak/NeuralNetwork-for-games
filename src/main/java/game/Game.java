@@ -7,7 +7,7 @@ import game.organisms.PredatorFactory;
 import game.organisms.Prey;
 import game.stage.Stage;
 import game.stage.StageManager;
-import genetics.BranchGenerationManager;
+import manager.BranchGenerationManager;
 
 import java.awt.*;
 import java.io.IOException;

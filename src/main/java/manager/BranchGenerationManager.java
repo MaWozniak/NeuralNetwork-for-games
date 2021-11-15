@@ -1,4 +1,4 @@
-package genetics;
+package manager;
 
 import game.organisms.Prey;
 import game.stage.StageManager;
