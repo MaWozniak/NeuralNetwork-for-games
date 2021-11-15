@@ -33,7 +33,7 @@ public class GenericPredator implements Predator {
         predatorLogic = new GenericPredatorLogic();
     }
 
-    public void move(char[][] model, Stage stage) {
+    public void move(byte[][] model, Stage stage) {
         thinking(model);
         setPosition(stage);
         energyCost();
@@ -49,7 +49,7 @@ public class GenericPredator implements Predator {
         }
     }
 
-    void thinking(char[][] model) {
+    void thinking(byte[][] model) {
         predatorLogic.thinking(model, this);
     }
 

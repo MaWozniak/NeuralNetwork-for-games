@@ -50,7 +50,7 @@ public class Prey {
         }
     }
 
-    public void move(char[][] model, Stage stage) {
+    public void move(byte[][] model, Stage stage) {
         thinking(model);
         setPosition();
         energyCost(stage);
@@ -68,7 +68,7 @@ public class Prey {
         this.firstInGeneration = firstInGeneration;
     }
 
-    void thinking(char[][] model) {
+    void thinking(byte[][] model) {
         ai.thinking(model, this);
     }
 

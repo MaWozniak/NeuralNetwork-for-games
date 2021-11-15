@@ -7,9 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ModelViewGui extends JFrame {
-    private final char[][] model;
+    private final byte[][] model;
 
-    public ModelViewGui(boolean visible, char[][] model) {
+    public ModelViewGui(boolean visible, byte[][] model) {
         this.model = model;
         JPanel jPanel = new JPanel();
         this.add(jPanel);
@@ -36,7 +36,7 @@ public class ModelViewGui extends JFrame {
 
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
-                if (model[i][j] == 'M') {
+                if (model[i][j] == 1) {
                     g2d.fillRect(i / 2, j / 2, 1, 1);
                 }
             }
@@ -46,7 +46,7 @@ public class ModelViewGui extends JFrame {
 
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
-                if (model[i][j] == 'F') {
+                if (model[i][j] == 3) {
                     g2d.fillRect(i / 2, j / 2, 1, 1);
                 }
             }
@@ -56,7 +56,7 @@ public class ModelViewGui extends JFrame {
 
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
-                if (model[i][j] == 'P') {
+                if (model[i][j] == 4) {
                     g2d.fillRect(i / 2, j / 2, 1, 1);
                 }
             }
@@ -66,7 +66,7 @@ public class ModelViewGui extends JFrame {
 
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
-                if (model[i][j] == 'X') {
+                if (model[i][j] == 2) {
                     g2d.fillRect(i / 2, j / 2, 1, 1);
                 }
             }

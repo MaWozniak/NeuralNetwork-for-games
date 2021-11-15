@@ -30,10 +30,10 @@ public class GenerationManager {
     public GenerationManager(List<Prey> AI_prey, int size, double preyMaxAge, StageManager stageManager) {
         this.generationSize = size;
         this.stageManager = stageManager;
-        NeuralNetwork protoplast = new NeuralNetwork(25, 2, 20, 4);
+        NeuralNetwork protoplast = new NeuralNetwork(25, 3, 30, 4);
         double BIAS = 1.0;
         protoplast.setAllBiases(BIAS);
-        NeuralNetwork bridge = new NeuralNetwork(25, 3, 15, 3);
+        NeuralNetwork bridge = new NeuralNetwork(25, 3, 25, 3);
         NodalNetwork nodalNetworkProtoplast = new NodalNetwork(bridge, protoplast, 3);
 
         this.generation = new Generation(1, generationSize, nodalNetworkProtoplast);

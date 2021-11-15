@@ -13,7 +13,7 @@ class PreyLogic {
         this.forceMove = forceMove;
     }
 
-    void thinking(char[][] model, Prey prey) {
+    void thinking(byte[][] model, Prey prey) {
         OutputMove move = this.blackBox.move(model, prey.getX(), prey.getY(), prey.getAngle(), prey.getSpeed(), prey.getEnergy(), prey.getStamina(), prey.getAge());
         if (forceMove) {
             prey.rightFrontTail = true;

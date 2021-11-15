@@ -8,7 +8,7 @@ class SimplePredatorLogic {
         randomMovement.start();
     }
 
-    void thinking(char[][] model, SimplePredator predator) {
+    void thinking(byte[][] model, SimplePredator predator) {
         predator.left = false;
         predator.down = false;
         predator.up = false;
@@ -73,12 +73,12 @@ class SimplePredatorLogic {
         }
     }
 
-    private boolean seePreyIn(double frontDistance, double sideDistance, char[][] model, SimplePredator predator) {
+    private boolean seePreyIn(double frontDistance, double sideDistance, byte[][] model, SimplePredator predator) {
         int x = ((int) predator.getX() - 5) + (int) (frontDistance * Math.sin(predator.angle) + (int) (sideDistance * Math.cos(predator.angle)));
         int y = ((int) predator.getY() - 5) - (int) (frontDistance * Math.cos(predator.angle) + (int) (sideDistance * Math.sin(predator.angle)));
 
         if (x > 0 && y > 0 && x < 1250 && y < 850) {
-            return model[x][y] == 'X';
+            return model[x][y] == 3;
         } else {
             return false;
         }
@@ -97,14 +97,14 @@ class SimplePredatorLogic {
         return result;
     }
 
-    private boolean seeHidePlace(char[][] model, SimplePredator predator) {
+    private boolean seeHidePlace(byte[][] model, SimplePredator predator) {
         double frontDistance = 20.0;
         double sideDistance = 0.0;
         int x = ((int) predator.getX() - 5) + (int) (frontDistance * Math.sin(predator.angle) + (int) (sideDistance * Math.cos(predator.angle)));
         int y = ((int) predator.getY() - 5) - (int) (frontDistance * Math.cos(predator.angle) + (int) (sideDistance * Math.sin(predator.angle)));
 
         if (x > 0 && y > 0 && x < 1250 && y < 850) {
-            return model[x][y] == 'M';
+            return model[x][y] == 1;
         } else {
             return false;
         }

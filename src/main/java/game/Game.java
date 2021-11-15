@@ -151,15 +151,15 @@ public class Game {
         modelView.clear(this.getStage());
 
         for (Predator generatedPredator : predators) {
-            modelView.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), 'P', 40);
+            modelView.set((int) generatedPredator.getX(), (int) generatedPredator.getY(), (byte) 4, 40);
         }
 
         for (Food food : foodManager.getFoodPoints()) {
-            modelView.set(food.getX(), food.getY(), 'F', 8);
+            modelView.set(food.getX(), food.getY(), (byte) 2, 8);
         }
 
         for (Prey generatedPrey : AI_prey) {
-            modelView.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), 'X', 12);
+            modelView.set((int) generatedPrey.getX(), (int) generatedPrey.getY(), (byte) 3, 12);
         }
 
         modelView.repaintGui();

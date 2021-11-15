@@ -2,7 +2,7 @@ package game.organisms;
 
 class GenericPredatorLogic {
 
-    void thinking(char[][] model, GenericPredator predator) {
+    void thinking(byte[][] model, GenericPredator predator) {
         predator.left = false;
         predator.down = false;
         predator.up = false;

@@ -118,13 +118,13 @@ public class GenerationScore {
             generationsScoresList.add(generationMemory.getAvarageScore());
             generationsAverageList.add(this.avarageScoreOfAllGenerations);
 
-            for (int i = 0; i < generationsScoresList.size(); i++) {
-                System.out.print("--" + (i + 1) + "--\t" + DF_2.format(this.generationsScoresList.get(i)) + "\t( " + DF_2.format(this.generationsAverageList.get(i)) + " )\t\t");
-                if ((i + 1) % 3 == 0) {
-                    System.out.println();
-                }
-
-            }
+//            for (int i = 0; i < generationsScoresList.size(); i++) {
+//                System.out.print("--" + (i + 1) + "--\t" + DF_2.format(this.generationsScoresList.get(i)) + "\t( " + DF_2.format(this.generationsAverageList.get(i)) + " )\t\t");
+//                if ((i + 1) % 3 == 0) {
+//                    System.out.println();
+//                }
+//
+//            }
             System.out.println("\n-------------------------\n");
             System.out.println("\n...START NEW GENERATION...\n");
         }

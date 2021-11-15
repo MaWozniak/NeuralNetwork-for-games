@@ -5,14 +5,14 @@ import game.stage.Stage;
 
 public class ModelView {
 
-    private final char[][] model = new char[1300][900];
+    private final byte[][] model = new byte[1300][900];
     private final ModelViewGui modelView;
 
     public ModelView(boolean visible) {
         modelView = new ModelViewGui(visible, model);
     }
 
-    char[][] getModel() {
+    byte[][] getModel() {
         return model;
     }
 
@@ -24,17 +24,17 @@ public class ModelView {
     void clear(Stage stage) {
         for (int i = 0; i < 1300; i++) {
             for (int j = 0; j < 900; j++) {
-                model[i][j] = '0';
+                model[i][j] = 0;
             }
         }
         this.paintSpecialPlaces(stage.isHidePlacesCenter(), stage.isHidePlacesBorder());
     }
 
-    void set(int x, int y, char ch, int radius) {
+    void set(int x, int y, byte value, int radius) {
         for (int a = -radius; a < radius; a++) {
             for (int b = -radius; b < radius; b++) {
                 if ((x + a) >= 0 && (y + b) >= 0 && (x + a) < 1290 && (y + b) < 890) {
-                    model[x + a][y + b] = ch;
+                    model[x + a][y + b] = value;
                 }
             }
         }
@@ -42,21 +42,21 @@ public class ModelView {
 
     private void paintSpecialPlaces(boolean center, boolean borders) {
         if (center) {
-            this.setRectengle(600, 420, 'M', 280, 400);
+            this.setRectangle(600, 420, (byte) 1, 280, 400);
         }
         if (borders) {
-            this.setRectengle(600, 50, 'M', 80, 1300);
-            this.setRectengle(600, 780, 'M', 80, 1300);
-            this.setRectengle(60, 450, 'M', 900, 80);
-            this.setRectengle(1160, 450, 'M', 900, 80);
+            this.setRectangle(600, 50, (byte) 1, 80, 1300);
+            this.setRectangle(600, 780, (byte) 1, 80, 1300);
+            this.setRectangle(60, 450, (byte) 1, 900, 80);
+            this.setRectangle(1160, 450, (byte) 1, 900, 80);
         }
     }
 
-    private void setRectengle(int x, int y, char ch, int height, int width) {
+    private void setRectangle(int x, int y, byte value, int height, int width) {
         for (int a = -width / 2; a < width / 2; a++) {
             for (int b = -height / 2; b < height / 2; b++) {
                 if ((x + a) >= 0 && (y + b) >= 0 && (x + a) < 1290 && (y + b) < 890) {
-                    model[x + a][y + b] = ch;
+                    model[x + a][y + b] = value;
                 }
             }
         }

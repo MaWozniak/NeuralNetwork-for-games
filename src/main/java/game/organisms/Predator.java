@@ -8,7 +8,7 @@ public interface Predator {
 
     boolean isAlive();
 
-    void move(char[][] model, Stage stage);
+    void move(byte[][] model, Stage stage);
 
     void eat();
 
