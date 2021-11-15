@@ -1,4 +1,4 @@
-At the moment - IT'S NOT WORKING
+IT'S WORKING BUT... these are possibilities of what could goes wrong:
 
 There is 4 mayor element of the experiment, that could not work:
 
@@ -10,15 +10,15 @@ There is 4 mayor element of the experiment, that could not work:
     many times the best preys in the generation are just for lucky, not for their behavior
 
  - OUTPUT-INPUT between Sim and Neural Network
-    - it could be not clear and not understable output from game simulation
+    - it could be not clear and not understandable output from game simulation
     - interpretation of this output could be misleading
 
  - GENETICS METHODS
-    - it could pass not a best genes but do too much mutation
-    - it could be wrong writting and not working like it should do
+    - it could pass not the best genes but do too much mutation
+    - it could be wrong writing and not working like it should do
     - or it has bad assumption: wrong mutation limit, wrong number od randomness etc
 
  - NEURAL NETWORK
-    - it could be wrong writting and not working like it should do
+    - it could be wrong writing and not working like it should do
     - or it's size: number of layers or neurons is not correct
 
