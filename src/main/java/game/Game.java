@@ -51,7 +51,7 @@ public class Game {
     }
 
     public void setFrameRate(int frameRate) {
-        this.gameLoop.setMillis(1000 / frameRate);
+        gameLoop.setMillis(1000 / frameRate);
     }
 
     void gameLoop() throws IOException {

@@ -10,12 +10,25 @@ import javax.swing.JPanel;
 
 public class GUI extends JFrame {
     private static final int FRAME_RATE = 60;
+    private static boolean isSleep = false;
 
     public GUI(Game game) throws InterruptedException {
         RenderPanel renderPanel = new RenderPanel(game);
         JPanel buttonPanel = new JPanel();
         FrameRateCount framerateCount = new FrameRateCount();
         JLabel label = new JLabel(Integer.toString(game.getFrameRate()));
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.addActionListener(actionEvent1 -> {
+            if(!isSleep) {
+                isSleep = true;
+                game.setFrameRate(1);
+                label.setText("1");
+            } else {
+                isSleep = false;
+                game.setFrameRate(9999999);
+                label.setText("9999999");
+            }
+        });
         JButton button1 = new JButton("Slower");
         button1.addActionListener(actionEvent1 -> {
             game.setFrameRate(framerateCount.previous());
@@ -32,20 +45,13 @@ public class GUI extends JFrame {
         button3.addActionListener(actionEvent3 -> {
             renderPanel.getGenerationMemory(game.getGenerationsScores(), game.getGenerationsAverageScores());
             renderPanel.setChartViewFlag();
-            label4.setText("BRANCH NUM: " + game.getBranchNumber());
-        });
-        JButton button6 = new JButton("Get Mutation rate:");
-        button6.addActionListener(actionEvent2 -> {
-            label3.setText(game.getMutationRate());
-            label4.setText("BRANCH NUM: " + game.getBranchNumber());
-
         });
         buttonPanel.setSize(100, 30);
+        buttonPanel.add(pauseButton);
         buttonPanel.add(button1);
         buttonPanel.add(label);
         buttonPanel.add(button2);
         buttonPanel.add(button3);
-        buttonPanel.add(button6);
         buttonPanel.add(label3);
         buttonPanel.add(label4);
         this.setLayout(new BorderLayout());
@@ -58,8 +64,13 @@ public class GUI extends JFrame {
         int millis = 1000 / FRAME_RATE;
 
         while (true) {
-            renderPanel.revalidate();
-            renderPanel.repaint();
+
+            if(!isSleep) {
+                renderPanel.revalidate();
+                renderPanel.repaint();
+                label3.setText("Mutation rate: " + game.getMutationRate());
+                label4.setText("BRANCH NUM: " + game.getBranchNumber());
+            }
             Thread.sleep(millis);
         }
     }
