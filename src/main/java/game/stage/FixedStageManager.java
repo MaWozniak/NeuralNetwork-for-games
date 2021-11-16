@@ -7,6 +7,9 @@ public class FixedStageManager implements StageManager {
 
     public FixedStageManager() {
         testStage.setLearningNetwork(2);
+        testStage.setHidePlacesBorder(true);
+        testStage.setHidePlacesCenter(true);
+        testStage.setHidePlacesPenalty(true);
         testStage.setPreyMustEat(true);
         testStage.setNumOfPredators(4);
         testStage.setFoodTypeStrategy(FoodStrategy.FOUR_POINTS);
