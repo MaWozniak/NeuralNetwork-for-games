@@ -8,13 +8,10 @@ import java.util.List;
 
 public class GenerationsChartView {
     private final static boolean TEST = false;
-    private final static int HEIGHT_OF_CHART_PLOTS = 80;
+    private int HEIGHT_OF_CHART_PLOTS = 64;
     private static final DecimalFormat df2 = new DecimalFormat("#.##");
     private List<List<Double>> generationsScoresList = new LinkedList<>();
     private List<List<Double>> generationsAverageList = new LinkedList<>();
-
-    public GenerationsChartView() {
-    }
 
     public void paint(Graphics2D g) {
         g.setColor(Color.GRAY);
@@ -77,6 +74,22 @@ public class GenerationsChartView {
             generationsAverageList.get(0).add(i / 10 + Math.random());
         }
 
+    }
+
+    public void scaleDownChart() {
+        if(HEIGHT_OF_CHART_PLOTS > 2) {
+            HEIGHT_OF_CHART_PLOTS = HEIGHT_OF_CHART_PLOTS / 2;
+        } else {
+            HEIGHT_OF_CHART_PLOTS = 1;
+        }
+    }
+
+    public void scaleUpChart() {
+        if(HEIGHT_OF_CHART_PLOTS  < 512) {
+            HEIGHT_OF_CHART_PLOTS = HEIGHT_OF_CHART_PLOTS * 2;
+        } else {
+            HEIGHT_OF_CHART_PLOTS = 512;
+        }
     }
 
     private Double mixedValue(Double one, Double two) {

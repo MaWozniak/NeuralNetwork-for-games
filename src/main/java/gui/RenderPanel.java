@@ -37,6 +37,14 @@ public class RenderPanel extends JPanel {
         chartViewFlag = !chartViewFlag;
     }
 
+    public void scaleDownChartViewHeight() {
+        chartView.scaleDownChart();
+    }
+
+    public void scaleUpChartViewHeight() {
+        chartView.scaleUpChart();
+    }
+
     public void getGenerationMemory(List<List<Double>> generationsScoresList, List<List<Double>> generationsAverageList) {
         chartView.getData(generationsScoresList, generationsAverageList);
     }

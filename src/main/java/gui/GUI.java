@@ -16,46 +16,60 @@ public class GUI extends JFrame {
         RenderPanel renderPanel = new RenderPanel(game);
         JPanel buttonPanel = new JPanel();
         FrameRateCount framerateCount = new FrameRateCount();
-        JLabel label = new JLabel(Integer.toString(game.getFrameRate()));
+        JLabel frameRateLabel = new JLabel(Integer.toString(game.getFrameRate()));
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(actionEvent1 -> {
             if(!isSleep) {
                 isSleep = true;
                 game.setFrameRate(1);
-                label.setText("1");
+                frameRateLabel.setText("1");
             } else {
                 isSleep = false;
                 game.setFrameRate(9999999);
-                label.setText("9999999");
+                frameRateLabel.setText("9999999");
             }
         });
-        JButton button1 = new JButton("Slower");
-        button1.addActionListener(actionEvent1 -> {
+        JButton slowerButton = new JButton("Slower");
+        slowerButton.addActionListener(actionEvent2 -> {
             int actualFrameRate = game.getFrameRate();
             game.setFrameRate(framerateCount.previous(actualFrameRate));
-            label.setText(framerateCount.getSelectedInString());
+            frameRateLabel.setText(framerateCount.getSelectedInString());
         });
-        JButton button2 = new JButton("Faster");
-        button2.addActionListener(actionEvent2 -> {
+        JButton fasterButton = new JButton("Faster");
+        fasterButton.addActionListener(actionEvent2 -> {
             int actualFrameRate = game.getFrameRate();
             game.setFrameRate(framerateCount.next(actualFrameRate));
-            label.setText(framerateCount.getSelectedInString());
+            frameRateLabel.setText(framerateCount.getSelectedInString());
         });
-        JLabel label3 = new JLabel(game.getMutationRate());
-        JLabel label4 = new JLabel("BRANCH NUM: " + game.getBranchNumber());
-        JButton button3 = new JButton("Progress Chart");
-        button3.addActionListener(actionEvent3 -> {
+        JLabel mutationRateLabel = new JLabel(game.getMutationRate());
+        JLabel branchNumLabel = new JLabel("BRANCH NUM: " + game.getBranchNumber());
+        JButton heightOfChartMinus = new JButton(" - ");
+        heightOfChartMinus.addActionListener(actionEvent4 -> {
+            renderPanel.scaleDownChartViewHeight();
+        });
+        heightOfChartMinus.setVisible(false);
+        JButton heightOfChartPlus = new JButton(" + ");
+        heightOfChartPlus.addActionListener(actionEvent5 -> {
+            renderPanel.scaleUpChartViewHeight();
+        });
+        heightOfChartPlus.setVisible(false);
+        JButton progressChartButton = new JButton("Progress Chart");
+        progressChartButton.addActionListener(actionEvent3 -> {
+            heightOfChartPlus.setVisible(!heightOfChartPlus.isVisible());
+            heightOfChartMinus.setVisible(!heightOfChartMinus.isVisible());
             renderPanel.getGenerationMemory(game.getGenerationsScores(), game.getGenerationsAverageScores());
             renderPanel.setChartViewFlag();
         });
         buttonPanel.setSize(100, 30);
         buttonPanel.add(pauseButton);
-        buttonPanel.add(button1);
-        buttonPanel.add(label);
-        buttonPanel.add(button2);
-        buttonPanel.add(button3);
-        buttonPanel.add(label3);
-        buttonPanel.add(label4);
+        buttonPanel.add(slowerButton);
+        buttonPanel.add(frameRateLabel);
+        buttonPanel.add(fasterButton);
+        buttonPanel.add(progressChartButton);
+        buttonPanel.add(heightOfChartMinus);
+        buttonPanel.add(heightOfChartPlus);
+        buttonPanel.add(mutationRateLabel);
+        buttonPanel.add(branchNumLabel);
         this.setLayout(new BorderLayout());
         this.add(renderPanel);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -70,8 +84,8 @@ public class GUI extends JFrame {
             if(!isSleep) {
                 renderPanel.revalidate();
                 renderPanel.repaint();
-                label3.setText("Mutation rate: " + game.getMutationRate());
-                label4.setText("BRANCH NUM: " + game.getBranchNumber());
+                mutationRateLabel.setText("Mutation rate: " + game.getMutationRate());
+                branchNumLabel.setText("BRANCH NUM: " + game.getBranchNumber());
             }
             Thread.sleep(millis);
         }
