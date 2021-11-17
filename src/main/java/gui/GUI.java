@@ -31,12 +31,14 @@ public class GUI extends JFrame {
         });
         JButton button1 = new JButton("Slower");
         button1.addActionListener(actionEvent1 -> {
-            game.setFrameRate(framerateCount.previous());
+            int actualFrameRate = game.getFrameRate();
+            game.setFrameRate(framerateCount.previous(actualFrameRate));
             label.setText(framerateCount.getSelectedInString());
         });
         JButton button2 = new JButton("Faster");
         button2.addActionListener(actionEvent2 -> {
-            game.setFrameRate(framerateCount.next());
+            int actualFrameRate = game.getFrameRate();
+            game.setFrameRate(framerateCount.next(actualFrameRate));
             label.setText(framerateCount.getSelectedInString());
         });
         JLabel label3 = new JLabel(game.getMutationRate());

@@ -47,11 +47,11 @@ public class Game {
     }
 
     public int getFrameRate() {
-        return this.gameLoop.getFramerate();
+        return gameLoop.getFrameRate();
     }
 
     public void setFrameRate(int frameRate) {
-        gameLoop.setMillis(1000 / frameRate);
+        gameLoop.setFrameRate(frameRate);
     }
 
     void gameLoop() throws IOException {

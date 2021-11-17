@@ -5,10 +5,10 @@ import java.io.IOException;
 public class GameLoop implements Runnable {
 
     private static final boolean FULL_SPEED = false;
-    private static final int FPS = 1000; //30-60
+    private int FPS = 1000; //30-60
 
     private final Game game;
-    private int millis;
+    private final int millis;
 
     GameLoop(Game game) {
         this.game = game;
@@ -35,11 +35,7 @@ public class GameLoop implements Runnable {
         }
     }
 
-    void setMillis(int millis) {
-        this.millis = millis;
-    }
+    void setFrameRate(int frameRate) { this.FPS = frameRate; }
 
-    int getFramerate() {
-        return 1000 / millis;
-    }
+    int getFrameRate() { return this.FPS; }
 }

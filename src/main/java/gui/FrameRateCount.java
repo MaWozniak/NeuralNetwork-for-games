@@ -1,33 +1,53 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FrameRateCount {
 
-    private final int[] array = {1, 5, 10, 15, 30, 45, 60, 100, 200, 300, 500, 1000, 9999999};
-    private int selectedIndex = 4;
+    private final List<Integer> list;
     private int selected;
 
-    private void updateSelected() {
-        selected = array[selectedIndex];
+    public FrameRateCount() {
+        list = populateList();
     }
 
-    public int next() {
-        if (selectedIndex < array.length - 1) {
-            selectedIndex++;
+    public int next(int actual) {
+        int actualIndex = list.indexOf(actual);
+        if( actual == list.size() - 1) {
+            selected = actual;
+        } else {
+            selected = list.get(actualIndex + 1);
         }
-        updateSelected();
         return selected;
     }
 
-    public int previous() {
-        if (selectedIndex > 0) {
-            selectedIndex--;
+    public int previous(int actual) {
+        int actualIndex = list.indexOf(actual);
+        if ( actual == 0 ) {
+            selected = actual;
+        } else {
+            selected = list.get(actualIndex - 1);
         }
-        updateSelected();
         return selected;
     }
 
     public String getSelectedInString() {
-        updateSelected();
         return Integer.toString(selected);
+    }
+
+    private List<Integer> populateList() {
+        List<Integer> result = new ArrayList<>();
+        result.add(1);
+        result.add(5);
+        result.add(15);
+        result.add(30);
+        result.add(60);
+        result.add(120);
+        result.add(250);
+        result.add(500);
+        result.add(1000);
+        result.add(9999999);
+        return result;
     }
 }
