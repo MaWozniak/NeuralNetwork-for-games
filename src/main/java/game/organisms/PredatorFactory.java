@@ -8,7 +8,7 @@ public class PredatorFactory {
             return new GenericPredator(xPos, yPos);
         } else if (generationNum < 2 * factor) {
             return createPredatorWithPercentChance(0.2, xPos, yPos);
-        } else if (generationNum < 4 * factor) {
+        } else if (generationNum < 3 * factor) {
             return createPredatorWithPercentChance(0.4, xPos, yPos);
         } else if (generationNum < 5 * factor) {
             return createPredatorWithPercentChance(0.75, xPos, yPos);
