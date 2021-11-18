@@ -11,11 +11,15 @@ public class Generation {
     int number;
     Stage stage;
     int learningNetwork;
+    int size;
+    NodalNetwork progenitor;
 
-    public Generation(int number, int size, NodalNetwork protoplast) {
+    public Generation(int number, int size, NodalNetwork progenitor) {
+        this.size = size;
         this.number = number;
+        this.progenitor = progenitor;
         for (int i = 0; i < size; i++) {
-            genomes.add(new Genome(number, protoplast.copy(), "generic", learningNetwork));
+            genomes.add(new Genome(number, progenitor.copy(), "generic", learningNetwork));
         }
 
     }
@@ -65,11 +69,11 @@ public class Generation {
                 for (i = 0; i < numOfParties; ++i) {
                     createGenome(ancestors.get(i), "elite");
                     createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.01);
+                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.02);
                     createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
-                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
-                    createMutatedGenome(ancestors.get(i), "mutationSmSm(0.05-0.05)", 0.05, 0.05);
-                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
-                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.01);
+                    createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.02);
                     createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
                     createMutatedGenome(ancestors.get(i), "mutationBgSm(0.6-0.03)", 0.5, 0.03);
                     createMutatedGenome(ancestors.get(i), "mutationSmBg(0.05-1.0)", 0.1, 1.0);
@@ -181,12 +185,13 @@ public class Generation {
         }
     }
 
-    public void randomize() {
+    public Generation randomize() {
         for (Genome genome : this.genomes) {
             for (int i = 0; i < genome.getNodalNetwork().getNumOfNetworks(); i++) {
                 genome.getNodalNetwork().getNetwork(i).fillRandomWeights();
             }
         }
+        return this;
     }
 
     public void randomScores() {
@@ -225,5 +230,29 @@ public class Generation {
         }
 
         return bestSelection;
+    }
+
+    public void setGenomes(List<Genome> genomes) {
+        this.genomes = genomes;
+    }
+
+    public Generation copy() {
+        Generation newGeneration = new Generation(this.number, this.size, this.progenitor);
+        List<Genome> copiedGenomes = new LinkedList<>();
+        for (Genome genome : genomes) {
+            copiedGenomes.add(genome.copy());
+        }
+        newGeneration.setGenomes(copiedGenomes);
+        return newGeneration;
+    }
+
+    public Generation makeShock() {
+        for (Genome genome : this.genomes) {
+            for (int i = 0; i < genome.getNodalNetwork().getNumOfNetworks(); i++) {
+                genome.getNodalNetwork().getNetwork(i).mutation(0.02, 0.4);
+                genome.getNodalNetwork().getNetwork(i).mutation(0.5, 0.02);
+            }
+        }
+        return this;
     }
 }

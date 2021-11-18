@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 class GenerationMemory {
-    private final List<Genome> genomes = new LinkedList<>();
+    private List<Genome> genomes = new LinkedList<>();
     private final int size;
     private final int id;
     private double averageScore;
@@ -45,6 +45,14 @@ class GenerationMemory {
         return genomes;
     }
 
+    private void setGenomes(List<Genome> genomes) {
+        List<Genome> newList = new LinkedList<>();
+        for (Genome genome : genomes) {
+            newList.add(genome.copy());
+        }
+        this.genomes = newList;
+    }
+
     Genome get(int i) {
         return genomes.get(i);
     }
@@ -59,6 +67,14 @@ class GenerationMemory {
 
     public int getSize() {
         return size;
+    }
+
+    public GenerationMemory copy() {
+        GenerationMemory newGenMem = new GenerationMemory(this.id, this.size);
+        newGenMem.averageScore = this.averageScore;
+        newGenMem.countAdding = this.countAdding;
+        newGenMem.setGenomes(new LinkedList<>(this.genomes));
+        return newGenMem;
     }
 }
 

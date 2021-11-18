@@ -5,19 +5,29 @@ import java.util.Random;
 
 
 public class Genome {
-    private static DecimalFormat df2 = new DecimalFormat("#.##");
-    private NodalNetwork nodalNetwork;
+    private final NodalNetwork nodalNetwork;
     private String id;
     private double score;
     private String parentage;
     private int learningNetwork;
+    private final int generationNumber;
 
     public Genome(int generationNumber, NodalNetwork protoplast, String parantage, int learningNetwork) {
         this.nodalNetwork = protoplast.copy();
         this.learningNetwork = learningNetwork;
+        this.generationNumber = generationNumber;
         this.id = "gen-" + generationNumber + "/" + generateId();
         this.parentage = parantage;
         this.score = 0.0;
+    }
+
+    public Genome copy() {
+        return new Genome(
+                this.generationNumber,
+                this.nodalNetwork.copy(),
+                this.parentage,
+                this.learningNetwork
+        );
     }
 
     void show(boolean showNetwork) {
