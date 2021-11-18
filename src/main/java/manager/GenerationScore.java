@@ -8,8 +8,8 @@ import java.util.List;
 
 public class GenerationScore {
     private static final DecimalFormat DF_2 = new DecimalFormat("#.#");
-    private final List<Double> generationsScoresList;
-    private final List<Double> generationsAverageList;
+    private List<Double> generationsScoresList;
+    private List<Double> generationsAverageList;
     private double averageScoreOfAllGenerations = 0.0;
     private final List<Double> averageScores = new LinkedList<>();
     private double bestScoreOfALLGenerations = 0.0;
@@ -178,4 +178,20 @@ public class GenerationScore {
     public double getNewMutationRate() {
         return (bestScore - averageScoreOfAllGenerations) / bestScore;
     }
+
+    public void setGenerationsScoresList(List<Double> generationsScoresList) {
+        this.generationsScoresList = generationsScoresList;
+    }
+
+    public void setGenerationsAverageList(List<Double> generationsAverageList) {
+        this.generationsAverageList = generationsAverageList;
+    }
+
+    public GenerationScore copy() {
+        GenerationScore genScore = new GenerationScore();
+        genScore.setGenerationsScoresList(new LinkedList<>(this.generationsScoresList));
+        genScore.setGenerationsAverageList(new LinkedList<>(this.generationsAverageList));
+        return genScore;
+    }
+
 }

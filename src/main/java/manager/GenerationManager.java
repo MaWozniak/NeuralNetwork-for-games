@@ -16,7 +16,7 @@ public class GenerationManager {
 
     private Generation generation;
     private final StageManager stageManager;
-    private final GenerationScore generationScore;
+    private GenerationScore generationScore;
     private GenerationMemory generationMemory;
     private final List<Prey> AI_prey;
     private final int generationSize;
@@ -25,6 +25,7 @@ public class GenerationManager {
     private int index = 0;
     private final double preyMaxAge;
     private boolean firstInGeneration;
+    private String[] possibleMutations = {"top5simply", "top5smallMutation", "top5bigRandom", "type3"};
 
 
     public GenerationManager(List<Prey> AI_prey, int size, double preyMaxAge, StageManager stageManager) {
@@ -112,16 +113,15 @@ public class GenerationManager {
     }
 
     public String getGeneticsType() {
-        String[] array = {"top5simply", "top5smallMutation", "top5bigRandom", "type3"};
         if (count % RESET_GENERATION == 0) {
             ++index;
         }
-        if (index > array.length - 1) {
+        if (index > possibleMutations.length - 1) {
             index = 0;
         }
-        System.out.println("-----------------USES GENETICS TYPE: ..." + array[index]
+        System.out.println("-----------------USES GENETICS TYPE: ..." + possibleMutations[index]
                 + "...---------------------");
-        return array[index];
+        return possibleMutations[index];
     }
 
     public void deathPrey(Prey prey) {
@@ -153,5 +153,38 @@ public class GenerationManager {
 
     public List<Double> getGenerationsAverageList() {
         return generationScore.getGenerationsAverageList();
+    }
+
+    public double getLastAverageScore() {
+        int lastScoreIndex = generationScore.getGenerationsAverageList().size() - 1;
+        return generationScore.getGenerationsAverageList().get(lastScoreIndex);
+    }
+
+    public void setGeneration(Generation generation) {
+        this.generation = generation;
+    }
+
+    public void setGenerationMemory(GenerationMemory generationMemory) {
+        this.generationMemory = generationMemory;
+    }
+
+    public void setGenerationScore(GenerationScore generationScore) {
+        this.generationScore = generationScore;
+    }
+
+    public GenerationScore getGenerationScore() {
+        return generationScore;
+    }
+
+    public Generation getGeneration() {
+        return generation;
+    }
+
+    public GenerationMemory getGenerationMemory() {
+        return generationMemory;
+    }
+
+    public void setLowerMutation() {
+        possibleMutations = new String[]{"top5smallMutation", "top5simply", "top5bigRandom", "type3"};
     }
 }

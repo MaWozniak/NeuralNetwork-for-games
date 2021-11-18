@@ -6,7 +6,7 @@ public class PredatorFactory {
         int factor = 80;
         if (generationNum < factor) {
             return new GenericPredator(xPos, yPos);
-        } else if (generationNum < 2 * factor) {
+        } else if (generationNum < 1 * factor) {
             return createPredatorWithPercentChance(0.2, xPos, yPos);
         } else if (generationNum < 3 * factor) {
             return createPredatorWithPercentChance(0.4, xPos, yPos);
