@@ -14,7 +14,7 @@ public class FrameRateCount {
 
     public int next(int actual) {
         int actualIndex = list.indexOf(actual);
-        if( actual == list.size() - 1) {
+        if( actualIndex == list.size() - 1) {
             selected = actual;
         } else {
             selected = list.get(actualIndex + 1);
@@ -24,7 +24,7 @@ public class FrameRateCount {
 
     public int previous(int actual) {
         int actualIndex = list.indexOf(actual);
-        if ( actual == 0 ) {
+        if ( actualIndex == 0 ) {
             selected = actual;
         } else {
             selected = list.get(actualIndex - 1);

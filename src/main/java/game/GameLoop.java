@@ -8,7 +8,7 @@ public class GameLoop implements Runnable {
     private int FPS = 1000; //30-60
 
     private final Game game;
-    private final int millis;
+    private int millis;
 
     GameLoop(Game game) {
         this.game = game;
@@ -35,7 +35,10 @@ public class GameLoop implements Runnable {
         }
     }
 
-    void setFrameRate(int frameRate) { this.FPS = frameRate; }
+    void setFrameRate(int frameRate) {
+        this.FPS = frameRate;
+        this.millis = 1000 / FPS;
+    }
 
     int getFrameRate() { return this.FPS; }
 }

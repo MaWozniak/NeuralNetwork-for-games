@@ -19,15 +19,7 @@ public class GUI extends JFrame {
         JLabel frameRateLabel = new JLabel(Integer.toString(game.getFrameRate()));
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(actionEvent1 -> {
-            if(!isSleep) {
-                isSleep = true;
-                game.setFrameRate(1);
-                frameRateLabel.setText("1");
-            } else {
-                isSleep = false;
-                game.setFrameRate(9999999);
-                frameRateLabel.setText("9999999");
-            }
+            isSleep = !isSleep;
         });
         JButton slowerButton = new JButton("Slower");
         slowerButton.addActionListener(actionEvent2 -> {
