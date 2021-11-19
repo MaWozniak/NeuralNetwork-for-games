@@ -81,7 +81,21 @@ public class BranchGenerationManager {
     }
 
     private void evaluationBranchesWithChanging() {
-        //to refactor
+
+        List<GenerationManager> twoBestBranches = getTwoBestBranches();
+
+        clearBranches();
+
+        // NEW BRANCHES:
+        branches.add(twoBestBranches.get(0));
+        branches.add(createWithLowerMutation(twoBestBranches.get(0)));
+        branches.add(createWithMutationShock(twoBestBranches.get(0)));
+        branches.add(createWithMutationShock(twoBestBranches.get(1)));
+        branches.add(createWithRandomize(twoBestBranches.get(1)));
+
+    }
+
+    private List<GenerationManager> getTwoBestBranches() {
         double maxScore = 0.0;
         double secondScore = 0.0;
         int maxScoreIndex = 0;
@@ -97,48 +111,44 @@ public class BranchGenerationManager {
                 secondScoreIndex = i;
             }
         }
-        //end to refactor
 
-        GenerationManager theBestBranch = branches.get(maxScoreIndex);
-        GenerationManager theSecondBranch = branches.get(secondScoreIndex);
+        List<GenerationManager> resultList = new LinkedList<>();
+        resultList.add(branches.get(maxScoreIndex));
+        resultList.add(branches.get(secondScoreIndex));
 
+        return resultList;
+    }
+
+    private void clearBranches() {
         for ( int i = branches.size() - 1; i > -1 ; i--) {
             branches.remove(branches.get(i));
         }
+    }
 
-        // NEW BRANCHES:
-        // 1) best branch
-        branches.add(theBestBranch);
+    private GenerationManager createWithLowerMutation(GenerationManager gmToCopy) {
+        GenerationManager newGenMan = createCopyOf(gmToCopy);
+        newGenMan.setLowerMutation();
+        return newGenMan;
+    }
 
-        // 2) lower mutation
-        GenerationManager newGenMan1 = new GenerationManager(AI_prey, size, preyMaxAge, stageManager);
-        newGenMan1.setGeneration(theBestBranch.getGeneration().copy());
-        newGenMan1.setLowerMutation();
-        newGenMan1.setGenerationMemory(theBestBranch.getGenerationMemory().copy());
-        newGenMan1.setGenerationScore(theBestBranch.getGenerationScore().copy());
-        branches.add(newGenMan1);
+    private GenerationManager createWithMutationShock(GenerationManager gmToCopy) {
+        GenerationManager newGenMan = createCopyOf(gmToCopy);
+        newGenMan.setGeneration(gmToCopy.getGeneration().copy().makeShock());
+        return newGenMan;
+    }
 
-        // 3) shock best branch
-        GenerationManager newGenMan2 = new GenerationManager(AI_prey, size, preyMaxAge, stageManager);
-        newGenMan2.setGeneration(theBestBranch.getGeneration().copy().makeShock());
-        newGenMan2.setGenerationMemory(theBestBranch.getGenerationMemory().copy());
-        newGenMan2.setGenerationScore(theBestBranch.getGenerationScore().copy());
-        branches.add(newGenMan2);
+    private GenerationManager createWithRandomize(GenerationManager gmToCopy) {
+        GenerationManager newGenMan = createCopyOf(gmToCopy);
+        newGenMan.setGeneration(gmToCopy.getGeneration().copy().randomize());
+        return newGenMan;
+    }
 
-        // 4) shock second branch
-        GenerationManager newGenMan3 = new GenerationManager(AI_prey, size, preyMaxAge, stageManager);
-        newGenMan3.setGeneration(theSecondBranch.getGeneration().copy());
-        newGenMan3.setGenerationMemory(theSecondBranch.getGenerationMemory().copy());
-        newGenMan3.setGenerationScore(theSecondBranch.getGenerationScore().copy());
-        branches.add(newGenMan3);
-
-        // 5) random generation
-        GenerationManager newGenMan4 = new GenerationManager(AI_prey, size, preyMaxAge, stageManager);
-        newGenMan4.setGeneration(theSecondBranch.getGeneration().copy().randomize());
-        newGenMan4.setGenerationMemory(theSecondBranch.getGenerationMemory().copy());
-        newGenMan4.setGenerationScore(theSecondBranch.getGenerationScore().copy());
-        branches.add(newGenMan4);
-
+    private GenerationManager createCopyOf(GenerationManager gmToCopy) {
+        GenerationManager newGenMan = new GenerationManager(AI_prey, size, preyMaxAge, stageManager);
+        newGenMan.setGeneration(gmToCopy.getGeneration().copy());
+        newGenMan.setGenerationMemory(gmToCopy.getGenerationMemory().copy());
+        newGenMan.setGenerationScore(gmToCopy.getGenerationScore().copy());
+        return newGenMan;
     }
 
     public List<List<Double>> getAllGenerationsScoresList() {
