@@ -147,6 +147,8 @@ public class GenerationManager {
         return count;
     }
 
+    public void setCount(int count) { this.count = count; }
+
     public List<Double> getGenerationsScoresList() {
         return generationScore.getGenerationsScoresList();
     }

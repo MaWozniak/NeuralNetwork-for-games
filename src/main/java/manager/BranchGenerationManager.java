@@ -51,7 +51,7 @@ public class BranchGenerationManager {
         int actualGen = branches.get(lastBranchIndex).getCount() - 1;
 
         int firstStage = 500;
-        int nextStageDuration = 200;
+        int nextStageDuration = 150;
         int nextNumberOfBranches = 5;
 
         // FIRST STEP - BEST 2 FROM 10
@@ -145,6 +145,7 @@ public class BranchGenerationManager {
 
     private GenerationManager createCopyOf(GenerationManager gmToCopy) {
         GenerationManager newGenMan = new GenerationManager(AI_prey, size, preyMaxAge, stageManager);
+        newGenMan.setCount(gmToCopy.getCount());
         newGenMan.setGeneration(gmToCopy.getGeneration().copy());
         newGenMan.setGenerationMemory(gmToCopy.getGenerationMemory().copy());
         newGenMan.setGenerationScore(gmToCopy.getGenerationScore().copy());
