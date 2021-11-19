@@ -169,4 +169,26 @@ public class BranchGenerationManager {
         System.out.println("______________BUCKET " + actualNumberOfBranch + "_______________");
         System.out.println("*************************************");
     }
+
+    public void saveGenerationsToConsole() {
+        System.out.println(
+                "\n\n"
+                + "/////// BRANCH MANAGER EMERGENCY SAVE ///////"
+                + "\n Two best branches best genomes:"
+                + "\n"
+        );
+        getTwoBestBranches().forEach(
+                x -> System.out.println(
+                        x.getGenerationScore().writeFileLog(
+                                x.getCount(),
+                                x.getGenerationMemory()
+                        )
+                )
+        );
+        System.out.println(
+                "\n"
+                + "/////// END BRANCH MANAGER EMERGENCY SAVE ///////"
+                + "\n"
+        );
+    }
 }

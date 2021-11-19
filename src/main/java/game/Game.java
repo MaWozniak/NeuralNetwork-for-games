@@ -216,4 +216,8 @@ public class Game {
     public Stage getStage() {
         return stageManager.getStage(branchGenerationManager.get().getCount() - 1);
     }
+
+    public void saveGenerationsToConsole() {
+        branchGenerationManager.saveGenerationsToConsole();
+    }
 }

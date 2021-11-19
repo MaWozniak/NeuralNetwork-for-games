@@ -45,13 +45,22 @@ public class GUI extends JFrame {
             renderPanel.scaleUpChartViewHeight();
         });
         heightOfChartPlus.setVisible(false);
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(actionEvent4 -> {
+            game.setFrameRate(1);
+            frameRateLabel.setText("1");
+            game.saveGenerationsToConsole();
+        });
+        saveButton.setVisible(false);
         JButton progressChartButton = new JButton("Progress Chart");
         progressChartButton.addActionListener(actionEvent3 -> {
             heightOfChartPlus.setVisible(!heightOfChartPlus.isVisible());
             heightOfChartMinus.setVisible(!heightOfChartMinus.isVisible());
+            saveButton.setVisible(!saveButton.isVisible());
             renderPanel.getGenerationMemory(game.getGenerationsScores(), game.getGenerationsAverageScores());
             renderPanel.setChartViewFlag();
         });
+
         buttonPanel.setSize(100, 30);
         buttonPanel.add(pauseButton);
         buttonPanel.add(slowerButton);
@@ -62,6 +71,7 @@ public class GUI extends JFrame {
         buttonPanel.add(heightOfChartPlus);
         buttonPanel.add(mutationRateLabel);
         buttonPanel.add(branchNumLabel);
+        buttonPanel.add(saveButton);
         this.setLayout(new BorderLayout());
         this.add(renderPanel);
         this.add(buttonPanel, BorderLayout.SOUTH);

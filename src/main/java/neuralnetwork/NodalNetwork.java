@@ -5,8 +5,8 @@ import java.util.List;
 
 public class NodalNetwork {
     private List<NeuralNetwork> networks = new LinkedList<>();
-    private NeuralNetwork bridge;
-    private NeuralNetwork node;
+    private final NeuralNetwork bridge;
+    private final NeuralNetwork node;
 
     public NodalNetwork(NeuralNetwork bridge, NeuralNetwork node, int numOfNodes) {
         this.bridge = bridge;
@@ -74,6 +74,14 @@ public class NodalNetwork {
     String showString() {
         StringBuilder result = new StringBuilder();
         result.append("nodal-nn hashCode: ").append(this.hashCode());
+        for(int i = 0; i < networks.size(); i++) {
+            result.append("\n" + "branch network ")
+                    .append(i)
+                    .append(":")
+                    .append("\n")
+                    .append(networks.get(i).showString())
+                    .append("\n");
+        }
         return result.toString();
     }
 

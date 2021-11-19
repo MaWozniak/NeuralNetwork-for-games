@@ -37,7 +37,7 @@ public class GenerationScore {
             double sumOfAll = last_N_scoresArray.stream().mapToDouble(Double::doubleValue).sum();
             return sumOfAll / length;
         } else {
-            for (int i = length - resetGen; i < length ; i++) {
+            for (int i = length - resetGen; i < length; i++) {
                 last_N_scoresArray.add(averageScores.get(i));
             }
             double sumOfLastN = last_N_scoresArray.stream().mapToDouble(Double::doubleValue).sum();
@@ -54,7 +54,6 @@ public class GenerationScore {
         this.updateAverageScores(generationMemory);
         this.updateBestIndividualScores(generationMemory);
         this.log("summary", count, stageManager, generationMemory);
-        this.writeFileLog(count, generationMemory);
     }
 
     void updateAverageScores(GenerationMemory generationMemory) {
@@ -148,7 +147,7 @@ public class GenerationScore {
 
     }
 
-    void writeFileLog(int count, GenerationMemory generationMemory) {
+    StringBuilder writeFileLog(int count, GenerationMemory generationMemory) {
         StringBuilder fileContent = new StringBuilder();
         fileContent.append("GENERATION ").append(count - 1).append("\n");
         fileContent.append("\nAVARAGE score of THIS GENERATION: ").append(generationMemory.getAverageScore());
@@ -160,11 +159,31 @@ public class GenerationScore {
         fileContent.append("\n3rd prey of ALL GENERATION: ").append(idOfThirdBestScore).append(" score: ").append(thirdBestScore);
         fileContent.append("\n--------------------------------------");
 
-        for (int i = 0; i < generationMemory.getSize(); i++) {
-            fileContent.append("\n\nGenome nr ").append(i).append(" id-").append(generationMemory.get(i).getId()).append(": ");
-            fileContent.append(generationMemory.get(i).saveToMemory());
-            fileContent.append("\n");
+        final boolean WRITE_ONLY_THE_BEST_GENOME = true;
+
+        if (WRITE_ONLY_THE_BEST_GENOME) {
+            int bestScoreIndex = 0;
+            double bestScore = 0.0;
+            for (int i = 0; i < generationMemory.getSize(); i++) {
+                if (generationMemory.get(i).getScore() >= bestScore) {
+                    bestScoreIndex = i;
+                    bestScore = generationMemory.get(i).getScore();
+                }
+            }
+            fileContent.append("\n\nBEST SCORE IS Genome nr ")
+                    .append(bestScoreIndex)
+                    .append(" id-")
+                    .append(generationMemory.get(bestScoreIndex).getId()).append(": ")
+                    .append(generationMemory.get(bestScoreIndex).saveToMemory())
+                    .append("\n");
+        } else {
+            for (int i = 0; i < generationMemory.getSize(); i++) {
+                fileContent.append("\n\nGenome nr ").append(i).append(" id-").append(generationMemory.get(i).getId()).append(": ");
+                fileContent.append(generationMemory.get(i).saveToMemory());
+                fileContent.append("\n");
+            }
         }
+        return fileContent;
     }
 
     public List<Double> getGenerationsScoresList() {
