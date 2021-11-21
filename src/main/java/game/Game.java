@@ -66,9 +66,9 @@ public class Game {
 
     private void addNewPredators(int number) {
         for (int i = 0; i < number; i++) {
-            int yStartPosChange = 100;
+            int yStartPosChange = (int)(200 + 100*Math.random());
             if (Math.random() > 0.5) {
-                yStartPosChange = 700;
+                yStartPosChange = (int)(600 - 100*Math.random());
             }
             double xStartPos = 100 + 950 * Math.random();
             double yStartPos = yStartPosChange + 20 * Math.random();

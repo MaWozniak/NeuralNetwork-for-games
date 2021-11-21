@@ -51,7 +51,7 @@ public class BranchGenerationManager {
         int actualGen = branches.get(lastBranchIndex).getCount() - 1;
 
         int firstStage = 500;
-        int nextStageDuration = 150;
+        int nextStageDuration = 300;
         int nextNumberOfBranches = 5;
 
         // FIRST STEP - BEST 2 FROM 10

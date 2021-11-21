@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class GenericPredator implements Predator {
     private static final boolean ENERGY_COST = true;
-    private static final double MAX_SPEED = 8;
+    private static final double MAX_SPEED = 0.3;
 
     double x;
     double y;
@@ -28,7 +28,7 @@ public class GenericPredator implements Predator {
         this.y = yStartPos;
         this.isAlive = true;
         this.energy = 130;
-        this.speed = 1.0;
+        this.speed = 0.1;
         predatorGui = new PredatorGui();
         predatorLogic = new GenericPredatorLogic();
     }
@@ -91,7 +91,7 @@ public class GenericPredator implements Predator {
             }
         }
 
-        double turnSpeed = 0.15;
+        double turnSpeed = 0.00015;
         if (right && speed != 0) {
             angle += turnSpeed * speed / MAX_SPEED;
         }

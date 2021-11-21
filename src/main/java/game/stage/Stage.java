@@ -6,7 +6,7 @@ public class Stage {
     private String name = "STAGE-NN";
     private int learningNetwork = 0;
     private int numOfPreys = 50;
-    private int preyMaxAge = 100;
+    private int preyMaxAge = 80;
     private int numOfPredators = 0;
     private boolean isHidePlacesCenter = false;
     private boolean isHidePlacesBorder = false;
