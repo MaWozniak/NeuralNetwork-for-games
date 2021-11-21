@@ -41,7 +41,7 @@ public class GenerationsChartView {
         List<Color> colors = fillColors();
 
         for(int j = 0; j < generationsAverageList.size(); j++) {
-            g.setColor(colors.get(j));
+            g.setColor(colors.get(j % colors.size()));
             for (int i = 0; i < generationsAverageList.get(j).size(); i += step) {
                 double mixedValue = mixedValue(generationsScoresList.get(j).get(i), generationsAverageList.get(j).get(i));
                 verticalFactor = (int) (HEIGHT_OF_CHART_PLOTS * mixedValue);

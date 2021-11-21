@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BranchGenerationManager {
 
-    private final int INITIAL_NUMBER_OF_BRANCHES = 10;
+    private final int INITIAL_NUMBER_OF_BRANCHES = 20;
     private int NUMBER_OF_BRANCHES = INITIAL_NUMBER_OF_BRANCHES;
     private final List<Prey> AI_prey;
     private final int size;
@@ -51,7 +51,7 @@ public class BranchGenerationManager {
         int actualGen = branches.get(lastBranchIndex).getCount() - 1;
 
         int firstStage = 500;
-        int nextStageDuration = 150;
+        int nextStageDuration = 200;
         int nextNumberOfBranches = 5;
 
         // FIRST STEP - BEST 2 FROM 10
