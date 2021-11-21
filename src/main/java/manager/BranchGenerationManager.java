@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BranchGenerationManager {
 
-    private final int INITIAL_NUMBER_OF_BRANCHES = 10;
+    private final int INITIAL_NUMBER_OF_BRANCHES = 20;
     private int NUMBER_OF_BRANCHES = INITIAL_NUMBER_OF_BRANCHES;
     private final List<Prey> AI_prey;
     private final int size;
