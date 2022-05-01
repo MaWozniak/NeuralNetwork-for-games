@@ -10,6 +10,7 @@ public class BlackBox {
      */
     private final int HORIZONTAL_VIEW_POINTS = 5 * 5; // it must be multiple of 5
     private final int VERTICAL_VIEW_POINTS = 8 * 3; // it must be multiple of 3
+    private final double DISTANCE_OF_VIEW = 25.0; // FIXME TESTING there was 150.0
 
     public BlackBox(Genome genome) {
         this.genome = genome;
@@ -210,8 +211,8 @@ public class BlackBox {
             double y,
             double angle
     ) {
-        double frontalTransposition = 150.0;
-        double sideTransposition = 150.0;
+        double frontalTransposition = DISTANCE_OF_VIEW;
+        double sideTransposition = DISTANCE_OF_VIEW;
 
         byte[][] viewTable = new byte[HORIZONTAL_VIEW_POINTS][VERTICAL_VIEW_POINTS];
 

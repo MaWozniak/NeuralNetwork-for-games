@@ -2,10 +2,11 @@ package game.organisms;
 
 class SimplePredatorLogic {
     private final RandomMovement randomMovement;
+    int randomSeed1 = (int)(Math.random()*60);
+    int randomSeed2  = 59 - (int)(Math.random()*60);
 
     SimplePredatorLogic() {
-        randomMovement = new RandomMovement();
-        randomMovement.start();
+        randomMovement = RandomMovement.getInstance();
     }
 
     void thinking(byte[][] model, SimplePredator predator) {
@@ -63,8 +64,8 @@ class SimplePredatorLogic {
     }
 
     private void randomMovement(SimplePredator predator) {
-        predator.left = randomMovement.isLeft();
-        predator.right = randomMovement.isRight();
+        predator.left = randomMovement.get(randomSeed1);
+        predator.right = randomMovement.get(randomSeed2);
     }
 
     private void lowEnergyRush(SimplePredator predator) {
@@ -111,6 +112,7 @@ class SimplePredatorLogic {
     }
 
     public void killThread() {
-        randomMovement.kill();
+        // for Singleton it's not needed
+//        randomMovement.kill();
     }
 }

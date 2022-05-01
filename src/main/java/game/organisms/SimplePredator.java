@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class SimplePredator implements Predator {
     private static final boolean ENERGY_COST = true;
-    private static final double MAX_SPEED = 0.5;
+    private static final double MAX_SPEED = 20.5;
 
     double x;
     double y;
